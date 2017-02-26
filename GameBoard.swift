@@ -58,14 +58,6 @@ class gameBoard {
     // Spieler, der dran ist 0=West,1=Nord,2=Ost,3=Süd
     var playerCurrent:Int
     
-    // Regelkonforme Karten des aktuellen Spielers
-    var cardsPlayable: [UInt64] {
-        
-        //TODO
-        return []
-        
-    }
-    
     // Karte, die den aktuellen Stich gewinnt -> Index im aktuellen Stichs
     // liefert -1, wenn Stich leer
     
@@ -92,7 +84,7 @@ class gameBoard {
    // FUNKTIONEN, METHODEN
     
 
-    func playCard(card:UInt64) -> gameBoard {
+    func playCard(card:UInt64) {
     // spielt eine Karte in einem aktuellen Gameboard und liefert das neu erzeugte Gameboard zurück
     
         
@@ -148,16 +140,50 @@ class gameBoard {
             // Ausspieler für neuen Stich festlegen
             self.trickLeader = cardWinsNumber
             
-            
-            
-            
         }
-        
-        return gameBoard(hands: hands, tricksNS: tricksWonByNorthSouth, tricksEW: tricksWonByEastWest, trickCurrent: trickCurrent, trump: trump, leader: trickLeader, trickSuit: trickSuit, playerShape: playerShape, cardsPlayed: cardsPlayed, playerCurrent: cardWinsNumber)
+    
     }
     
     
+    func playableCardsOfCurrentPlayer() -> [UInt64] {
+        
+        let cardsInPlayersHandAsArray = allCards.filter({$0 & hands[playerCurrent] > 0})
+        // -> Array mit allen Karten, die in der Spielerhand sind
+        
+        
+        
+        if trickCurrent.isEmpty {
+            // 1. Ausspieler, alle Karten, die sich in der Hand des aktuellen Spielers befinden
+            
+            return cardsInPlayersHandAsArray
+            
+        } else {
+            
+            // 2. Kann bedienen ?
+            
+            
+            if hands[playerCurrent] & trickSuit == 0  {
+                
+                // a. Nein -> alle Spielerkarten sind spielbar
+                return cardsInPlayersHandAsArray
+                
+            } else {
+                
+                // b. Ja
+                return cardsInPlayersHandAsArray.filter({$0 & trickSuit > 0})
+                
+            }
+            
+            
+        // TODO
+        // filter is successor
+        // wenn a) gleiche Farbe b) es gibt keine Karte dazwischen, die einem anderen Spieler gehört oder die Karte ist nicht im Spiel
+            
+        }
 
+        
+        
+    }
     
     
     

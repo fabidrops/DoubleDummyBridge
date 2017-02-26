@@ -14,6 +14,8 @@
 		05CC78181E61A8B900962EA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05CC78161E61A8B900962EA3 /* LaunchScreen.storyboard */; };
 		05CC78201E62C83A00962EA3 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC781F1E62C83A00962EA3 /* GameBoard.swift */; };
 		05CC78221E62E70800962EA3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC78211E62E70800962EA3 /* Constants.swift */; };
+		05CC78241E63301E00962EA3 /* ConstantsForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC78231E63301E00962EA3 /* ConstantsForTest.swift */; };
+		05CC78261E6330C100962EA3 /* MinMax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC78251E6330C100962EA3 /* MinMax.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		05CC78191E61A8B900962EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		05CC781F1E62C83A00962EA3 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameBoard.swift; path = ../GameBoard.swift; sourceTree = "<group>"; };
 		05CC78211E62E70800962EA3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Constants.swift; sourceTree = "<group>"; };
+		05CC78231E63301E00962EA3 /* ConstantsForTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConstantsForTest.swift; path = ../ConstantsForTest.swift; sourceTree = "<group>"; };
+		05CC78251E6330C100962EA3 /* MinMax.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MinMax.swift; path = ../MinMax.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +69,9 @@
 				05CC78161E61A8B900962EA3 /* LaunchScreen.storyboard */,
 				05CC78191E61A8B900962EA3 /* Info.plist */,
 				05CC781F1E62C83A00962EA3 /* GameBoard.swift */,
+				05CC78251E6330C100962EA3 /* MinMax.swift */,
 				05CC78211E62E70800962EA3 /* Constants.swift */,
+				05CC78231E63301E00962EA3 /* ConstantsForTest.swift */,
 			);
 			path = DoubleDummyBridge;
 			sourceTree = "<group>";
@@ -144,9 +150,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				05CC78101E61A8B900962EA3 /* ViewController.swift in Sources */,
+				05CC78261E6330C100962EA3 /* MinMax.swift in Sources */,
 				05CC78201E62C83A00962EA3 /* GameBoard.swift in Sources */,
 				05CC780E1E61A8B900962EA3 /* AppDelegate.swift in Sources */,
 				05CC78221E62E70800962EA3 /* Constants.swift in Sources */,
+				05CC78241E63301E00962EA3 /* ConstantsForTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
