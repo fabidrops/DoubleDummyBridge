@@ -12,6 +12,8 @@
 		05CC78131E61A8B900962EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05CC78111E61A8B900962EA3 /* Main.storyboard */; };
 		05CC78151E61A8B900962EA3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 05CC78141E61A8B900962EA3 /* Assets.xcassets */; };
 		05CC78181E61A8B900962EA3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05CC78161E61A8B900962EA3 /* LaunchScreen.storyboard */; };
+		05CC78201E62C83A00962EA3 /* GameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC781F1E62C83A00962EA3 /* GameBoard.swift */; };
+		05CC78221E62E70800962EA3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC78211E62E70800962EA3 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		05CC78141E61A8B900962EA3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		05CC78171E61A8B900962EA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		05CC78191E61A8B900962EA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		05CC781F1E62C83A00962EA3 /* GameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GameBoard.swift; path = ../GameBoard.swift; sourceTree = "<group>"; };
+		05CC78211E62E70800962EA3 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = ../Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,8 @@
 				05CC78141E61A8B900962EA3 /* Assets.xcassets */,
 				05CC78161E61A8B900962EA3 /* LaunchScreen.storyboard */,
 				05CC78191E61A8B900962EA3 /* Info.plist */,
+				05CC781F1E62C83A00962EA3 /* GameBoard.swift */,
+				05CC78211E62E70800962EA3 /* Constants.swift */,
 			);
 			path = DoubleDummyBridge;
 			sourceTree = "<group>";
@@ -138,7 +144,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				05CC78101E61A8B900962EA3 /* ViewController.swift in Sources */,
+				05CC78201E62C83A00962EA3 /* GameBoard.swift in Sources */,
 				05CC780E1E61A8B900962EA3 /* AppDelegate.swift in Sources */,
+				05CC78221E62E70800962EA3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

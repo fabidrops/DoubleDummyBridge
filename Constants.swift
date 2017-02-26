@@ -1,0 +1,14 @@
+//
+//  Constants.swift
+//  DoubleDummyBridge
+//
+//  Created by Fabian von Löbbecke on 26.02.17.
+//  Copyright © 2017 Fabian von Löbbecke. All rights reserved.
+//
+
+import Foundation
+
+let spades:   UInt64 =  0b1111111111111000000000000000000000000000000000000000
+let hearts:   UInt64 =  0b0000000000000111111111111100000000000000000000000000
+let diamonds: UInt64 =  0b0000000000000000000000000011111111111110000000000000
+let clubs:    UInt64 =  0b0000000000000000000000000000000000000001111111111111
