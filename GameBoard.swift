@@ -63,20 +63,31 @@ class gameBoard {
     
     var cardTrickWinner: Int {
         
-        var returnValue = -1
-        var highestCardInTrick:UInt64 = 0
-        
-        for card in trickCurrent {
+        if trickCurrent.count == 1 {
             
-            if (card & trickSuit) > (highestCardInTrick & trickSuit) || (card & trump) > (highestCardInTrick & trump)  {
+            // nur eine Karte im Stich, diese gewinnt
+            return 0
+        
+        } else {
+            
+            var highestCardInTrick = trickCurrent[0]
+            var returnValue = 0
+            
+            for i in 1...trickCurrent.count-1 {
                 
-                returnValue += 1
-                highestCardInTrick = card
+                if (trickCurrent[i] & trickSuit) > (highestCardInTrick & trickSuit) || (trickCurrent[i] & trump) > (highestCardInTrick & trump)  {
+                    
+                    
+                    highestCardInTrick = trickCurrent[i]
+                    returnValue = i
+                    
+                }
                 
             }
+            
+            return returnValue // Index der Karte im Stich, die den Stich gewinnt
+            
         }
-        
-        return returnValue // Index der Karte im Stich, die den Stich gewinnt
         
     }
     
@@ -85,7 +96,7 @@ class gameBoard {
     
 
     func playCard(card:UInt64) {
-    // spielt eine Karte in einem aktuellen Gameboard und liefert das neu erzeugte Gameboard zurück
+    // spielt eine Karte in einem aktuellen Gameboard
     
         
         // Karte aus gespielter Hand entfernen
@@ -140,7 +151,17 @@ class gameBoard {
             // Ausspieler für neuen Stich festlegen
             self.trickLeader = cardWinsNumber
             
+            // Aktueller Spieler
+            self.playerCurrent = cardWinsNumber
+            
+        } else {
+            
+            // Stich nicht vollständig -> nächster Spieler dran
+            self.playerCurrent = (self.trickLeader + self.trickCurrent.count) % 4
+            
+            
         }
+        
     
     }
     
@@ -149,7 +170,6 @@ class gameBoard {
         
         let cardsInPlayersHandAsArray = allCards.filter({$0 & hands[playerCurrent] > 0})
         // -> Array mit allen Karten, die in der Spielerhand sind
-        
         
         
         if trickCurrent.isEmpty {
@@ -165,11 +185,13 @@ class gameBoard {
             if hands[playerCurrent] & trickSuit == 0  {
                 
                 // a. Nein -> alle Spielerkarten sind spielbar
+               
                 return cardsInPlayersHandAsArray
                 
             } else {
                 
                 // b. Ja
+               
                 return cardsInPlayersHandAsArray.filter({$0 & trickSuit > 0})
                 
             }
