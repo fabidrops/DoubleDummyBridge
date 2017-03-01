@@ -59,44 +59,10 @@ class ViewController: UIViewController {
         
         let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
     
-        // FILL playerShape
+        print(game.playerShape)
+        game.playerShape =  fillPlayersShape(hands: game.hands)
         
-        for i in 0...3 {
-            
-            for card in allCards {
-                
-                if card & spades & game.hands[i] > 0 {
-                    
-                    
-                    game.playerShape[i][0] += 1
-                    
-                }
-                
-                if card & hearts & game.hands[i] > 0 {
-                    
-                    
-                    game.playerShape[i][1] += 1
-                    
-                }
-                
-                if card & diamonds & game.hands[i] > 0 {
-                    
-                    
-                    game.playerShape[i][2] += 1
-                    
-                }
-                
-                if card & clubs & game.hands[i] > 0 {
-                    
-                    
-                    game.playerShape[i][3] += 1
-                    
-                }
-                
-                
-            }
-            
-        }
+        print (game.playerShape)
         
         // print("\(game.playerShape[0][0])-\(game.playerShape[0][1])-\(game.playerShape[0][2])-\(game.playerShape[0][3])")
         

@@ -19,6 +19,7 @@
 		05CC78281E63444F00962EA3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05CC78271E63444F00962EA3 /* Main.storyboard */; };
 		05CC782A1E63468100962EA3 /* Output.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC78291E63468100962EA3 /* Output.swift */; };
 		05CC782C1E649F3500962EA3 /* TODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC782B1E649F3500962EA3 /* TODO.swift */; };
+		05CC782E1E64A72800962EA3 /* HelpingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		05CC78271E63444F00962EA3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		05CC78291E63468100962EA3 /* Output.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Output.swift; sourceTree = "<group>"; };
 		05CC782B1E649F3500962EA3 /* TODO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TODO.swift; sourceTree = "<group>"; };
+		05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpingFunctions.swift; path = ../HelpingFunctions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				05CC78191E61A8B900962EA3 /* Info.plist */,
 				05CC781F1E62C83A00962EA3 /* GameBoard.swift */,
 				05CC78251E6330C100962EA3 /* MinMax.swift */,
+				05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */,
 				05CC78211E62E70800962EA3 /* Constants.swift */,
 				05CC78231E63301E00962EA3 /* ConstantsForTest.swift */,
 				05CC78291E63468100962EA3 /* Output.swift */,
@@ -167,6 +170,7 @@
 				05CC780E1E61A8B900962EA3 /* AppDelegate.swift in Sources */,
 				05CC78221E62E70800962EA3 /* Constants.swift in Sources */,
 				05CC78241E63301E00962EA3 /* ConstantsForTest.swift in Sources */,
+				05CC782E1E64A72800962EA3 /* HelpingFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

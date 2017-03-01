@@ -8,34 +8,6 @@
 
 import UIKit
 
-func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
-    
-    var deckOfCards = allCards
-    
-    // empty and single-element collections don't shuffle
-    
-    
-    for i in 0...51 {
-        let j = Int(arc4random_uniform(UInt32(52 - i))) + i
-        guard i != j else { continue }
-        swap(&deckOfCards[i], &deckOfCards[j])
-    }
-    
-    var hand: [UInt64] = [0,0,0,0]
-    
-    for i in 0...3 {
-        
-        for j in 0...numberOfCardsPerHand-1 {
-            
-            hand[i] += deckOfCards[i*13+j]
-            
-        }
-        
-    }
-    
-    return [hand[0],hand[1],hand[2],hand[3]]
-}
-
 
 func handHasVoid(suit: UInt64, hand: UInt64) -> Bool {
     
