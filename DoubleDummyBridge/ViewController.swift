@@ -24,7 +24,6 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var cardNumberCounterLbl: UILabel!
     
-    
     @IBOutlet weak var playProgressLbl: UILabel!
 
 
@@ -55,19 +54,29 @@ class ViewController: UIViewController {
     
     @IBAction func dealButton(_ sender: AnyObject) {
         
+        //Hash-Table leeren
+        hashTable = [:]
+        
         playProgressLbl.text = "CALCULATE..."
         
         let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+        
+//        let game7 = gameBoard(hands: [0b101000000100000001010001001000000000000010000110000,0b1000001100000000100100010000100100000000100000000100,0b10000001001000000000010011000000101001000000010,0b10100000000110000000000000000011110000000100001000], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+//        
+//        let game3 = gameBoard(hands: [0b1000010001010000000001100000000000000010000000000,0b10000100000001000001010000000000000001000000000010,0b10000000100000000000000100000101000000011000000,0b10010100011000100000000000000000001], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+        
+        //10 Stiche fehlerhand kommt n/2 2 raus obwohl es 3 sein müssten 42166, mit sort 47000+
+        //let game = gameBoard(hands: [0b101000000100000001010001001000000000000010000110000,0b1000001100000000100100010000100100000000100000000100,0b10000001001000000000010011000000101001000000010,0b10100000000110000000000000000011110000000100001000], tricksNS: 0, tricksEW: 0, actualTrick: [], leader: 0,actualTrickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],cardsPlayedInOrder: [])
+        
+        //7 stiche hand 7093 varianten // 5303 //2287//1305 = 5 Sti
+        //let game = gameBoard(hands: [0b1000010001010000000001100000000000000010000000000,0b10000100000001000001010000000000000001000000000010,0b10000000100000000000000100000101000000011000000,0b10010100011000100000000000000000001], tricksNS: 0, tricksEW: 0, actualTrick: [], leader: 0,actualTrickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]],cardsPlayedInOrder: [])
     
-        print(game.playerShape)
+        // Korrekte Shape-Struktur der Spieler ermitteln
         game.playerShape =  fillPlayersShape(hands: game.hands)
         
         print (game.playerShape)
         
-        // print("\(game.playerShape[0][0])-\(game.playerShape[0][1])-\(game.playerShape[0][2])-\(game.playerShape[0][3])")
-        
-    
-        
+        // Hände anzeigen
         handNorth.text = handToStringVisualStyle(hand: game.hands[1])
         handSouth.text = handToStringVisualStyle(hand: game.hands[3])
         handWest.text = handToStringVisualStyle(hand: game.hands[0])
@@ -80,23 +89,20 @@ class ViewController: UIViewController {
         if game.trump == 0 { trumpLbl.text = "SANS ATOUT" }
         
         
-        //outputLbl.text = "Max Stiche N/S:\(mini(game: game, alpha:0, beta:numberOfCardsPerHand))\n"+"Zweige:\(GLOBALCOUNTER)"
-        
-        
-        
-        
+        // Eigentliche Berechnung anstoßen
         outputLbl.text = "Max Stiche N/S:\(mini(game: game, alpha:0, beta:NumberOfCardsPerHand))\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
         
         print("ALPHACUTOFF:\(GLOBALCOUNTER_ALPHA_CUTOFF)")
         print("BETACUTOFF:\(GLOBALCOUNTER_BETA_CUTOFF)")
-         print("Varianten:\(GLOBALCOUNTER_CALCULATE_LAST)")
-         print("MinMaxAufrufe:\(GLOBALCOUNTER_MINMAX)")
+        print("Varianten:\(GLOBALCOUNTER_CALCULATE_LAST)")
+        print("MinMaxAufrufe:\(GLOBALCOUNTER_MINMAX)")
+        print("HashTableFindings:\(GLOBALCOUNTER_HASHTAG)")
 
         GLOBALCOUNTER_MINMAX = 0
         GLOBALCOUNTER_CALCULATE_LAST = 0
         GLOBALCOUNTER_ALPHA_CUTOFF = 0
         GLOBALCOUNTER_BETA_CUTOFF = 0
-        
+        GLOBALCOUNTER_HASHTAG = 0
         
         //createHashTable
     }

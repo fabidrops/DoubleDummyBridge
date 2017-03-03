@@ -168,6 +168,9 @@ class gameBoard {
     
     func playableCardsOfCurrentPlayer() -> [UInt64] {
         
+        var playableCards:[UInt64] = []
+        var playableCardsFilterEqualCards:[UInt64] = []
+        
         let cardsInPlayersHandAsArray = allCards.filter({$0 & hands[playerCurrent] > 0})
         // -> Array mit allen Karten, die in der Spielerhand sind
         
@@ -175,7 +178,7 @@ class gameBoard {
         if trickCurrent.isEmpty {
             // 1. Ausspieler, alle Karten, die sich in der Hand des aktuellen Spielers befinden
             
-            return cardsInPlayersHandAsArray
+            playableCards = cardsInPlayersHandAsArray
             
         } else {
             
@@ -186,24 +189,46 @@ class gameBoard {
                 
                 // a. Nein -> alle Spielerkarten sind spielbar
                
-                return cardsInPlayersHandAsArray
+                playableCards = cardsInPlayersHandAsArray
                 
             } else {
                 
                 // b. Ja
                
-                return cardsInPlayersHandAsArray.filter({$0 & trickSuit > 0})
+                playableCards = cardsInPlayersHandAsArray.filter({$0 & trickSuit > 0})
+                
+            }
+            
+        }
+        
+        // playableCards wird ab hier untersucht, ob gleichwertige Karten enthalten sind
+        // diese werden dann entfernt
+        
+        
+        for card in playableCards {
+            
+            
+            // Karten deren Binärverschiebung um eine Position (gleich nächste Karte)
+            // Ausnahme: die 2en, weil danach das As einer neuen Farbe kommt (siehe allCards)
+            if playableCards.contains(card >> 1) == false ||  [s2,h2,d2,c2].contains(card) == true {
+                
+                playableCardsFilterEqualCards.append(card)
                 
             }
             
             
-        // TODO
-        // filter is successor
-        // wenn a) gleiche Farbe b) es gibt keine Karte dazwischen, die einem anderen Spieler gehört oder die Karte ist nicht im Spiel
-            
         }
-
         
+        return playableCardsFilterEqualCards
+        
+    }
+    
+    func hashIndex() -> String {
+        
+        // Um die Hashtabelle für Spielpositionen aufzubauen, wird einer Spielsituation ein eindeutiger String zugeordnet
+        // gespielte Karten sind schon sehr eindeutig, da sie vorher auch eindeutig Händen zugeordnet waren
+        
+        return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest)
         
     }
     

@@ -21,6 +21,21 @@ func max(game: gameBoard, alpha: Int, beta:Int) -> Int {
         
     }
     
+    // HASH-Table Look-Up BEGINN
+    
+    let hashIndexActual = game.hashIndex()
+    
+    let hashFlag = (game.trickCurrent.count == 0)
+    
+    if let hashValue = hashTable[hashIndexActual] {
+        
+        if hashFlag == true {
+            GLOBALCOUNTER_HASHTAG += 1
+            return hashValue
+        }
+        
+    }
+    
     // Generiere Züge des aktuellen Spielers
     
     var maxWert:Int = alpha // schlechtester Wert für N/S
@@ -89,6 +104,12 @@ func max(game: gameBoard, alpha: Int, beta:Int) -> Int {
         
     }
     
+    // HASH-Table Write
+    
+    if hashFlag {
+        
+        hashTable[hashIndexActual] = maxWert
+    }
     
     return maxWert
     
@@ -105,6 +126,21 @@ func mini(game: gameBoard, alpha: Int, beta:Int) -> Int {
         
         GLOBALCOUNTER_CALCULATE_LAST += 1
         return game.tricksWonByNorthSouth
+        
+    }
+    
+    // HASH-Table Look-Up BEGINN
+    
+    let hashIndexActual = game.hashIndex()
+    
+    let hashFlag = (game.trickCurrent.count == 0)
+    
+    if let hashValue = hashTable[hashIndexActual] {
+        
+        if hashFlag == true {
+            GLOBALCOUNTER_HASHTAG += 1
+            return hashValue
+        }
         
     }
     
@@ -177,6 +213,13 @@ func mini(game: gameBoard, alpha: Int, beta:Int) -> Int {
         game.trickSuit = kopieBoard.trickSuit
         game.playerCurrent = kopieBoard.playerCurrent
         
+    }
+    
+    // HASH-Table Write
+    
+    if hashFlag {
+        
+        hashTable[hashIndexActual] = minWert
     }
     
     return minWert
