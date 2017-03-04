@@ -201,21 +201,19 @@ class gameBoard {
             
         }
         
-        // playableCards wird ab hier untersucht, ob gleichwertige Karten enthalten sind
-        // diese werden dann entfernt
+              if playableCards.count == 1 { return playableCards } else {
         
-        
-        for card in playableCards {
-            
-            
-            // Karten deren Binärverschiebung um eine Position (gleich nächste Karte)
-            // Ausnahme: die 2en, weil danach das As einer neuen Farbe kommt (siehe allCards)
-            if playableCards.contains(card >> 1) == false ||  [s2,h2,d2,c2].contains(card) == true {
+            for i in 0...playableCards.count-2 {
                 
-                playableCardsFilterEqualCards.append(card)
+                if areWeEqualCards(card1: playableCards[i], card2: playableCards[i+1]) == false {
+                    
+                    playableCardsFilterEqualCards.append(playableCards[i])
+                }
+                
                 
             }
             
+            playableCardsFilterEqualCards.append(playableCards.last!)
             
         }
         
@@ -230,6 +228,41 @@ class gameBoard {
         
         return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest)
         
+    }
+    
+    func areWeEqualCards(card1: UInt64, card2:UInt64) -> Bool {
+        
+        // Funktion überprüft, ob zwei Karten gleichwertig sind, d.h. nahtlos ineinander übergehen und somit
+        // bei den playable cards rausgefiltert werden können
+        
+        //Karten verschiedenfarbig
+        
+        if card1 & spades > 0 && card2 & spades == 0 {return false}
+        if card1 & hearts > 0 && card2 & hearts == 0 {return false}
+        if card1 & diamonds > 0 && card2 & diamonds == 0{return false}
+        if card1 & clubs > 0 && card2 & clubs == 0 {return false}
+        
+        var cardRun = card1
+        
+        while cardRun > card2 {
+            
+            cardRun = (cardRun >> 1)
+            
+            if cardRun == card2 { return true }
+            
+            //Karte ist nicht in Spielerhand und noch nicht gespielt und nicht im aktuellen Stich = in Fremdspielerhand
+            //Achtung wenn man links die 9 ausspielt und einer hält 108, wären die Karten gleichwertig und
+            //die 10 könnte den Stich nicht mehr machen, deshalb sind Karten auch bereinigt um aktuellen Stich
+            if cardRun & hands[playerCurrent] == 0 && cardRun & self.cardsPlayed == 0 && self.trickCurrent.contains(cardRun) == false {
+                
+                return false
+                
+            }
+            
+        }
+        
+        // von einer Karte zur anderen kommt nie eine Gegenspielerkarte oder Partnerkarte
+        return true
     }
     
     

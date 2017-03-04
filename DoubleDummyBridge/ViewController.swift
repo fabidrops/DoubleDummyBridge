@@ -76,6 +76,8 @@ class ViewController: UIViewController {
         
         print (game.playerShape)
         
+    
+        
         // Hände anzeigen
         handNorth.text = handToStringVisualStyle(hand: game.hands[1])
         handSouth.text = handToStringVisualStyle(hand: game.hands[3])
