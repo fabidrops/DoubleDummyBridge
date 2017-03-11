@@ -23,3 +23,6 @@ import Foundation
 // 4. Kleine Karten gleichwertig behandeln
 // 5. Hash-Table for playable Cards ?
 
+// Optimierung
+// Hash-Table nach Anzahl der Restkarten, zB 13-10 Restkarten darf auch "7" -> x verwandeln, darunter nur ab der 6 -> x ?
+

@@ -230,7 +230,17 @@ class gameBoard {
         // Um die Hashtabelle für Spielpositionen aufzubauen, wird einer Spielsituation ein eindeutiger String zugeordnet
         // gespielte Karten sind schon sehr eindeutig, da sie vorher auch eindeutig Händen zugeordnet waren
         
-        return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest)
+        if hashTableBuildingGuide == 0 {
+            
+            // Hash-Table wird exakt erzeugt
+            return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest)
+            
+        } else {
+            
+            // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
+            return String(self.cardsPlayed | 0b0000000111111000000011111100000001111110000000111111) + String(self.playerCurrent) + String(tricksWonByEastWest)
+            
+        }
         
     }
     
