@@ -203,16 +203,20 @@ class gameBoard {
         
               if playableCards.count == 1 { return playableCards } else {
         
+                
+            // Ab mindestens 2 Karten, wird untersucht, ob diese "gleichwertig sind", d.h. benachbart
             for i in 0...playableCards.count-2 {
                 
                 if areWeEqualCards(card1: playableCards[i], card2: playableCards[i+1]) == false {
                     
+                    // wenn nicht benachbart, dann wird die Karte angehängt
                     playableCardsFilterEqualCards.append(playableCards[i])
                 }
                 
                 
             }
             
+            // die letzte Karte wird immer angehängt, da dieser vorher nciht aussortiert werden kann
             playableCardsFilterEqualCards.append(playableCards.last!)
             
         }
@@ -248,12 +252,20 @@ class gameBoard {
             
             cardRun = (cardRun >> 1)
             
-            if cardRun == card2 { return true }
+            if cardRun == card2 {
+//                // Test
+//                if playerCurrent == 3 && self.trickCurrent.contains(cJ) {
+//                    
+//                    print("\(returnCardAsString (hand: card1)) \(returnCardAsString (hand: card2))")
+//                }
+                
+                return true }
             
-            //Karte ist nicht in Spielerhand und noch nicht gespielt und nicht im aktuellen Stich = in Fremdspielerhand
-            //Achtung wenn man links die 9 ausspielt und einer hält 108, wären die Karten gleichwertig und
-            //die 10 könnte den Stich nicht mehr machen, deshalb sind Karten auch bereinigt um aktuellen Stich
-            if cardRun & hands[playerCurrent] == 0 && cardRun & self.cardsPlayed == 0 && self.trickCurrent.contains(cardRun) == false {
+            //zwischen zwei möglichen benachbarten Karten muss geguckt werden, was mit diesen Karten ist
+            //Sind die Karten noch im Spiel also auf einer Gegnerhand ODER im aktuellen Stich
+            //können die Karten nie benachbart sein
+            
+            if (cardRun & hands[playerCurrent] == 0 && cardRun & self.cardsPlayed == 0) || self.trickCurrent.contains(cardRun) == true {
                 
                 return false
                 
