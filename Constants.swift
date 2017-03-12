@@ -11,6 +11,8 @@ import Foundation
 var hashTable = [String:Int]()
 var hashTableBuildingGuide = 1 // wichtige Konstante, die die Hash-Table-Erzeugung steuert -> Gameboard.hashtag gucken
 
+var playableCardsWithSorting = false // soll das Programm Karten sortieren ?
+
 let spades:   UInt64 =  0b1111111111111000000000000000000000000000000000000000
 let hearts:   UInt64 =  0b0000000000000111111111111100000000000000000000000000
 let diamonds: UInt64 =  0b0000000000000000000000000011111111111110000000000000

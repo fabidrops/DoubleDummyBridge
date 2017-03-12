@@ -62,10 +62,12 @@ class gameBoard {
     // liefert -1, wenn Stich leer
     
     var cardTrickWinner: Int {
+        // die Zahl die returniert wird ist die Array-Position der Karte, nicht die des Spielers
         
         if trickCurrent.count == 1 {
             
             // nur eine Karte im Stich, diese gewinnt
+            
             return 0
         
         } else {
@@ -75,11 +77,29 @@ class gameBoard {
             
             for i in 1...trickCurrent.count-1 {
                 
-                if (trickCurrent[i] & trickSuit) > (highestCardInTrick & trickSuit) || (trickCurrent[i] & trump) > (highestCardInTrick & trump)  {
+                if highestCardInTrick & trump > 0 {
+                
+                    // Trumpf im Stich
+                    if (trickCurrent[i] & trump) > (highestCardInTrick & trump)  {
+                        
+                        
+                        highestCardInTrick = trickCurrent[i]
+                        returnValue = i
+                        
+                    }
+                
+                } else {
+                    
+                     // kein Trumpf im Stich
+                    if (trickCurrent[i] & trickSuit) > (highestCardInTrick & trickSuit) || (trickCurrent[i] & trump) > 0  {
+                        
+                        
+                        highestCardInTrick = trickCurrent[i]
+                        returnValue = i
+                        
+                    }
                     
                     
-                    highestCardInTrick = trickCurrent[i]
-                    returnValue = i
                     
                 }
                 
@@ -221,8 +241,15 @@ class gameBoard {
             
         }
         
-        return playableCardsFilterEqualCards
-        
+        if playableCardsWithSorting == true {
+            //images.sorted({ $0.fileID > $1.fileID })
+            return playableCardsFilterEqualCards.sorted(by: {self.pointsForCardSorting(card: $0) > self.pointsForCardSorting(card: $1)})
+            
+        } else {
+            
+            return playableCardsFilterEqualCards
+            
+        }
     }
     
     func hashIndex() -> String {
@@ -235,10 +262,15 @@ class gameBoard {
             // Hash-Table wird exakt erzeugt
             return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest)
             
-        } else {
+        } else if hashTableBuildingGuide == 1  {
             
             // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
             return String(self.cardsPlayed | 0b0000000111111000000011111100000001111110000000111111) + String(self.playerCurrent) + String(tricksWonByEastWest)
+            
+        } else {
+            
+            // Hash-Table macht aus 7,6,5,4,3,2 jeweils ein x
+            return String(self.cardsPlayed | 0b0000001111111000000111111100000011111110000001111111) + String(self.playerCurrent) + String(tricksWonByEastWest)
             
         }
         
@@ -263,11 +295,6 @@ class gameBoard {
             cardRun = (cardRun >> 1)
             
             if cardRun == card2 {
-//                // Test
-//                if playerCurrent == 3 && self.trickCurrent.contains(cJ) {
-//                    
-//                    print("\(returnCardAsString (hand: card1)) \(returnCardAsString (hand: card2))")
-//                }
                 
                 return true }
             
@@ -285,6 +312,19 @@ class gameBoard {
         
         // von einer Karte zur anderen kommt nie eine Gegenspielerkarte oder Partnerkarte
         return true
+    }
+    
+    func pointsForCardSorting(card: UInt64) -> Int {
+    
+        // Funktion soll in einer Spielsituation einen Wert geben um eine Sortierung zu ermöglichen
+        
+            //test
+        
+        //if card == sK || card == dK {return 10} else {return 0}
+        
+        return 0
+    
+    
     }
     
     

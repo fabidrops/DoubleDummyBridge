@@ -10,12 +10,12 @@ import Foundation
 
 
 // FEHLER
-// 1. NT scheint richtig zu sein, mit Trumpf nicht
+// done - 1. NT scheint richtig zu sein, mit Trumpf nicht
 
 
 
 // SPEED
-// 0. Funktion playable Cards prüft nur die nächste Karte also 78 aber nicht 79 wenn die 8 nicht im spiel ist
+// done - 0. Funktion playable Cards prüft nur die nächste Karte also 78 aber nicht 79 wenn die 8 nicht im spiel ist
 // 0a.Karten sortieren
 // 1. Hash-Table für "Wer gewinnt den Stich"
 // 2. Hast-Table Stellung
