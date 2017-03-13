@@ -260,17 +260,23 @@ class gameBoard {
         if hashTableBuildingGuide == 0 {
             
             // Hash-Table wird exakt erzeugt
-            return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest)
+            return String(self.cardsPlayed) + String(self.playerCurrent) + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
         } else if hashTableBuildingGuide == 1  {
             
-            // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
-            return String(self.cardsPlayed | 0b0000000111111000000011111100000001111110000000111111) + String(self.playerCurrent) + String(tricksWonByEastWest)
+            // Hash-Table macht aus 7,6,5,4,3,2 jeweils ein x
+            
+            let str1 = String(self.cardsPlayed & 0b1111111000000111111100000011111110000001111111000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
         } else {
             
-            // Hash-Table macht aus 7,6,5,4,3,2 jeweils ein x
-            return String(self.cardsPlayed | 0b0000001111111000000111111100000011111110000001111111) + String(self.playerCurrent) + String(tricksWonByEastWest)
+            // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
+            
+            let str1 = String(self.cardsPlayed & 0b1111110000000111111000000011111100000001111110000000) + String(self.playerCurrent)
+            
+            return  str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
         }
         
