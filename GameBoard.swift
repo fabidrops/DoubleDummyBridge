@@ -62,6 +62,8 @@ class gameBoard {
     // liefert -1, wenn Stich leer
     
     var cardTrickWinner: Int {
+        
+        
         // die Zahl die returniert wird ist die Array-Position der Karte, nicht die des Spielers
         
         if trickCurrent.count == 1 {
@@ -71,6 +73,7 @@ class gameBoard {
             return 0
         
         } else {
+            
             
             var highestCardInTrick = trickCurrent[0]
             var returnValue = 0
@@ -160,9 +163,10 @@ class gameBoard {
         let cardWinsNumber = (self.cardTrickWinner + trickLeader) % 4
         if self.trickCurrent.count == 4 {
             
+            
             // Stichanzahl erhöhen
             
-            if cardWinsNumber == 0 || cardWinsNumber == 2 { tricksWonByEastWest += 1} else {tricksWonByNorthSouth += 1}
+            if cardWinsNumber == 0 || cardWinsNumber == 2 {  tricksWonByEastWest += 1} else { tricksWonByNorthSouth += 1}
             
             // Stich leeren & Stichfarbe zurücksetzen
             self.trickCurrent = []
@@ -190,6 +194,8 @@ class gameBoard {
         
         var playableCards:[UInt64] = []
         var playableCardsFilterEqualCards:[UInt64] = []
+        
+    
         
         let cardsInPlayersHandAsArray = allCards.filter({$0 & hands[playerCurrent] > 0})
         // -> Array mit allen Karten, die in der Spielerhand sind
@@ -220,6 +226,8 @@ class gameBoard {
             }
             
         }
+        
+        if playableCards.count == 0 { return playableCards }
         
               if playableCards.count == 1 { return playableCards } else {
         
@@ -252,6 +260,27 @@ class gameBoard {
         }
     }
     
+    func quickTricksOfCurrentPlayer() -> Int {
+        
+        // Ermittelt mittels einer Hash Table die quickTricks addiert pro Einzelfarbe
+        
+        // 1. Transformation der Verteilung in eine relative Verteilung
+        
+        var quickTricks = 0
+        
+        for card in allSpades {
+            
+            
+            
+        }
+        
+        
+        
+        
+        return quickTricks
+    }
+    
+    
     func hashIndex() -> String {
         
         // Um die Hashtabelle für Spielpositionen aufzubauen, wird einer Spielsituation ein eindeutiger String zugeordnet
@@ -270,13 +299,29 @@ class gameBoard {
             
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
-        } else {
+        } else if hashTableBuildingGuide == 2 {
             
             // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
             
             let str1 = String(self.cardsPlayed & 0b1111110000000111111000000011111100000001111110000000) + String(self.playerCurrent)
             
             return  str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        } else if hashTableBuildingGuide == 99 {
+            
+            // Hash-Table NEW
+            
+            return  String(self.cardsPlayed) + String(self.playerCurrent)
+            
+        } else {
+            
+            // Hash-Table macht aus 5,4,3,2 jeweils ein x
+            
+            let str1 = String(self.cardsPlayed & 0b1111111100000111111110000011111111000001111111100000) + String(self.playerCurrent)
+            
+            return  str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+            
             
         }
         
@@ -332,6 +377,30 @@ class gameBoard {
     
     
     }
+    
+//    func gameToQuickTricks() -> [String] {
+//        
+//        var strSpades = ""
+//        var strHearts = ""
+//        var strDiamonds = ""
+//        var strClubs = ""
+//        
+//        // liefert die realtiven Rankings pro Farbe
+//        
+//        for card in allCards {
+//            
+//            if card & spades > 0 {
+//                
+//                strSpades +=
+//                
+//            }
+//            
+//            
+//        }
+//        
+//        
+//        
+//    }
     
     
     

@@ -8,223 +8,108 @@
 
 import Foundation
 
-func max(game: gameBoard, alpha: Int, beta:Int) -> Int {
+// MinMax-Algorythmus
+// mit alpha/beta pruning
+
+func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) -> Int {
     
-    // MinMax Algorythmus
-    GLOBALCOUNTER_MINMAX += 1
+    var game = game
+    let alpha = alpha
+    let beta = beta
     
-    // Spiel zu Ende: Bewerten
-    if game.tricksWonByEastWest + game.tricksWonByNorthSouth == NumberOfCardsPerHand {
+    let playableCards = game.playableCardsOfCurrentPlayer()
+    
+    // Spiel zu Ende -> Bewertung vornehmen
+    if deep == 0 || playableCards.count == 0 {
         
-        GLOBALCOUNTER_CALCULATE_LAST += 1
         return game.tricksWonByNorthSouth
         
     }
     
-    // HASH-Table Look-Up BEGINN
+    // Wer ist dran ? N/S hier gehts weiter sonst im Else Zweig für O/W
     
-    let hashIndexActual = game.hashIndex()
-    
-    let hashFlag = (game.trickCurrent.count == 0)
-    
-    if let hashValue = hashTable[hashIndexActual] {
+    if turnNS {
         
-        if hashFlag == true {
-            GLOBALCOUNTER_HASHTAG += 1
-            return hashValue
-        }
+        var value: Int
+        var maxValue = alpha
         
-    }
-    
-    // Generiere Züge des aktuellen Spielers
-    
-    var maxWert:Int = alpha // schlechtester Wert für N/S
-    var wert: Int = alpha
-    
-    for card in game.playableCardsOfCurrentPlayer() {
-        
-        // Kopie des gameBoards anlegen
-        let kopieBoard = gameBoard(hands: game.hands, tricksNS: game.tricksWonByNorthSouth, tricksEW: game.tricksWonByEastWest, trickCurrent: game.trickCurrent, trump: game.trump, leader: game.trickLeader, trickSuit: game.trickSuit, playerShape: game.playerShape, cardsPlayed: game.cardsPlayed, playerCurrent: game.playerCurrent)
-        
-        // Führe Karte aus
-        
-        game.playCard(card: card)
-        
-        
-        // Nord-Süd am Stich
-        if game.playerCurrent == 1 || game.playerCurrent == 3 {
+        for card in playableCards {
             
-            // Bewertungsfunktion rekursiv
-            wert = max(game: game, alpha: maxWert, beta:beta)
+            // Kopie des gameBoards anlegen
+            let kopieBoard = gameBoard(hands: game.hands, tricksNS: game.tricksWonByNorthSouth, tricksEW: game.tricksWonByEastWest, trickCurrent: game.trickCurrent, trump: game.trump, leader: game.trickLeader, trickSuit: game.trickSuit, playerShape: game.playerShape, cardsPlayed: game.cardsPlayed, playerCurrent: game.playerCurrent)
             
-            if wert > maxWert {
-                maxWert = wert
+            // Führe Karte aus
+            
+            game.playCard(card: card)
+            
+            value = miniMax(game: game , deep: deep - 1, alpha: maxValue, beta: beta, turnNS: (game.playerCurrent == 1 || game.playerCurrent == 3 ))
+            
+            // Karte rückgängig machen
+            
+            game = kopieBoard
+            
+            // Beta - CutOff ?
+            
+            if (value > maxValue) {
                 
-                // Alpha-Beta Pruning, der andere Spieler könnte immer Beta erzwingen, deswegen Break
-                if maxWert >= beta {
+                maxValue = value
+                
+                if (maxValue >= beta) {
                     
-                    GLOBALCOUNTER_BETA_CUTOFF += 1
-                    break
-                
-                }
-            }
-        }
-        
-        // Ost-West am Stich
-        if game.playerCurrent == 0 || game.playerCurrent == 2 {
-            
-            wert = mini(game: game, alpha: maxWert, beta: beta)
-            
-            
-            if wert > maxWert {
-                maxWert = wert
-                
-                if maxWert >= beta {
+                    // Zug ist widerlegt, alle anderen Züge können verworfen werden, weil dieser Zweig nie gewählt würde vom minimierenden Spieler
                     
-                    GLOBALCOUNTER_BETA_CUTOFF += 1
                     break
-                
+                    
                 }
+                
             }
             
         }
         
+        return maxValue
+        
+    } else {
+        
+        // OW am Stich
+        
+        var value: Int
+        var minValue = beta
+        
+        for card in playableCards {
             
-        // Karte rückgängig machen
+            // Kopie des gameBoards anlegen
+            let kopieBoard = gameBoard(hands: game.hands, tricksNS: game.tricksWonByNorthSouth, tricksEW: game.tricksWonByEastWest, trickCurrent: game.trickCurrent, trump: game.trump, leader: game.trickLeader, trickSuit: game.trickSuit, playerShape: game.playerShape, cardsPlayed: game.cardsPlayed, playerCurrent: game.playerCurrent)
+            
+            // Führe Karte aus
+            
+            game.playCard(card: card)
+            
+            value = miniMax(game: game , deep: deep - 1, alpha: alpha, beta: minValue, turnNS: (game.playerCurrent == 1 || game.playerCurrent == 3 ))
+           
+            // Karte rückgängig machen
+                        
+            game = kopieBoard
+            
+            // Alpha - CutOff ?
+            
+            if (value < minValue) {
+                
+                minValue = value
+                
+                if (minValue <= alpha) {
+                    
+                    // Zug ist widerlegt, alle anderen Züge können verworfen werden, weil dieser Zweig nie gewählt würde vom maximierenden Spieler
+                    
+                    break
+                    
+                }
+                
+            }
+            
+        }
         
-        game.trickCurrent = kopieBoard.trickCurrent
-        game.hands = kopieBoard.hands
-        game.tricksWonByEastWest = kopieBoard.tricksWonByEastWest
-        game.tricksWonByNorthSouth = kopieBoard.tricksWonByNorthSouth
-        game.trickLeader = kopieBoard.trickLeader
-        game.cardsPlayed = kopieBoard.cardsPlayed
-        game.playerShape = kopieBoard.playerShape
-        game.trickSuit = kopieBoard.trickSuit
-        game.playerCurrent = kopieBoard.playerCurrent
+        return minValue
         
     }
-    
-    // HASH-Table Write
-    
-    if hashFlag {
-        
-        hashTable[hashIndexActual] = maxWert
-    }
-    
-    return maxWert
     
 }
-
-func mini(game: gameBoard, alpha: Int, beta:Int) -> Int {
-    
-    // MinMax Algorythmus
-    GLOBALCOUNTER_MINMAX += 1
-    
-   
-    // Spiel zu Ende: Bewerten
-    if game.tricksWonByEastWest + game.tricksWonByNorthSouth == NumberOfCardsPerHand {
-        
-        GLOBALCOUNTER_CALCULATE_LAST += 1
-        return game.tricksWonByNorthSouth
-        
-    }
-    
-    // HASH-Table Look-Up BEGINN
-    
-    let hashIndexActual = game.hashIndex()
-    
-    let hashFlag = (game.trickCurrent.count == 0)
-    
-    if let hashValue = hashTable[hashIndexActual] {
-        
-        if hashFlag == true {
-            GLOBALCOUNTER_HASHTAG += 1
-            return hashValue
-        }
-        
-    }
-    
-    // Generiere Züge des aktuellen Spielers
-    
-    var minWert:Int = beta
-    var wert: Int = beta
-    
-    
-    for card in game.playableCardsOfCurrentPlayer() {
-        
-        // Kopie des gameBoards anlegen
-        let kopieBoard = gameBoard(hands: game.hands, tricksNS: game.tricksWonByNorthSouth, tricksEW: game.tricksWonByEastWest, trickCurrent: game.trickCurrent, trump: game.trump, leader: game.trickLeader, trickSuit: game.trickSuit, playerShape: game.playerShape, cardsPlayed: game.cardsPlayed, playerCurrent: game.playerCurrent)
-        
-        // Führe Karte aus
-        
-        game.playCard(card: card)
-        
-        // Nord-Süd am Stich
-        if game.playerCurrent == 1 || game.playerCurrent == 3 {
-            
-            // Bewertungsfunktion rekursiv
-            wert = max(game: game, alpha: alpha, beta:minWert)
-            
-            
-            if wert < minWert {
-                minWert = wert
-                
-                // Alpha-Beta Pruning, der andere Spieler könnte immer Alpha erzwingen, deswegen Break
-                if minWert <= alpha {
-                    
-                    GLOBALCOUNTER_ALPHA_CUTOFF += 1
-                    break
-                    
-                }
-            }
-        }
-        
-        // Ost-West am Stich
-        if game.playerCurrent == 0 || game.playerCurrent == 2 {
-            
-            wert = mini(game: game, alpha: alpha, beta: minWert)
-            
-            
-            if wert < minWert {
-                minWert = wert
-                
-                if minWert <= alpha {
-                    
-                    GLOBALCOUNTER_ALPHA_CUTOFF += 1
-                    break
-                    
-                }
-            }
-            
-        
-        
-        
-        }
-        
-        // Karte rückgängig machen
-        
-        game.trickCurrent = kopieBoard.trickCurrent
-        game.hands = kopieBoard.hands
-        game.tricksWonByEastWest = kopieBoard.tricksWonByEastWest
-        game.tricksWonByNorthSouth = kopieBoard.tricksWonByNorthSouth
-        game.trickLeader = kopieBoard.trickLeader
-        game.cardsPlayed = kopieBoard.cardsPlayed
-        game.playerShape = kopieBoard.playerShape
-        game.trickSuit = kopieBoard.trickSuit
-        game.playerCurrent = kopieBoard.playerCurrent
-        
-    }
-    
-    // HASH-Table Write
-    
-    if hashFlag {
-        
-        hashTable[hashIndexActual] = minWert
-    }
-    
-    return minWert
-    
-}
-
-
-

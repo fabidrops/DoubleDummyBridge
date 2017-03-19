@@ -8,8 +8,7 @@
 
 import Foundation
 
-var hashTable = [String:Int]()
-var hashTableBuildingGuide = 1 // wichtige Konstante, die die Hash-Table-Erzeugung steuert -> Gameboard.hashtag gucken
+
 
 var playableCardsWithSorting = false // soll das Programm Karten sortieren ?
 
@@ -19,6 +18,11 @@ let diamonds: UInt64 =  0b0000000000000000000000000011111111111110000000000000
 let clubs:    UInt64 =  0b0000000000000000000000000000000000000001111111111111
 
 let allCards = [sA,sK,sQ,sJ,sT,s9,s8,s7,s6,s5,s4,s3,s2,hA,hK,hQ,hJ,hT,h9,h8,h7,h6,h5,h4,h3,h2,dA,dK,dQ,dJ,dT,d9,d8,d7,d6,d5,d4,d3,d2,cA,cK,cQ,cJ,cT,c9,c8,c7,c6,c5,c4,c3,c2]
+
+let allSpades = [sA,sK,sQ,sJ,sT,s9,s8,s7,s6,s5,s4,s3,s2]
+let allHearts = [hA,hK,hQ,hJ,hT,h9,h8,h7,h6,h5,h4,h3,h2]
+let allDiamonds = [dA,dK,dQ,dJ,dT,d9,d8,d7,d6,d5,d4,d3,d2]
+let allClubs = [cA,cK,cQ,cJ,cT,c9,c8,c7,c6,c5,c4,c3,c2]
 
 let sA: UInt64 =      0b1000000000000000000000000000000000000000000000000000
 let sK: UInt64 =      0b0100000000000000000000000000000000000000000000000000
