@@ -311,7 +311,7 @@ class gameBoard {
             
             // Hash-Table NEW
             
-            return  String(self.cardsPlayed) + String(self.playerCurrent)
+            return  String(self.cardsPlayed) + String(self.trickLeader)
             
         } else {
             

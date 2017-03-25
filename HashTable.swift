@@ -13,11 +13,7 @@ var hashTableAlphaBeta = [String : [Int]]()
 
 
 
-var hashTableBuildingGuide = 1 // wichtige Konstante, die die Hash-Table-Erzeugung steuert -> Gameboard.hashtag gucken
-
-
-
-
+var hashTableBuildingGuide = 0 // wichtige Konstante, die die Hash-Table-Erzeugung steuert -> Gameboard.hashtag gucken
 
 
 // Funktion funktioniert, hat aber keinen Geschwindigkeitsvorteil gebracht, deshlab nicht reingebracht !

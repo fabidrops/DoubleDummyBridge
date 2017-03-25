@@ -247,3 +247,16 @@ func returnCardAsString (hand: UInt64) -> String {
     return "XX"
 }
 
+func printBinary(number: [UInt64]) {
+    
+    var str:[String] = []
+    
+    for num in number {
+        
+        str.append(String(num, radix: 2))
+        
+    }
+    
+    print(str)
+}
+
