@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="bridgeAnalyse" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="DoubleDummyBridge" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -118,6 +118,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9GI-ir-gJH">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="T1M-PT-aMy"/>
+                                    <constraint firstAttribute="height" constant="30" id="XNt-ER-8Gf"/>
+                                </constraints>
+                                <state key="normal" title="TEST"/>
+                                <connections>
+                                    <action selector="testMode:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XjV-tA-W5e"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -127,6 +137,7 @@
                             <constraint firstItem="QcJ-RU-6Ae" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="69" id="CyL-wU-9Qx"/>
                             <constraint firstItem="5Lb-2a-kl6" firstAttribute="leading" secondItem="QcJ-RU-6Ae" secondAttribute="trailing" constant="8" id="Elt-Cs-Rj5"/>
                             <constraint firstItem="Qfq-vD-JdI" firstAttribute="top" secondItem="Wd7-ua-1Bz" secondAttribute="bottom" constant="8" id="GVw-D7-c9k"/>
+                            <constraint firstItem="9GI-ir-gJH" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="IXz-P0-j7Y"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dNx-eq-1eS" secondAttribute="trailing" constant="70" id="L33-TO-AwB"/>
                             <constraint firstItem="Wd7-ua-1Bz" firstAttribute="top" secondItem="q8H-51-EBx" secondAttribute="bottom" constant="8" id="Q0z-pZ-EIL"/>
                             <constraint firstItem="uIC-cD-xqv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QWX-yw-69K"/>
@@ -137,6 +148,8 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="dNx-eq-1eS" secondAttribute="bottom" constant="20" id="WIw-Nu-hfj"/>
                             <constraint firstItem="hBZ-cK-WWT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="WYk-8a-nKo"/>
                             <constraint firstItem="QcJ-RU-6Ae" firstAttribute="top" secondItem="Qfq-vD-JdI" secondAttribute="bottom" constant="8" id="YH3-hF-EAc"/>
+                            <constraint firstItem="9GI-ir-gJH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="112" id="c8v-kD-Pf9"/>
+                            <constraint firstItem="9GI-ir-gJH" firstAttribute="leading" secondItem="uIC-cD-xqv" secondAttribute="trailing" constant="25.5" id="eGK-Oi-q3K"/>
                             <constraint firstItem="BbK-iX-CGq" firstAttribute="top" secondItem="5Lb-2a-kl6" secondAttribute="bottom" constant="8" id="fI1-CP-bcM"/>
                             <constraint firstItem="Qfq-vD-JdI" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="joj-AM-OOA"/>
                             <constraint firstItem="5Lb-2a-kl6" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="r3O-Ko-wlM"/>
@@ -159,6 +172,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qEH-Fq-fCb">
+                    <rect key="frame" x="0.0" y="0.0" width="64" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <state key="normal" title="TESTMODE"/>
+                </button>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="109.29535232383809"/>
         </scene>

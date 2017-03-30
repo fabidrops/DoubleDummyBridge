@@ -26,17 +26,15 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var playProgressLbl: UILabel!
 
-
+    var testHandsOn = false // Testmodus
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Projektstart 25.02.2017
         cardNumberCounterLbl.text = String(NumberOfCardsPerHand)
         outputLbl.text = "HIER"
         
-        
-        
-        //fillHashTableTrickWinnerNoTrump()
+        fillTestHands()
         
         
     }
@@ -48,7 +46,6 @@ class ViewController: UIViewController {
         
     }
     
-    
     @IBAction func Minus(_ sender: AnyObject) {
         
         NumberOfCardsPerHand -= 1
@@ -56,25 +53,104 @@ class ViewController: UIViewController {
         
     }
     
+    @IBAction func testMode(_ sender: AnyObject) {
+        
+        testHandsOn = !testHandsOn
+        
+        if testHandsOn {
+            
+            print("TESTMODE!")
+            
+        } else {
+            
+            print ("REALMODE!")
+        }
+        
+        
+        
+    }
+    
+    
     @IBAction func dealButton(_ sender: AnyObject) {
         
-        //Hash-Table leeren
-        //hashTable = [:]
-        hashTableAlphaBeta = [:]
+        if testHandsOn {
+            
+            // Testmodus
         
-        // Hash Art wird in Constants gesetzt !
+            for hand in testHands {
+            
+                //Hash-Table leeren, Hash Methode wird in Variable HashArt gesetzt
+                //hashTable = [:]
+                hashTableAlphaBeta = [:]
+                
+                playProgressLbl.text = "CALCULATE..."
+                
+                
+                // Korrekte Shape-Struktur der Spieler ermitteln
+                hand.playerShape =  fillPlayersShape(hands: hand.hands)
+                
+                // Hände anzeigen
+                fillVisual(game: hand)
+                
+                let game = gameBoard(hands: hand.hands, tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
+                    game.testNumberOfCards = hand.testNumberOfCards
+            
+                NumberOfCardsPerHand = hand.testNumberOfCards
+                game.tricksTest = hand.tricksTest
+                game.nameTest = hand.nameTest
+                
+                hashTableBuildingGuide = 0
+                
+                let time1 = DispatchTime.now()
+                let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: false)
+                let time2 = DispatchTime.now()
+                let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
+                
+                //hashTable = [:]
+                
+                outputLbl.text = "Max Stiche N/S:\(erg6)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
+                
+                var testScoreCorrect = true
+                
+                if erg6 != game.tricksTest {testScoreCorrect = false }
+                
+                 print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF)  ")
+                
+            }
+            
+        } else {
+            
         
-        playProgressLbl.text = "CALCULATE..."
         
-        let game76 = gameC
+            let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
         
-        let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            // Korrekte Shape-Struktur der Spieler ermitteln
+            game.playerShape =  fillPlayersShape(hands: game.hands)
+            
+            // Anzeige
+            fillVisual(game: game)
+            
+            //hashTable = [:]
+            hashTableAlphaBeta = [:]
+            hashTableBuildingGuide = 0
+            
+            let time1 = DispatchTime.now()
+            let erg = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: false)
+            let time2 = DispatchTime.now()
+            let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
+            
+            outputLbl.text = "Max Stiche N/S:\(erg)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
+            
+            print("\(VERSION): #N/S \(erg) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF)  ")
+            
+            
+            
+        }
         
-   
-        // Korrekte Shape-Struktur der Spieler ermitteln
-        game.playerShape =  fillPlayersShape(hands: game.hands)
         
-        print (game.playerShape)
+    }
+    
+    func fillVisual(game: gameBoard) {
         
         // Hände anzeigen
         handNorth.text = handToStringVisualStyle(hand: game.hands[1])
@@ -87,26 +163,8 @@ class ViewController: UIViewController {
         if game.trump == diamonds { trumpLbl.text = "DIAMONDS" }
         if game.trump == clubs { trumpLbl.text = "CLUBS" }
         if game.trump == 0 { trumpLbl.text = "SANS ATOUT" }
-        
-        
-        var game6 = game
-        printBinary(number: game.hands)
 
-        
-        hashTableBuildingGuide = 99
-        
-        var time1 = DispatchTime.now()
-        let erg6 = miniMax(game: game6, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: false)
-        var time2 = DispatchTime.now()
-        var delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
-        
-        hashTable = [:]
-        
-        outputLbl.text = "Max Stiche N/S:\(erg6)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
-        
-        
-         print("\(VERSION): #N/S \(erg6) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF)  ")
-        
+        // Test-Counter zurücksetzen
         
         GLOBALCOUNTER_MINMAX = 0
         GLOBALCOUNTER_CALCULATE_LAST = 0
@@ -114,8 +172,8 @@ class ViewController: UIViewController {
         GLOBALCOUNTER_BETA_CUTOFF = 0
         GLOBALCOUNTER_HASHTAG = 0
         
-        //createHashTable
     }
-
+    
+    
 }
 

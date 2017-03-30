@@ -58,6 +58,12 @@ class gameBoard {
     // Spieler, der dran ist 0=West,1=Nord,2=Ost,3=Süd
     var playerCurrent:Int
     
+    // Testvariablen für automatische Tests
+    var nameTest = "TestHand1"
+    var tricksTest = 0
+    var testNumberOfCards = 0
+    
+    
     // Karte, die den aktuellen Stich gewinnt -> Index im aktuellen Stichs
     // liefert -1, wenn Stich leer
     
@@ -350,7 +356,7 @@ class gameBoard {
                 return true }
             
             //zwischen zwei möglichen benachbarten Karten muss geguckt werden, was mit diesen Karten ist
-            //Sind die Karten noch im Spiel also auf einer Gegnerhand ODER im aktuellen Stich
+            //Sind die Karten noch im Spiel also auf einer Gegnerhand/Partnerhand ODER im aktuellen Stich
             //können die Karten nie benachbart sein
             
             if (cardRun & hands[playerCurrent] == 0 && cardRun & self.cardsPlayed == 0) || self.trickCurrent.contains(cardRun) == true {

@@ -13,15 +13,20 @@ import Foundation
 // Hash Table
 // TO DO: Killer Moves
 
+
+
 func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) -> Int {
     
     GLOBALCOUNTER_MINMAX += 1
     
     var game = game
-    let alpha = alpha
-    let beta = beta
+    var alpha = alpha
+    var beta = beta
     
     let playableCards = game.playableCardsOfCurrentPlayer()
+    
+    // TO DO: angenommen alpha ist 7 und n/S hat 4 es sind aber nur noch 2 Stiche -> Cut
+    
     
     // Spiel zu Ende -> Bewertung vornehmen
     if deep == 0 || playableCards.count == 0  {
@@ -57,11 +62,16 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
                             return hashValue[0]
                         }
                 
+                    //beta = hashValue[0] + game.tricksWonByNorthSouth
+                
                 case 2: // upper bound
                     
                     if (hashValue[0] <= alpha) {
                             return hashValue[0]
                         }
+                
+                    //alpha = hashValue[0] + game.tricksWonByNorthSouth
+
                 
                 default: return hashValue[0] // kommt nicht vor
                 
@@ -138,6 +148,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         for card in playableCards {
             
             // Kopie des gameBoards anlegen
+            // wichtig: nicht einfach nur game eine Variable kopieBoard zuweisen, da CLASS immer auf die Variable verweisen und Änderungen mitmachen
             let kopieBoard = gameBoard(hands: game.hands, tricksNS: game.tricksWonByNorthSouth, tricksEW: game.tricksWonByEastWest, trickCurrent: game.trickCurrent, trump: game.trump, leader: game.trickLeader, trickSuit: game.trickSuit, playerShape: game.playerShape, cardsPlayed: game.cardsPlayed, playerCurrent: game.playerCurrent)
             
             // Führe Karte aus
@@ -181,6 +192,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             
         }
 
+        
         return minValue
         
     }
