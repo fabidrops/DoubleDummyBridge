@@ -36,6 +36,29 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    // Spieler N/S kann nicht mehr Maximum erreichen
+    // Reststiche reichen nicht mehr aus um Alpha zu erreichen, auch gleich Alpha bringt keine Verbesserung
+    if game.trickCurrent.count == 0 && turnNS {
+        
+        if game.tricksWonByNorthSouth + deep/4 <= alpha {
+            
+            return alpha
+            
+        }
+    
+    }
+    
+    if game.trickCurrent.count == 1 && turnNS {
+    // gleiche Logik, nur das hier O/W am Stich war und man eine Karte wartet, um die Abfrage zu machen, da ber Int + 1, da auch der aktuelle Stich noch gewonnen werden kann
+        if game.tricksWonByNorthSouth + Int(deep/4)+1 <= alpha {
+            
+            return alpha
+            
+        }
+        
+    }
+    
+    
      // HASH-Table Look-Up BEGINN
     
     let hashIndexActual = game.hashIndex()

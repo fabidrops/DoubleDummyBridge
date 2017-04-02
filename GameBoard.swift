@@ -375,12 +375,8 @@ class gameBoard {
     
         // Funktion soll in einer Spielsituation einen Wert geben um eine Sortierung zu ermöglichen
         
-            //test
-        
-        //if card == sK || card == dK {return 10} else {return 0}
         
         return 0
-    
     
     }
     

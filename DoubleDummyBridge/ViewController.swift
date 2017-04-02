@@ -163,6 +163,14 @@ class ViewController: UIViewController {
         if game.trump == diamonds { trumpLbl.text = "DIAMONDS" }
         if game.trump == clubs { trumpLbl.text = "CLUBS" }
         if game.trump == 0 { trumpLbl.text = "SANS ATOUT" }
+        
+        // Hand ausdrucken
+        
+        if testHandsOn == false {
+            
+            printBinary(number: game.hands)
+            
+        }
 
         // Test-Counter zurücksetzen
         

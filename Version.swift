@@ -11,3 +11,4 @@ import Foundation
 // ## 0.1   MinMax mit Alpha/Beta Pruning in einer Funktion rekursiv mit Parameter Tiefe eingebaut
 // ## 0.2   Hash-Table installiert mit verschiedenen Hash-Methoden
 //          Automatisches Testtool 
+// ## 0.25  MinMax prüft, ob N/S überhaupt noch mit den vorhandenen Reststichen noch alpha erreichen kann, sonst kann man gleich abbrechen
