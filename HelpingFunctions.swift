@@ -10,6 +10,7 @@ import Foundation
 
 // 1. Shuffle Deck -> Mischt die Karten
 // 2. FillPlayersShape -> game.hands in game.playersShape umwandeln
+// 3. Relative Rankings
 
 func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
     
@@ -82,3 +83,36 @@ func fillPlayersShape(hands: [UInt64]) -> [[Int]] {
     
     return shape
 }
+
+func convertToRelativeRanking(hand: UInt64, cardRemoved: UInt64) -> UInt64 {
+    
+    
+    var cardsInSuit:[UInt64] = []
+    
+    if cardRemoved & spades > 0 { cardsInSuit = spadesLow } else if cardRemoved & hearts > 0 { cardsInSuit = heartsLow } else if cardRemoved & diamonds > 0 {
+        
+        cardsInSuit = diamondsLow
+        
+    } else { cardsInSuit = clubsLow }
+    
+    
+    var output:UInt64 = hand
+    
+    for card in cardsInSuit {
+        
+        if (card >= cardRemoved)  { break }
+        
+        if (card < cardRemoved)  && (card & hand > 0) {
+            
+            output -= card
+            output += (card << 1)
+        
+        }
+        
+        
+    }
+    
+    return output
+    
+}
+

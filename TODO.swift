@@ -28,3 +28,17 @@ import Foundation
 // Optimierung
 // Hash-Table nach Anzahl der Restkarten, zB 13-10 Restkarten darf auch "7" -> x verwandeln, darunter nur ab der 6 -> x ?
 
+
+// QuickTricks: ich bilde einzelne Farbe pro Hand ab
+// 100010000011000 0111011000000
+// ich ermittele die Quick Tricks unabhängig von Gegnerhänden , dh Kombinationen wo es egal ist wie die Gegnerhände sind
+// das sind ide Kombination wo hand1&hand2 = 1 oder 11 oder 111 beginnen....
+// bei Konstellationen wie AKB gibt die Hashtabelle einen Wert zurück je nachdem wo die Dame ist, das prüft man extra
+// hash Table gibt auch entryFlag zurück
+
+// wenn hand die ersten x Tops hat dann ist QT = Anzahl Tops
+// sogar Anzahl TOP >= anzahl karten aller gener und partner ist dann ist QT = Länge der Farbe
+
+// solche reglen kann man auch für AKB definieren usw.
+
+

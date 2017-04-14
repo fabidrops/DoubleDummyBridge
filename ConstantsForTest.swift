@@ -8,7 +8,7 @@
 
 import Foundation
 
-let VERSION = "V0.25"
+let VERSION = "V0.26"
 
 //V0.20: game0(true) #N/S 1 #TIME 30290 #VAR 7971 #MINMAX 1099099 #HASH 392887 #ALPHA 187797 #BETA 210881
 //V0.20: gameA(true) #N/S 1 #TIME 2544 #VAR 2045 #MINMAX 93881 #HASH 22951 #ALPHA 8170 #BETA 31758
@@ -45,6 +45,8 @@ var GLOBALCOUNTER_BETA_CUTOFF = 0
 var GLOBALCOUNTER_ALPHA_CUTOFF = 0
 
 var NumberOfCardsPerHand = 5
+
+let convertHandsToRelativeHand = true
 
 var testHands = [game0,gameA,gameB,gameC,gameD,gameE]
 //var testHands = [game0]

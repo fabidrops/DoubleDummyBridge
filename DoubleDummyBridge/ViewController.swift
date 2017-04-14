@@ -29,7 +29,11 @@ class ViewController: UIViewController {
     var testHandsOn = false // Testmodus
     
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
+        
+        convertToRelativeRanking(hand: 0b0001010010010, cardRemoved: 0b0000100000000)
         
         cardNumberCounterLbl.text = String(NumberOfCardsPerHand)
         outputLbl.text = "HIER"
@@ -57,6 +61,8 @@ class ViewController: UIViewController {
         
         testHandsOn = !testHandsOn
         
+        printBinary(number: [convertToRelativeRanking(hand: gameC.hands[0], cardRemoved: sK)])
+        
         if testHandsOn {
             
             print("TESTMODE!")
@@ -78,6 +84,28 @@ class ViewController: UIViewController {
             // Testmodus
         
             for hand in testHands {
+                
+                printBinary(number: [hand.hands[0],hand.hands[1],hand.hands[2],hand.hands[3]])
+                
+                //Covert in kanonische Hände
+                if convertHandsToRelativeHand {
+                    
+                    for card in allCards.reversed() {
+                        
+                        if card & (hand.hands[0] | hand.hands[1] | hand.hands[2] | hand.hands[3]) == 0 {
+                            
+                            hand.hands[0] = convertToRelativeRanking(hand: hand.hands[0], cardRemoved: card)
+                            hand.hands[1] = convertToRelativeRanking(hand: hand.hands[1], cardRemoved: card)
+                            hand.hands[2] = convertToRelativeRanking(hand: hand.hands[2], cardRemoved: card)
+                            hand.hands[3] = convertToRelativeRanking(hand: hand.hands[3], cardRemoved: card)
+                            
+                            
+                        }
+                        
+                        
+                    }
+                    
+                }
             
                 //Hash-Table leeren, Hash Methode wird in Variable HashArt gesetzt
                 //hashTable = [:]
@@ -99,10 +127,12 @@ class ViewController: UIViewController {
                 game.tricksTest = hand.tricksTest
                 game.nameTest = hand.nameTest
                 
+                
+                
                 hashTableBuildingGuide = 0
                 
                 let time1 = DispatchTime.now()
-                let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: false)
+                let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: 0, beta: 13, turnNS: false)
                 let time2 = DispatchTime.now()
                 let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
                 
@@ -123,6 +153,34 @@ class ViewController: UIViewController {
         
         
             let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            
+              print(handToStringVisualStyle(hand: game.hands[0]))
+              print(handToStringVisualStyle(hand: game.hands[1]))
+              print(handToStringVisualStyle(hand: game.hands[2]))
+              print(handToStringVisualStyle(hand: game.hands[3]))
+            
+            
+            //Covert in kanonische Hände
+            if convertHandsToRelativeHand {
+                
+                for card in allCards.reversed() {
+                    
+                    if card & (game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]) == 0 {
+                        
+                        print(returnCardAsString(hand: card))
+                        
+                        game.hands[0] = convertToRelativeRanking(hand: game.hands[0], cardRemoved: card)
+                        game.hands[1] = convertToRelativeRanking(hand: game.hands[1], cardRemoved: card)
+                        game.hands[2] = convertToRelativeRanking(hand: game.hands[2], cardRemoved: card)
+                        game.hands[3] = convertToRelativeRanking(hand: game.hands[3], cardRemoved: card)
+                        
+                        
+                    }
+                    
+                    
+                }
+                
+            }
         
             // Korrekte Shape-Struktur der Spieler ermitteln
             game.playerShape =  fillPlayersShape(hands: game.hands)

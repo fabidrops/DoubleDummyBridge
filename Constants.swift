@@ -24,6 +24,11 @@ let allHearts = [hA,hK,hQ,hJ,hT,h9,h8,h7,h6,h5,h4,h3,h2]
 let allDiamonds = [dA,dK,dQ,dJ,dT,d9,d8,d7,d6,d5,d4,d3,d2]
 let allClubs = [cA,cK,cQ,cJ,cT,c9,c8,c7,c6,c5,c4,c3,c2]
 
+let spadesLow = [s2,s3,s4,s5,s6,s7,s8,s9,sT,sJ,sQ,sK,sA]
+let heartsLow = [h2,h3,h4,h5,h6,h7,h8,h9,hT,hJ,hQ,hK,hA]
+let diamondsLow = [d2,d3,d4,d5,d6,d7,d8,d9,dT,dJ,dQ,dK,dA]
+let clubsLow = [c2,c3,c4,c5,c6,c7,c8,c9,cT,cJ,cQ,cK,cA]
+
 let sA: UInt64 =      0b1000000000000000000000000000000000000000000000000000
 let sK: UInt64 =      0b0100000000000000000000000000000000000000000000000000
 let sQ: UInt64 =      0b0010000000000000000000000000000000000000000000000000
