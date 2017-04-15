@@ -9,6 +9,8 @@
 import Foundation
 
 
+// wenn Variable auf True erzeugt jede Hand stets die korrespondirende relative Hand
+let convertHandsToRelativeHand = true
 
 var playableCardsWithSorting = false // soll das Programm Karten sortieren ?
 

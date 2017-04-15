@@ -85,13 +85,14 @@ class ViewController: UIViewController {
         
             for hand in testHands {
                 
-                printBinary(number: [hand.hands[0],hand.hands[1],hand.hands[2],hand.hands[3]])
+//                printBinary(number: [hand.hands[0],hand.hands[1],hand.hands[2],hand.hands[3]])
                 
                 //Covert in kanonische Hände
                 if convertHandsToRelativeHand {
                     
                     for card in allCards.reversed() {
                         
+                        // Alle Karten, die bei der Verteilung nicht verteilt wurden, werden überprüft und dancah die relativen Hände bestimmt
                         if card & (hand.hands[0] | hand.hands[1] | hand.hands[2] | hand.hands[3]) == 0 {
                             
                             hand.hands[0] = convertToRelativeRanking(hand: hand.hands[0], cardRemoved: card)

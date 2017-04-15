@@ -46,7 +46,6 @@ var GLOBALCOUNTER_ALPHA_CUTOFF = 0
 
 var NumberOfCardsPerHand = 5
 
-let convertHandsToRelativeHand = true
 
 var testHands = [game0,gameA,gameB,gameC,gameD,gameE]
 //var testHands = [game0]
