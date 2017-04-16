@@ -174,32 +174,6 @@ class gameBoard {
             
             if cardWinsNumber == 0 || cardWinsNumber == 2 {  tricksWonByEastWest += 1} else { tricksWonByNorthSouth += 1}
             
-            // Hand -> relative Hand konvertieren
-            
-            if convertHandsToRelativeHand {
-            
-                self.hands[0] = convertToRelativeRanking(hand: self.hands[0], cardRemoved: self.trickCurrent[0])
-                self.hands[1] = convertToRelativeRanking(hand: self.hands[1], cardRemoved: self.trickCurrent[0])
-                self.hands[2] = convertToRelativeRanking(hand: self.hands[2], cardRemoved: self.trickCurrent[0])
-                self.hands[3] = convertToRelativeRanking(hand: self.hands[3], cardRemoved: self.trickCurrent[0])
-                
-                self.hands[0] = convertToRelativeRanking(hand: self.hands[0], cardRemoved: self.trickCurrent[1])
-                self.hands[1] = convertToRelativeRanking(hand: self.hands[1], cardRemoved: self.trickCurrent[1])
-                self.hands[2] = convertToRelativeRanking(hand: self.hands[2], cardRemoved: self.trickCurrent[1])
-                self.hands[3] = convertToRelativeRanking(hand: self.hands[3], cardRemoved: self.trickCurrent[1])
-                
-                self.hands[0] = convertToRelativeRanking(hand: self.hands[0], cardRemoved: self.trickCurrent[2])
-                self.hands[1] = convertToRelativeRanking(hand: self.hands[1], cardRemoved: self.trickCurrent[2])
-                self.hands[2] = convertToRelativeRanking(hand: self.hands[2], cardRemoved: self.trickCurrent[2])
-                self.hands[3] = convertToRelativeRanking(hand: self.hands[3], cardRemoved: self.trickCurrent[2])
-                
-                self.hands[0] = convertToRelativeRanking(hand: self.hands[0], cardRemoved: self.trickCurrent[3])
-                self.hands[1] = convertToRelativeRanking(hand: self.hands[1], cardRemoved: self.trickCurrent[3])
-                self.hands[2] = convertToRelativeRanking(hand: self.hands[2], cardRemoved: self.trickCurrent[3])
-                self.hands[3] = convertToRelativeRanking(hand: self.hands[3], cardRemoved: self.trickCurrent[3])
-                
-            }
-            
             // Stich leeren & Stichfarbe zurücksetzen
             self.trickCurrent = []
             self.trickSuit = 0
@@ -407,33 +381,6 @@ class gameBoard {
         return 0
     
     }
-    
-//    func gameToQuickTricks() -> [String] {
-//        
-//        var strSpades = ""
-//        var strHearts = ""
-//        var strDiamonds = ""
-//        var strClubs = ""
-//        
-//        // liefert die realtiven Rankings pro Farbe
-//        
-//        for card in allCards {
-//            
-//            if card & spades > 0 {
-//                
-//                strSpades +=
-//                
-//            }
-//            
-//            
-//        }
-//        
-//        
-//        
-//    }
-    
-    
-       
     
     
 }

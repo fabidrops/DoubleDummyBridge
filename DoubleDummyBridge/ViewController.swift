@@ -33,8 +33,6 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        convertToRelativeRanking(hand: 0b0001010010010, cardRemoved: 0b0000100000000)
-        
         cardNumberCounterLbl.text = String(NumberOfCardsPerHand)
         outputLbl.text = "HIER"
         
