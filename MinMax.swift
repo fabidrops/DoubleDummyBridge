@@ -15,6 +15,7 @@ import Foundation
 
 
 
+
 func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) -> Int {
     
     GLOBALCOUNTER_MINMAX += 1
@@ -24,6 +25,19 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     var beta = beta
     
     let playableCards = game.playableCardsOfCurrentPlayer()
+    
+    // Quick Tricks output
+    
+//    if game.trickCurrent.count == 0 {
+//        
+//        if GLOBALCOUNTER_MINMAX == 1 {
+//            print(game.quickTricksPlayer(player: 0))
+//            print(game.quickTricksPlayer(player: 1))
+//            print(game.quickTricksPlayer(player: 2))
+//            print(game.quickTricksPlayer(player: 3))
+//        }
+//    }
+    
     
     // TO DO: angenommen alpha ist 7 und n/S hat 4 es sind aber nur noch 2 Stiche -> Cut
     
@@ -58,8 +72,52 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    // QUICK TRICKS
     
-     // HASH-Table Look-Up BEGINN
+    if playingWithQuickTricks && game.trickCurrent.count == 0{
+    // am Anfang eines Stiches
+        
+        // Quick Tricks
+        var qT = game.quickTricksPlayer(player: game.playerCurrent)
+        
+        var quickTrick = qT[0]
+        
+        // wenn Partner sogar ein Entry hat addiere seine Quick Tricks
+        if qT[1] > 0 { quickTrick += game.quickTricksPlayer(player: (game.playerCurrent + 2) % 4 )[0] }
+        
+        // N/S am Stich
+        if turnNS == true {
+            
+            if quickTrick >= deep/4 { return game.tricksWonByNorthSouth + deep/4 } else if (quickTrick + game.tricksWonByNorthSouth) > alpha {
+                
+                alpha = quickTrick + game.tricksWonByNorthSouth
+                
+            }
+            
+        } else {
+            
+          // O/W am Stich
+            
+            if quickTrick >= deep/4 { return game.tricksWonByNorthSouth }
+            
+//            else if game.tricksTest - (quickTrick + game.tricksWonByEastWest) < beta {
+//                
+//                beta = game.tricksTest - (quickTrick + game.tricksWonByEastWest)
+//            }
+            
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
+    
+    
+    // HASH-Table Look-Up BEGINN
     
     let hashIndexActual = game.hashIndex()
     

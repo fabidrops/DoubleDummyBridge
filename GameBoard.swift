@@ -268,25 +268,83 @@ class gameBoard {
         }
     }
     
-    func quickTricksOfCurrentPlayer() -> Int {
-        
+    func quickTricksPlayer(player: Int) -> [Int] {
+    
         // Ermittelt mittels einer Hash Table die quickTricks addiert pro Einzelfarbe
         
-        // 1. Transformation der Verteilung in eine relative Verteilung
-        
         var quickTricks = 0
+        var entryToPartner = 0
         
-        for card in allSpades {
+        var handQuick: [UInt64] = [0,0,0,0]
+        var suitQuick:[[UInt64]] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+        
+        
+        // übergebener Player ist Index 0, Partner 2, Gegenr 1 und 3
+        for i in 0...3 { // für jeden Spieler
+            
+            handQuick[i] = self.hands[(player+i)%4]
+            
+            // Hände werden normiert, d.h. in relative Hände transfomriert
+            for card in allCards.reversed() {
+                
+                if card & (self.hands[0] | self.hands[1] | self.hands[2] | self.hands[3]) == 0 {
+                    
+                    handQuick[i] = convertToRelativeRanking(hand: handQuick[i], cardRemoved: card)
+                    
+                }
+                
+            }
+            
+            // Isolieren der Farben -> jede Hand wird in ein Array seiner Einzelfarben zerlegt
+            
+            // Farben isolieren
+            
+            suitQuick[i][0] = (handQuick[i] & spades) >> 39
+            suitQuick[i][1] = (handQuick[i] & hearts) >> 26
+            suitQuick[i][2] = (handQuick[i] & diamonds) >> 13
+            suitQuick[i][3] = (handQuick[i] & clubs)
+            
+        }
+        
+        // prüfen der Quick-Tricks pro Farbe
+        
+        for j in 0...3 { // für jede Farbe
+            
+            // Reminder: player 0 ist der untersuchte Index (player) des Spieler j ist Farbe -> Pik,Herz,Karo,Kreuz
+            
+            if suitQuick[0][j] & 0b1000000000000 > 0 {
+                
+                quickTricks += 1
+                
+                if suitQuick[0][j] & 0b0100000000000 > 0 {
+                    
+                    quickTricks += 1
+                    
+                    if suitQuick[0][j] & 0b0010000000000 > 0 {
+                        
+                        quickTricks += 1
+                        
+                    }
+
+                }
+            
+            } else if ((suitQuick[2][j] & 0b1000000000000) > 0) && ((suitQuick[0][j] & 0b1111111111111) > 0) {
+                
+                // Partner hat das As und man selber eine Karte -> Entry
+                entryToPartner += 1
+            }
+            
             
             
             
         }
         
         
+       
         
-        
-        return quickTricks
+        return [quickTricks,entryToPartner]
     }
+
     
     
     func hashIndex() -> String {

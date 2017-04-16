@@ -121,7 +121,9 @@ class ViewController: UIViewController {
                 
                 let game = gameBoard(hands: hand.hands, tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
                     game.testNumberOfCards = hand.testNumberOfCards
-            
+                
+                
+                // Testparameter setzen
                 NumberOfCardsPerHand = hand.testNumberOfCards
                 game.tricksTest = hand.tricksTest
                 game.nameTest = hand.nameTest
@@ -157,6 +159,9 @@ class ViewController: UIViewController {
               print(handToStringVisualStyle(hand: game.hands[1]))
               print(handToStringVisualStyle(hand: game.hands[2]))
               print(handToStringVisualStyle(hand: game.hands[3]))
+            
+            // Anzahl Karten im Gesamtspiel setzen
+            game.testNumberOfCards = NumberOfCardsPerHand
             
             
             //Covert in kanonische Hände
