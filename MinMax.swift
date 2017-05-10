@@ -92,9 +92,16 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         // N/S am Stich
         if turnNS == true {
             
+            // N/S bekommt den Rest
             if quickTrick >= deep/4 { return game.tricksWonByNorthSouth + deep/4 }
             
-            // TO DO: qT+tricksNS > beta ABBRUCH
+            // wenn beta durch die qT übertroffen wird, kann O/W immer beta erzwingen
+            if quickTrick + game.tricksWonByNorthSouth >= beta { return beta }
+            
+            // nachdem (!) beta Prüfung lief, guckt man, ob man das Alpha verbessern kann
+            if quickTrick + game.tricksWonByNorthSouth > alpha { alpha = quickTrick + game.tricksWonByNorthSouth }
+            
+            //
             
 //            else if (quickTrick + game.tricksWonByNorthSouth) > alpha {
 //                
@@ -106,7 +113,17 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             
           // O/W am Stich
             
+            // O/W bekommt den Rest
             if quickTrick >= deep/4 { return game.tricksWonByNorthSouth }
+            
+            // wenn alpha unterwandert wird, kann N/S immer alpha erzwingen
+            if (deep/4 - quickTrick) + game.tricksWonByNorthSouth <= alpha { return alpha }
+            
+            // nachdem (!) alpha Prüfung lief, guckt man, ob man das beta verbessern kann
+            if (deep/4 - quickTrick) + game.tricksWonByNorthSouth < beta { beta = (deep/4 - quickTrick) + game.tricksWonByNorthSouth }
+            
+            
+//            if (deep/4 - )
             
 //            else if game.tricksWonByNorthSouth + (deep/4 - quickTrick) < beta {
 //                
