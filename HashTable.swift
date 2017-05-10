@@ -10,6 +10,7 @@ import Foundation
 
 var hashTable = [String:Int]()
 var hashTableAlphaBeta = [String : [Int]]()
+var hashTableRelativeRanking = [String:UInt64]()
 
 
 

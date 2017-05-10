@@ -74,11 +74,15 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     // QUICK TRICKS
     
-    if playingWithQuickTricks && game.trickCurrent.count == 0{
+    if playingWithQuickTricks && game.trickCurrent.count == 0  {
     // am Anfang eines Stiches
         
         // Quick Tricks
         var qT = game.quickTricksPlayer(player: game.playerCurrent)
+        
+        if game.playerCurrent == 0 && game.tricksWonByNorthSouth == 0 && game.tricksWonByEastWest == 0 {
+        print(qT)
+        }
         
         var quickTrick = qT[0]
         
@@ -88,11 +92,15 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         // N/S am Stich
         if turnNS == true {
             
-            if quickTrick >= deep/4 { return game.tricksWonByNorthSouth + deep/4 } else if (quickTrick + game.tricksWonByNorthSouth) > alpha {
-                
-                alpha = quickTrick + game.tricksWonByNorthSouth
-                
-            }
+            if quickTrick >= deep/4 { return game.tricksWonByNorthSouth + deep/4 }
+            
+            // TO DO: qT+tricksNS > beta ABBRUCH
+            
+//            else if (quickTrick + game.tricksWonByNorthSouth) > alpha {
+//                
+//                alpha = quickTrick + game.tricksWonByNorthSouth
+//                
+//            }
             
         } else {
             
@@ -100,13 +108,13 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             
             if quickTrick >= deep/4 { return game.tricksWonByNorthSouth }
             
-//            else if game.tricksTest - (quickTrick + game.tricksWonByEastWest) < beta {
+//            else if game.tricksWonByNorthSouth + (deep/4 - quickTrick) < beta {
 //                
-//                beta = game.tricksTest - (quickTrick + game.tricksWonByEastWest)
+//                beta = game.tricksWonByNorthSouth + (deep/4 - quickTrick)
 //            }
+//        
             
-            
-        }
+         }
         
         
         

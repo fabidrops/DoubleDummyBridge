@@ -85,7 +85,7 @@ func fillPlayersShape(hands: [UInt64]) -> [[Int]] {
 }
 
 func convertToRelativeRanking(hand: UInt64, cardRemoved: UInt64) -> UInt64 {
-    
+    // Funktion rechnet sehr schnell, 5.000.000 Aufrufe vielleicht 1sek
     
     var cardsInSuit:[UInt64] = []
     
@@ -100,9 +100,10 @@ func convertToRelativeRanking(hand: UInt64, cardRemoved: UInt64) -> UInt64 {
     
     for card in cardsInSuit {
         
-        if (card >= cardRemoved)  { break }
+        if card >= cardRemoved  { break }
         
-        if (card < cardRemoved)  && (card & hand > 0) {
+        if card & hand > 0 {
+        // Fall: card < cardRemoved
             
             output -= card
             output += (card << 1)
@@ -113,6 +114,16 @@ func convertToRelativeRanking(hand: UInt64, cardRemoved: UInt64) -> UInt64 {
     }
     
     return output
+    
+}
+
+func fillRelativeHashTable() {
+    
+    hashTableRelativeRanking = [:]
+    
+    
+    
+    
     
 }
 

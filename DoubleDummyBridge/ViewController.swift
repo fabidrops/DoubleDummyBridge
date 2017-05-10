@@ -77,6 +77,7 @@ class ViewController: UIViewController {
     
     @IBAction func dealButton(_ sender: AnyObject) {
         
+                
         if testHandsOn {
             
             // Testmodus

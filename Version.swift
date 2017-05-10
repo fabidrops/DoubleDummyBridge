@@ -13,3 +13,4 @@ import Foundation
 //          Automatisches Testtool 
 // ## 0.25  MinMax prüft, ob N/S überhaupt noch mit den vorhandenen Reststichen noch alpha erreichen kann, sonst kann man gleich abbrechen
 // ## 0.26  Funktion die Hand->kanonische Hand zu überführen, d.h. AQ -> AK wenn der König schon raus ist
+// ## 0.30  Quick Tricks Implementation Begin
