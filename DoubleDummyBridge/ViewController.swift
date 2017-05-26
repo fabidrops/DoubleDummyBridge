@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         outputLbl.text = "HIER"
         
         fillTestHands()
+        fillquickTricksTable()
         
         
     }
@@ -156,10 +157,13 @@ class ViewController: UIViewController {
         
             let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
             
-              print(handToStringVisualStyle(hand: game.hands[0]))
-              print(handToStringVisualStyle(hand: game.hands[1]))
-              print(handToStringVisualStyle(hand: game.hands[2]))
-              print(handToStringVisualStyle(hand: game.hands[3]))
+//              print(handToStringVisualStyle(hand: game.hands[0]))
+//              print(handToStringVisualStyle(hand: game.hands[1]))
+//              print(handToStringVisualStyle(hand: game.hands[2]))
+//              print(handToStringVisualStyle(hand: game.hands[3]))
+            
+            
+           
             
             // Anzahl Karten im Gesamtspiel setzen
             game.testNumberOfCards = NumberOfCardsPerHand
@@ -172,7 +176,7 @@ class ViewController: UIViewController {
                     
                     if card & (game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]) == 0 {
                         
-                        print(returnCardAsString(hand: card))
+                        //print(returnCardAsString(hand: card))
                         
                         game.hands[0] = convertToRelativeRanking(hand: game.hands[0], cardRemoved: card)
                         game.hands[1] = convertToRelativeRanking(hand: game.hands[1], cardRemoved: card)
@@ -189,6 +193,9 @@ class ViewController: UIViewController {
         
             // Korrekte Shape-Struktur der Spieler ermitteln
             game.playerShape =  fillPlayersShape(hands: game.hands)
+            
+            //PRINT TEST
+            print(game.quickTricksPlayer2(player: 0))
             
             // Anzeige
             fillVisual(game: game)

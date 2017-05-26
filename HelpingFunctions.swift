@@ -11,6 +11,7 @@ import Foundation
 // 1. Shuffle Deck -> Mischt die Karten
 // 2. FillPlayersShape -> game.hands in game.playersShape umwandeln
 // 3. Relative Rankings
+// 4. Shift Zahl um aus einer Hand eine Farbe zu isolieren
 
 func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
     
@@ -126,4 +127,16 @@ func fillRelativeHashTable() {
     
     
 }
+
+func shiftNumber (suit: UInt64) -> UInt64 {
+    
+    if suit == spades {return 39}
+    else if suit == hearts {return 26}
+    else if suit == diamonds {return 13}
+    else {return 0}
+    
+    
+}
+
+// func quickTrickInSuit (suit: UInt64, game:gameBoard) ->
 

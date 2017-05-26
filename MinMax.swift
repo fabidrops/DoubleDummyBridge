@@ -74,15 +74,15 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     // QUICK TRICKS
     
-    if playingWithQuickTricks && game.trickCurrent.count == 0  {
+    if playingWithQuickTricks && game.trickCurrent.count == 0  && deep > 8 {
     // am Anfang eines Stiches
         
         // Quick Tricks
-        var qT = game.quickTricksPlayer(player: game.playerCurrent)
+        var qT = game.quickTricksPlayer2(player: game.playerCurrent)
         
-        if game.playerCurrent == 0 && game.tricksWonByNorthSouth == 0 && game.tricksWonByEastWest == 0 {
-        print(qT)
-        }
+//        if game.playerCurrent == 0 && game.tricksWonByNorthSouth == 0 && game.tricksWonByEastWest == 0 {
+//        print(qT)
+//        }
         
         var quickTrick = qT[0]
         

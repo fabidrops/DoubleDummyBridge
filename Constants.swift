@@ -22,6 +22,12 @@ let clubs:    UInt64 =  0b0000000000000000000000000000000000000001111111111111
 
 let allCards = [sA,sK,sQ,sJ,sT,s9,s8,s7,s6,s5,s4,s3,s2,hA,hK,hQ,hJ,hT,h9,h8,h7,h6,h5,h4,h3,h2,dA,dK,dQ,dJ,dT,d9,d8,d7,d6,d5,d4,d3,d2,cA,cK,cQ,cJ,cT,c9,c8,c7,c6,c5,c4,c3,c2]
 
+let allHighCards = [sA,sK,sQ,sJ,sT,s9,hA,hK,hQ,hJ,hT,h9,dA,dK,dQ,dJ,dT,d9,cA,cK,cQ,cJ,cT,c9]
+
+let highSpades = [sA,sK,sQ,sJ,sT,s9]
+
+let allSuits = [allSpades,allHearts,allDiamonds,allClubs]
+
 let allSpades = [sA,sK,sQ,sJ,sT,s9,s8,s7,s6,s5,s4,s3,s2]
 let allHearts = [hA,hK,hQ,hJ,hT,h9,h8,h7,h6,h5,h4,h3,h2]
 let allDiamonds = [dA,dK,dQ,dJ,dT,d9,d8,d7,d6,d5,d4,d3,d2]
@@ -84,4 +90,6 @@ let c5: UInt64 =      0b0000000000000000000000000000000000000000000000001000
 let c4: UInt64 =      0b0000000000000000000000000000000000000000000000000100
 let c3: UInt64 =      0b0000000000000000000000000000000000000000000000000010
 let c2: UInt64 =      0b0000000000000000000000000000000000000000000000000001
+
+
 

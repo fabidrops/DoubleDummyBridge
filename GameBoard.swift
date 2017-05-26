@@ -268,6 +268,40 @@ class gameBoard {
         }
     }
     
+    func quickTricksPlayerNew(player: Int) -> Int{
+        
+        // Strategie  10000010000111-Farbbeschreibung -> A K Q J T 9 (ZB 1010000)
+        // diese 64 Kombinationen werden zusammen mit den 64 Partnerkombinationen = 4096 Kombinationen werden ausgewertet ggf. über Hash-Table
+        // in der HashTable wird entweder direkt die qT abgelegt als Int
+        // oder eine Zahl zB 238, die bedeutet dass das Maximum der Farblängen genommen werden soll
+        
+        
+        var qT = 0
+        
+//        for suit:UInt64 in [spades,hearts,diamonds,clubs] {
+//            
+//            // Karten je Farbe isolieren
+//            let cardsInSuitPlayer:UInt64 = (self.hands[player] & suit) >> (shiftNumber(suit: suit) )
+//            let cardsInSuitPartner:UInt64 = (self.hands[(player + 2) % 4] & suit) >> (shiftNumber(suit: suit) )
+//            
+//            
+//            
+//            
+//        }
+        
+        // Pik
+        
+        // 
+        
+        var cardsInSuitPlayer:UInt16 = 0
+        
+        
+        
+        
+        
+        return qT    }
+    
+    
     func quickTricksPlayer(player: Int) -> [Int] {
     
         // Ermittelt mittels einer Hash Table die quickTricks addiert pro Einzelfarbe
@@ -278,6 +312,10 @@ class gameBoard {
         var handQuick: [UInt64] = [0,0,0,0]
         var suitQuick:[[UInt64]] = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         
+        let orHands = self.hands[0] | self.hands[1] | self.hands[2] | self.hands[3]
+        
+        
+        // !!! TO DO - hier muss ich nur den aktuellen Spieler auswerten, nicht alle, das wird später in MinMax gemacht
         
         // übergebener Player ist Index 0, Partner 2, Gegenr 1 und 3
         for i in 0...3 { // für jeden Spieler
@@ -285,9 +323,9 @@ class gameBoard {
             handQuick[i] = self.hands[(player+i)%4]
             
             // Hände werden normiert, d.h. in relative Hände transfomriert
-            for card in allCards.reversed() {
+            for card in allHighCards.reversed() {
                 
-                if card & (self.hands[0] | self.hands[1] | self.hands[2] | self.hands[3]) == 0 {
+                if card & orHands == 0 {
                     
                     handQuick[i] = convertToRelativeRanking(hand: handQuick[i], cardRemoved: card)
                     
@@ -345,7 +383,146 @@ class gameBoard {
         return [quickTricks,entryToPartner]
     }
 
+    func quickTricksPlayer2(player: Int) -> [Int] {
+        
+        
+        
+        
+        // Format AKJ5Q3 (AKJ zu fünft zu Q zu dritt ergibt 5 Stiche) mit Gegner AKJ5-3-Q2-3 (AKJxx zu xxx linke Qx ergibt 3), Anzahl Entries eintragen ?
+        
+        let orHands = self.hands[0] | self.hands[1] | self.hands[2] | self.hands[3]
+        
+        var quickTricks = 0
+        var entryToPartner = 0
+        
+        
+        
+//        var strSuit = [["A","K","Q","J","T","9","x","x","x","x","x","x","x"],["A","K","Q","J","T","9","x","x","x","x","x","x","x"],["A","K","Q","J","T","9","x","x","x","x","x","x","x"],["A","K","Q","J","T","9","x","x","x","x","x","x","x"]]
+//        
+//        var qTSuit = [["","","",""],["","","",""],["","","",""],["","","",""]]
+        
+        // TO DO: 1. Tabelle mit Topfiguren einer  Hand -> if anzahl größer >= alle Anzahlen an Karten (zB AK gegen xx , x, xx) dann anzahl Karten in Farbe
+        // sonst Anzahl Topkarten 
+        // Tabelle 2 , auch Topfiguren des Partner wenn Entry
+        // Tabelle 3 , gemeinsame Kombinationen
+        // Tabelle 4 , mit Gegnerhänden
+        
+        // ITERATE OVER ALL SUITS
+        
+        for suit in 0...3 {
+            
+            let longestSuitBesidesActualPlayer = max(self.playerShape[(player+1)%4][suit],self.playerShape[(player+2)%4][suit],self.playerShape[(player+3)%4][suit])
+        
+            var strInSuit = ["A","K","Q","J","T","9","x","x","x","x","x","x","x"] // bei jedem Schleifendurchlauf neue Farbe mit "frischem Array"
+            var qTInSuit = ["","","",""]
+
+            
+            for card in allSuits[suit] {
+                
+                
+                // Karte ist schon gespielt -> nächste Karte prüfen
+                if card & orHands == 0 { continue }
+                // As nicht in player-Hand -> nächste Farbe prüfen
+                // das ist ok ggf. wird es dann bei Partner Hand geprüft
+                // TO DO
+                
+                
+                
+                if card & hands[player] > 0 {
+                    
+                    
+                    qTInSuit[0] += strInSuit[0]
+                    strInSuit.remove(at: 0)
+                
+                }
+                
+                if card & hands[(player+1)%4] > 0 {
+                    
+                    qTInSuit[1] += strInSuit[0]
+                    strInSuit.remove(at: 0)
+                    
+                }
+
+                
+                if card & hands[(player+2)%4] > 0 {
+                    
+                    qTInSuit[2] += strInSuit[0]
+                    strInSuit.remove(at: 0)
+                    
+                }
+                
+                if card & hands[(player+3)%4] > 0 {
+                    
+                    qTInSuit[3] += strInSuit[0]
+                    strInSuit.remove(at: 0)
+                    
+                }
+                
+            }
+            
+            
+            let suitOutputOnly1Hand = qTInSuit[0]
+            
+            
+            // Test für Top Tricks
+            
+//            if (suitOutputOnly1Hand.hasPrefix("A") == false ) {
+//                
+//                break
+//                
+//            }
+            
+            if suitOutputOnly1Hand.hasPrefix("AKQJT") {
+                
+                if longestSuitBesidesActualPlayer <= 5 { quickTricks += self.playerShape[player][suit] }
+                else { quickTricks += 5 }
+                
+            }
+            
+            else if suitOutputOnly1Hand.hasPrefix("AKQJ") {
+                
+                if longestSuitBesidesActualPlayer <= 4 { quickTricks += self.playerShape[player][suit] }
+                else { quickTricks += 4 }
+                
+            }
+            
+            else if suitOutputOnly1Hand.hasPrefix("AKQ") {
+                
+                if longestSuitBesidesActualPlayer <= 3 { quickTricks += self.playerShape[player][suit] }
+                else { quickTricks += 3 }
+                
+            }
+            
+            else if suitOutputOnly1Hand.hasPrefix("AK") {
+                
+                if longestSuitBesidesActualPlayer <= 2 { quickTricks += self.playerShape[player][suit] }
+                else { quickTricks += 2 }
+                
+            }
+            
+            else if suitOutputOnly1Hand.hasPrefix("A") {
+                
+                if longestSuitBesidesActualPlayer <= 1 { quickTricks += self.playerShape[player][suit] }
+                else { quickTricks += 1 }
+            }
+
+            else if let qT = qTT[suitOutputOnly1Hand] {
+                
+                quickTricks += qT
+                
+            }
+            
+            
+        
+        }
+        
+        
+        
+        
+        return [quickTricks,entryToPartner]
+    }
     
+
     
     func hashIndex() -> String {
         
