@@ -80,6 +80,10 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         // Quick Tricks
         var qT = game.quickTricksPlayer2(player: game.playerCurrent)
         
+        //Entry to Partner ?
+        if qT[1] > 0 { qT += game.quickTricksPlayer2(player: (game.playerCurrent+2)%4) }
+
+        
 //        if game.playerCurrent == 0 && game.tricksWonByNorthSouth == 0 && game.tricksWonByEastWest == 0 {
 //        print(qT)
 //        }

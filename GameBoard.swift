@@ -385,9 +385,6 @@ class gameBoard {
 
     func quickTricksPlayer2(player: Int) -> [Int] {
         
-        
-        
-        
         // Format AKJ5Q3 (AKJ zu fünft zu Q zu dritt ergibt 5 Stiche) mit Gegner AKJ5-3-Q2-3 (AKJxx zu xxx linke Qx ergibt 3), Anzahl Entries eintragen ?
         
         let orHands = self.hands[0] | self.hands[1] | self.hands[2] | self.hands[3]
@@ -395,22 +392,11 @@ class gameBoard {
         var quickTricks = 0
         var entryToPartner = 0
         
-        
-        
-//        var strSuit = [["A","K","Q","J","T","9","x","x","x","x","x","x","x"],["A","K","Q","J","T","9","x","x","x","x","x","x","x"],["A","K","Q","J","T","9","x","x","x","x","x","x","x"],["A","K","Q","J","T","9","x","x","x","x","x","x","x"]]
-//        
-//        var qTSuit = [["","","",""],["","","",""],["","","",""],["","","",""]]
-        
-        // TO DO: 1. Tabelle mit Topfiguren einer  Hand -> if anzahl größer >= alle Anzahlen an Karten (zB AK gegen xx , x, xx) dann anzahl Karten in Farbe
-        // sonst Anzahl Topkarten 
-        // Tabelle 2 , auch Topfiguren des Partner wenn Entry
-        // Tabelle 3 , gemeinsame Kombinationen
-        // Tabelle 4 , mit Gegnerhänden
-        
-        // ITERATE OVER ALL SUITS
+        // ITERATE OVER ALL SUITS ; 0 = spades : 4 = clubs
         
         for suit in 0...3 {
             
+            // maximale Kartenanzahl eines anderen Spielers
             let longestSuitBesidesActualPlayer = max(self.playerShape[(player+1)%4][suit],self.playerShape[(player+2)%4][suit],self.playerShape[(player+3)%4][suit])
         
             var strInSuit = ["A","K","Q","J","T","9","x","x","x","x","x","x","x"] // bei jedem Schleifendurchlauf neue Farbe mit "frischem Array"
@@ -463,6 +449,13 @@ class gameBoard {
             
             let suitOutputOnly1Hand = qTInSuit[0]
             
+            // Entry ?
+            
+            if suitOutputOnly1Hand != "" && qTInSuit[2].hasPrefix("A") {
+                
+                entryToPartner += 1
+                
+            }
             
             // Test für Top Tricks
             
@@ -471,7 +464,7 @@ class gameBoard {
 //                break
 //                
 //            }
-            
+//            
             if suitOutputOnly1Hand.hasPrefix("AKQJT") {
                 
                 if longestSuitBesidesActualPlayer <= 5 { quickTricks += self.playerShape[player][suit] }
@@ -515,8 +508,6 @@ class gameBoard {
             
         
         }
-        
-        
         
         
         return [quickTricks,entryToPartner]
