@@ -14,9 +14,9 @@ var qTT = [String:Int]()
 
 func fillquickTricksTable () {
 
-    qTT["AKQJ109xx"] = 8
-    qTT["AKQJ109x"] = 7
-    qTT["AKQJ109"] = 6
+    qTT["AKQJ10xxx"] = 8
+    qTT["AKQJ10xx"] = 7
+    qTT["AKQJ10x"] = 6
     qTT["AKQJ10"] = 5
     qTT["AKQJ"] = 4
     qTT["AKQ"] = 3

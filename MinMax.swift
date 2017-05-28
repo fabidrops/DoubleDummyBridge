@@ -80,18 +80,20 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         // Quick Tricks
         var qT = game.quickTricksPlayer2(player: game.playerCurrent)
         
+        var quickTrick = qT[0]
+
+        
         //Entry to Partner ?
-        if qT[1] > 0 { qT += game.quickTricksPlayer2(player: (game.playerCurrent+2)%4) }
+        //if qT[1] > 0 { qT += game.quickTricksPlayer2(player: (game.playerCurrent+2)%4) }
 
         
 //        if game.playerCurrent == 0 && game.tricksWonByNorthSouth == 0 && game.tricksWonByEastWest == 0 {
 //        print(qT)
 //        }
         
-        var quickTrick = qT[0]
         
         // wenn Partner sogar ein Entry hat addiere seine Quick Tricks
-        if qT[1] > 0 { quickTrick += game.quickTricksPlayer(player: (game.playerCurrent + 2) % 4 )[0] }
+        if qT[1] > 0 { quickTrick += game.quickTricksPlayer2(player: (game.playerCurrent + 2) % 4 )[0] }
         
         // N/S am Stich
         if turnNS == true {

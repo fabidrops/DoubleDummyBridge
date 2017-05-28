@@ -15,3 +15,5 @@ import Foundation
 // ## 0.26  Funktion die Hand->kanonische Hand zu überführen, d.h. AQ -> AK wenn der König schon raus ist
 // ## 0.30  Quick Tricks Implementation Begin
 // ## 0.35  Better Quick Tricks
+// ## 0.40  Better Quick Tricks
+

@@ -399,7 +399,7 @@ class gameBoard {
             // maximale Kartenanzahl eines anderen Spielers
             let longestSuitBesidesActualPlayer = max(self.playerShape[(player+1)%4][suit],self.playerShape[(player+2)%4][suit],self.playerShape[(player+3)%4][suit])
         
-            var strInSuit = ["A","K","Q","J","T","9","x","x","x","x","x","x","x"] // bei jedem Schleifendurchlauf neue Farbe mit "frischem Array"
+            var strInSuit = ["A","K","Q","J","T","x","x","x","x","x","x","x","x"] // bei jedem Schleifendurchlauf neue Farbe mit "frischem Array"
             var qTInSuit = ["","","",""]
 
             
