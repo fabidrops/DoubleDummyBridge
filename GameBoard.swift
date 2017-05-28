@@ -416,7 +416,7 @@ class gameBoard {
                 
                 if card & hands[player] > 0 {
                     
-                    
+                    // wenn die Karte in der Spieler-Hand ist, wird der erste Zeichen des Strings verarbeitet, anschließend der String verkürzt
                     qTInSuit[0] += strInSuit[0]
                     strInSuit.remove(at: 0)
                 
@@ -435,6 +435,7 @@ class gameBoard {
                     qTInSuit[2] += strInSuit[0]
                     strInSuit.remove(at: 0)
                     
+
                 }
                 
                 if card & hands[(player+3)%4] > 0 {
@@ -449,7 +450,9 @@ class gameBoard {
             
             let suitOutputOnly1Hand = qTInSuit[0]
             
-            // Entry ?
+            let suitOutputTwoHands = qTInSuit[0] + "-" + qTInSuit[2]
+            
+            // Entry zum Partner ?
             
             if suitOutputOnly1Hand != "" && qTInSuit[2].hasPrefix("A") {
                 
@@ -457,15 +460,17 @@ class gameBoard {
                 
             }
             
+
             // Test für Top Tricks
             
-//            if (suitOutputOnly1Hand.hasPrefix("A") == false ) {
-//                
-//                break
-//                
-//            }
-//            
-            if suitOutputOnly1Hand.hasPrefix("AKQJT") {
+            if let qT = qTT[suitOutputTwoHands] {
+                
+                quickTricks += qT
+                
+                
+            }
+            
+            else if suitOutputOnly1Hand.hasPrefix("AKQJT") {
                 
                 if longestSuitBesidesActualPlayer <= 5 { quickTricks += self.playerShape[player][suit] }
                 else { quickTricks += 5 }
@@ -506,10 +511,12 @@ class gameBoard {
             }
             
             
+            
+            
         
         }
         
-        
+        //if quickTricks >= 4 {print("qT:\(quickTricks), Player:(\(player))")}
         return [quickTricks,entryToPartner]
     }
     
