@@ -447,10 +447,14 @@ class gameBoard {
                 
             }
             
+            // bis hier ist qTInSuit für alle Spieler gefüllt
+            
             
             let suitOutputOnly1Hand = qTInSuit[0]
             
             let suitOutputTwoHands = qTInSuit[0] + "-" + qTInSuit[2]
+            
+            let suitOutputTwoHandsPartnerFirst = qTInSuit[2] + "-" + qTInSuit[0]
             
             // Entry zum Partner ?
             
@@ -469,6 +473,18 @@ class gameBoard {
                 
                 
             }
+                
+            // TO DO: revresed auswerten, dann muss man aber auch longestsuitbeside... anders auswerten
+//            if let qT = qTT[suitOutputTwoHandsPartnerFirst] {
+//                
+//                if entryToPartner > 0 {
+//                    
+//                    quickTricks += qT
+//
+//                    
+//                }
+//                
+//            }
             
             else if suitOutputOnly1Hand.hasPrefix("AKQJT") {
                 

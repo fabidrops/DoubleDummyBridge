@@ -22,7 +22,8 @@ func fillquickTricksTable () {
     qTT["AKQ"] = 3
     qTT["AK"] = 2
     qTT["A"] = 1
-
+    
+    // 2 Stiche Kombinationen
     qTT["Ax-Kx"] = 2
     qTT["Ax-KQ"] = 2
     qTT["Ax-KJ"] = 2
@@ -33,16 +34,73 @@ func fillquickTricksTable () {
     qTT["AJ-Kx"] = 2
     qTT["AJ-KT"] = 2
     qTT["AJ-KQ"] = 2
+    qTT["AT-Kx"] = 2
+    qTT["AT-KJ"] = 2
+    qTT["AT-KQ"] = 2
     qTT["AQ-K"] = 2
 
+    // Ax Kombinationen
     qTT["Ax-KQx"] = 3
+    qTT["Ax-KQT"] = 3
     qTT["Ax-KQJ"] = 3
     qTT["Ax-KQJx"] = 4
+    qTT["Ax-KQJT"] = 4
+    qTT["Ax-KQJTx"] = 5
+
+    
+    qTT["Axx-KQx"] = 3
+    qTT["Axx-KQT"] = 3
+    qTT["Axx-KQJ"] = 3
+    qTT["Axx-KQJx"] = 4
+    qTT["Axx-KQJT"] = 4
+    qTT["Axx-KQJTx"] = 5
+    
+    qTT["Axxx-KQJx"] = 4
+    qTT["Axxx-KQJT"] = 4
+    qTT["Axxx-KQJTx"] = 5
+    qTT["Axxxx-KQJTx"] = 5
+    qTT["Axxxx-KJTxx"] = 5
+    qTT["Axxxx-KQTxx"] = 5
+    qTT["Axxxx-KQxxx"] = 5
+
+
+    // AT Kombinationen
     qTT["AT-KQx"] = 3
     qTT["AT-KQJ"] = 3
     qTT["AT-KQJx"] = 4
+    
+    
+    qTT["ATx-KQx"] = 3
+    qTT["ATx-KQx"] = 3
+    qTT["ATx-KQJ"] = 3
+    qTT["ATx-KQJx"] = 4
+    qTT["ATx-KQJx"] = 4
+    qTT["ATx-KQJxx"] = 5
+    
+    qTT["ATxx-KQJx"] = 4
+    qTT["ATxx-KQJx"] = 4
+    qTT["ATxx-KQJxx"] = 5
+    qTT["ATxxx-KQJxx"] = 5
+
+    
+    // AJ Kombinationen
+    qTT["AJ-KQx"] = 3
+    qTT["AJ-KQT"] = 3
+    qTT["AJ-KQTx"] = 4
+    
+    
+    qTT["AJx-KQx"] = 3
+    qTT["AJx-KQT"] = 3
+    qTT["AJx-KQTx"] = 4
+    qTT["AJx-KQTx"] = 4
+    qTT["AJx-KQTxx"] = 5
+    
+    qTT["AJxx-KQTx"] = 4
+    qTT["AJxx-KQTx"] = 4
+    qTT["AJxx-KQTxx"] = 5
 
 
+    
     qTT["AQx-KT"] = 3
     qTT["AQx-Kx"] = 3
     qTT["AQx-KJ"] = 3
@@ -70,11 +128,16 @@ func fillquickTricksTable () {
 
     qTT["AJx-KTx"] = 3
     qTT["ATx-KJx"] = 3
+    qTT["AJT-Kxx"] = 3
+    qTT["Axx-KJT"] = 3
+    qTT["AJxx-KTxx"] = 3
+    qTT["ATxx-KJxx"] = 3 //
 
     qTT["AKJx-QTxx"] = 4
     qTT["AKJx-Qxxx"] = 4
     qTT["AKJT-Qxxx"] = 4
     qTT["AKxx-QJxx"] = 4
+    qTT["AKxx-QJx"] = 4
     qTT["AKTx-QJxx"] = 4
     qTT["AKx-QJxx"] = 4
     qTT["AKT-QJxx"] = 4
@@ -93,10 +156,24 @@ func fillquickTricksTable () {
     qTT["AQTx-KJ"] = 4
     qTT["AJTx-KQ"] = 4
 
-
+    qTT["AJx-KQTxx"] = 5
+    qTT["ATx-KQJxx"] = 5
+    
+    qTT["AJx-KQTxxx"] = 6
+    qTT["ATx-KQJxxx"] = 6
 
     qTT["AQJxx-KTx"] = 5
     qTT["AQTxx-KJx"] = 5
+    
+    qTT["AKJTxx-Qx"] = 6
+    qTT["AKJTxx-Qxx"] = 6
+    qTT["AKJTxx-Qxxx"] = 6
+    qTT["AKJTxx-Qxxxxx"] = 6
+    
+    qTT["AKJTxxx-Qx"] = 7
+    qTT["AKJTxxx-Qxx"] = 7
+    qTT["AKJTxxx-Qxxx"] = 7
+    qTT["AKJTxxx-Qxxxxx"] = 7
 
 
 

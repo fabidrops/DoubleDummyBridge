@@ -260,3 +260,10 @@ func printBinary(number: [UInt64]) {
     print(str)
 }
 
+func SingleBinary(number: UInt64) -> String {
+    
+    return String(number, radix: 2)
+    
+}
+
+
