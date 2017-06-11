@@ -16,4 +16,5 @@ import Foundation
 // ## 0.30  Quick Tricks Implementation Begin
 // ## 0.35  Better Quick Tricks
 // ## 0.40  Better Quick Tricks
-
+// ## 0.45  quickTrickPlaying Mode als Variable, wenn diese auf true ist bricht das Programm ab sowie O/W einen Stich macht oder die Farbe Pik nicht mehr gespielt wird, somit kann mann die quickTricks der Farbe Pik des Nord Spielers herleiten, in Minmax  (game.trickCurrent.count == 0 || game.trickSuit != spades) 
+//    nicht man != spades raus, dann bekommt man alle quickTricks der Hand, leider dauert dieses Verfahren zu lange

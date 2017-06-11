@@ -398,6 +398,7 @@ class gameBoard {
             
             // maximale Kartenanzahl eines anderen Spielers
             let longestSuitBesidesActualPlayer = max(self.playerShape[(player+1)%4][suit],self.playerShape[(player+2)%4][suit],self.playerShape[(player+3)%4][suit])
+            let longestSuitOpponent = max(self.playerShape[(player+1)%4][suit],self.playerShape[(player+3)%4][suit])
         
             var strInSuit = ["A","K","Q","J","T","x","x","x","x","x","x","x","x"] // bei jedem Schleifendurchlauf neue Farbe mit "frischem Array"
             var qTInSuit = ["","","",""]
@@ -517,6 +518,7 @@ class gameBoard {
             else if suitOutputOnly1Hand.hasPrefix("A") {
                 
                 if longestSuitBesidesActualPlayer <= 1 { quickTricks += self.playerShape[player][suit] }
+                    
                 else { quickTricks += 1 }
             }
 

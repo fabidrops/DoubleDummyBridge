@@ -74,7 +74,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     // QUICK TRICKS
     
-    if playingWithQuickTricks && game.trickCurrent.count == 0  && deep > 8 {
+    if playingWithQuickTricks && game.trickCurrent.count == 0  && deep > 8  && quickTestPlayingMode == false {
     // am Anfang eines Stiches
         
         // Quick Tricks
@@ -257,6 +257,8 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         var value: Int
         var minValue = beta
         
+        if quickTestPlayingMode == true &&  (game.trickCurrent.count == 0 || game.trickSuit != spades)  { minValue = game.tricksWonByNorthSouth } else {
+        
         for card in playableCards {
             
             // Kopie des gameBoards anlegen
@@ -292,6 +294,8 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
                     
                 }
                 
+            }
+            
             }
             
         }

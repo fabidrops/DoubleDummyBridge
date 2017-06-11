@@ -153,9 +153,13 @@ class ViewController: UIViewController {
             
         } else {
             
-        
-        
-            let game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            var game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            
+            if quickTestPlayingMode == true {
+                
+               game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 1, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 1)
+                
+            }
             
 //              print(handToStringVisualStyle(hand: game.hands[0]))
 //              print(handToStringVisualStyle(hand: game.hands[1]))
@@ -205,7 +209,9 @@ class ViewController: UIViewController {
             hashTableBuildingGuide = 0
             
             let time1 = DispatchTime.now()
-            let erg = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: false)
+            
+            let erg = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: (game.playerCurrent == 1 || game.playerCurrent == 3 ))
+            
             let time2 = DispatchTime.now()
             let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
             
