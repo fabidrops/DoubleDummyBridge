@@ -19,10 +19,26 @@ func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
     
     var deckOfCards = allCards
     
+    swap(&deckOfCards[0], &deckOfCards[44]) // Pik As in die Nordhand
+    
     for i in 0...51 {
+        
+        
+        
         let j = Int(arc4random_uniform(UInt32(52 - i))) + i
         guard i != j else { continue }
-        swap(&deckOfCards[i], &deckOfCards[j])
+        
+        if quickTestPlayingMode {
+            
+            if deckOfCards[i]  == sA || deckOfCards[j] == sA {continue} else {swap(&deckOfCards[i], &deckOfCards[j]) }
+
+            
+            
+        } else {
+        
+            swap(&deckOfCards[i], &deckOfCards[j])
+            
+        }
     }
     
     var hand: [UInt64] = [0,0,0,0]

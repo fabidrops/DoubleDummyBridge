@@ -25,19 +25,54 @@ class ViewController: UIViewController {
     @IBOutlet weak var cardNumberCounterLbl: UILabel!
     
     @IBOutlet weak var playProgressLbl: UILabel!
+    
+    var loopCounter = 0 // für Wiederholungen bei quickTricks
 
     var testHandsOn = false // Testmodus
+    
+    let docsBaseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! // Speichern der quickTrickDatei (Link)
+
     
     override func viewDidLoad() {
         
         
         super.viewDidLoad()
         
+        let file = "QuickTricks.txt" //this is the file. we will write to and read from it
+        
+        let text = "SOMETXTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" //just a text
+        
+        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            
+            let path = dir.appendingPathComponent(file)
+            
+            print(path)
+            
+//            //writing
+//            do {
+//                try text.write(to: path, atomically: false, encoding: String.Encoding.utf8)
+//            }
+//            catch { print("ERROR")}
+            
+            //reading
+            do {
+                let text2 = try String(contentsOf: path, encoding: String.Encoding.utf8)
+                print(text2)
+            }
+            catch {/* error handling here */}
+        }
+        
         cardNumberCounterLbl.text = String(NumberOfCardsPerHand)
         outputLbl.text = "HIER"
         
         fillTestHands()
+        
+        
+        // hashTableQuickTricksFüllen
         fillquickTricksTable()
+        
+        // Tabelle laden
+        //hashTableQuickTricks = NSKeyedUnarchiver.unarchiveObject(withFile: docsBaseURL.path) as! [String : Int]
         
         
     }
@@ -78,8 +113,18 @@ class ViewController: UIViewController {
     
     @IBAction func dealButton(_ sender: AnyObject) {
         
+        
+        
+        
+        
                 
         if testHandsOn {
+            
+            print(hashTableQuickTricks)
+            
+            // speichern
+            NSKeyedArchiver.archiveRootObject(hashTableQuickTricks, toFile: docsBaseURL.path)
+
             
             // Testmodus
         
@@ -155,19 +200,89 @@ class ViewController: UIViewController {
             
             var game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
             
+            var gameInverted = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            
             if quickTestPlayingMode == true {
                 
                game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 1, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 1)
                 
+            
+                
+                
+                // Austauschen der Mittelkarten
+                
+                for middleCard in [s9,s8,s7] {
+                
+                    if game.hands[1] & middleCard > 0 {
+                        
+                        for card in [s2,s3,s4,s5,s6] {
+                            
+                            if card & game.hands[0] > 0 {
+                                
+                                game.hands[0] -= card
+                                game.hands[0] += middleCard
+                                game.hands[1] += card
+                                game.hands[1] -= middleCard
+                                
+                                break
+                                
+                                
+                            } else if card & game.hands[2] > 0 {
+                                
+                                game.hands[2] -= card
+                                game.hands[2] += middleCard
+                                game.hands[1] += card
+                                game.hands[1] -= middleCard
+
+                                break
+                                
+                            }
+                            
+                            
+                        }
+                        
+                        
+                    } else if game.hands[3] & middleCard > 0 {
+                        
+                        for card in [s2,s3,s4,s5,s6] {
+                            
+                            if card & game.hands[0] > 0 {
+                                
+                                game.hands[0] -= card
+                                game.hands[0] += middleCard
+                                game.hands[3] += card
+                                game.hands[3] -= middleCard
+
+                                break
+                                
+                            } else if card & game.hands[2] > 0 {
+                                
+                                game.hands[2] -= card
+                                game.hands[2] += middleCard
+                                game.hands[3] += card
+                                game.hands[3] -= middleCard
+                                break
+                                
+                            }
+                            
+                            
+                        }
+                        
+                        
+                    }
+                
+                }
+                
+                
             }
             
-//              print(handToStringVisualStyle(hand: game.hands[0]))
-//              print(handToStringVisualStyle(hand: game.hands[1]))
-//              print(handToStringVisualStyle(hand: game.hands[2]))
-//              print(handToStringVisualStyle(hand: game.hands[3]))
+            // quickTricks von der anderen Seite
+            gameInverted = gameBoard(hands: game.hands, tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 3, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 3)
+            
+            // Korrekte Shape-Struktur der Spieler ermitteln
+            game.playerShape =  fillPlayersShape(hands: game.hands)
             
             
-           
             
             // Anzahl Karten im Gesamtspiel setzen
             game.testNumberOfCards = NumberOfCardsPerHand
@@ -195,11 +310,23 @@ class ViewController: UIViewController {
                 
             }
         
-            // Korrekte Shape-Struktur der Spieler ermitteln
-            game.playerShape =  fillPlayersShape(hands: game.hands)
+            var quickTrickOutput = ""
+            quickTrickOutput += handToStringQuickTrickStyle(hand: game.hands[1])
+            quickTrickOutput += "-"
+            quickTrickOutput += handToStringQuickTrickStyle(hand: game.hands[3])
+            quickTrickOutput += "-"
+            // die Gegenerhände brauchen maximal so viele Karten wie Maxiumum der N/S Spieler für quickTricks
+            let maxV:Int = max(game.playerShape[1][0],game.playerShape[3][0]) // max Pik Anzahl von Sp1 oder Sp3
+            let stringShort1 = String(handToStringQuickTrickStyle(hand: game.hands[0]).characters.prefix(maxV))
+            quickTrickOutput += stringShort1
+            let stringShort2 = String(handToStringQuickTrickStyle(hand: game.hands[2]).characters.prefix(maxV))
+            quickTrickOutput += "-"
+            quickTrickOutput += stringShort2
+            //print(quickTrickOutput)
+
             
             //PRINT TEST
-            print(game.quickTricksPlayer2(player: 0))
+            // print(game.quickTricksPlayer2(player: 0))
             
             // Anzeige
             fillVisual(game: game)
@@ -212,17 +339,18 @@ class ViewController: UIViewController {
             
             let erg = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: (game.playerCurrent == 1 || game.playerCurrent == 3 ))
             
+            
             let time2 = DispatchTime.now()
             let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
             
             outputLbl.text = "Max Stiche N/S:\(erg)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
+            hashTableQuickTricks[quickTrickOutput] = erg
             
-            
-            print("gameZ.nameTest = \"gameZ\"")
-            print("gameZ.testNumberOfCards = \(game.testNumberOfCards)")
-            print("gameZ.tricksTest = \(erg)")
-            
-            print("var gameZ = gameBoard(hands: [0b\(SingleBinary(number: game.hands[0])), 0b\(SingleBinary(number: game.hands[1])), 0b\(SingleBinary(number: game.hands[2])), 0b\(SingleBinary(number: game.hands[3]))], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)")
+//            print("gameZ.nameTest = \"gameZ\"")
+//            print("gameZ.testNumberOfCards = \(game.testNumberOfCards)")
+//            print("gameZ.tricksTest = \(erg)")
+//            
+//            print("var gameZ = gameBoard(hands: [0b\(SingleBinary(number: game.hands[0])), 0b\(SingleBinary(number: game.hands[1])), 0b\(SingleBinary(number: game.hands[2])), 0b\(SingleBinary(number: game.hands[3]))], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)")
             
             print("\(VERSION): #N/S \(erg) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
             
@@ -230,7 +358,16 @@ class ViewController: UIViewController {
             
         }
         
+        if loopCounter <= 10 {
+            
+            loopCounter += 1
+            
+            self.dealButton(self)
+            
+            
+        }
         
+       
     }
     
     func fillVisual(game: gameBoard) {
@@ -252,7 +389,7 @@ class ViewController: UIViewController {
         if testHandsOn == false {
             
             
-            printBinary(number: game.hands)
+            // printBinary(number: game.hands)
             
         }
 

@@ -9,7 +9,8 @@
 import Foundation
 
 // quickTrickTable
-var qTT = [String:Int]()
+var qTT = [String:Int]()    //manuell
+var hashTableQuickTricks = [String:Int]() // aus Datei
 
 
 func fillquickTricksTable () {

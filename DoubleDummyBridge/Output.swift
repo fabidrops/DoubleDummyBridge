@@ -266,4 +266,28 @@ func SingleBinary(number: UInt64) -> String {
     
 }
 
+func handToStringQuickTrickStyle(hand: UInt64) -> String {
+    
+    var output = ""
+    
+    if handHasVoid(suit: spades, hand: hand) == true {output += "-"}
+    
+    if hand & sA > 0 { output += "A"}
+    if hand & sK > 0 { output += "K"}
+    if hand & sQ > 0 { output += "Q"}
+    if hand & sJ > 0 { output += "J"}
+    if hand & sT > 0 { output += "T"}
+    if hand & s9 > 0 { output += "x"}
+    if hand & s8 > 0 { output += "x"}
+    if hand & s7 > 0 { output += "x"}
+    if hand & s6 > 0 { output += "x"}
+    if hand & s5 > 0 { output += "x"}
+    if hand & s4 > 0 { output += "x"}
+    if hand & s3 > 0 { output += "x"}
+    if hand & s2 > 0 { output += "x"}
+    
+    return output
+}
+
+
 

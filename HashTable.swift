@@ -14,6 +14,7 @@ var hashTableRelativeRanking = [String:UInt64]()
 
 
 
+
 var hashTableBuildingGuide = 0 // wichtige Konstante, die die Hash-Table-Erzeugung steuert -> Gameboard.hashtag gucken
 
 
