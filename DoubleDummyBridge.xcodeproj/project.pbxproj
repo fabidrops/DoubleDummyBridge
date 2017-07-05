@@ -10,6 +10,7 @@
 		053CCE381E7EC53700670211 /* Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053CCE371E7EC53700670211 /* Version.swift */; };
 		054691F91F07A09700C5C0EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 054691F81F07A09700C5C0EF /* GoogleService-Info.plist */; };
 		056D07CD1EDADE710077A626 /* quickTrickTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056D07CC1EDADE710077A626 /* quickTrickTable.swift */; };
+		05871E9D1F08D78900AC4F53 /* doubledummybridge.json in Resources */ = {isa = PBXBuildFile; fileRef = 05871E9C1F08D78900AC4F53 /* doubledummybridge.json */; };
 		05CC780E1E61A8B900962EA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC780D1E61A8B900962EA3 /* AppDelegate.swift */; };
 		05CC78101E61A8B900962EA3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC780F1E61A8B900962EA3 /* ViewController.swift */; };
 		05CC78131E61A8B900962EA3 /* Main_OLD.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 05CC78111E61A8B900962EA3 /* Main_OLD.storyboard */; };
@@ -25,12 +26,15 @@
 		05CC782E1E64A72800962EA3 /* HelpingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */; };
 		05E0F0221E7B124C005FE515 /* HashTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0F0211E7B124C005FE515 /* HashTable.swift */; };
 		05E0F0241E7D4803005FE515 /* BackUpGameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0F0231E7D4803005FE515 /* BackUpGameBoard.swift */; };
+		258D319B328B255C3C00A87A /* Pods_DoubleDummyBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DC12D4A845DFEE1189EFB0 /* Pods_DoubleDummyBridge.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		053CCE371E7EC53700670211 /* Version.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Version.swift; sourceTree = "<group>"; };
 		054691F81F07A09700C5C0EF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		056D07CC1EDADE710077A626 /* quickTrickTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = quickTrickTable.swift; path = ../quickTrickTable.swift; sourceTree = "<group>"; };
+		05871E9C1F08D78900AC4F53 /* doubledummybridge.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = doubledummybridge.json; sourceTree = "<group>"; };
+		05871E9E1F08DA9900AC4F53 /* DoubleDummyBridge.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DoubleDummyBridge.entitlements; sourceTree = "<group>"; };
 		05CC780A1E61A8B900962EA3 /* DoubleDummyBridge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoubleDummyBridge.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05CC780D1E61A8B900962EA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		05CC780F1E61A8B900962EA3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -48,6 +52,9 @@
 		05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpingFunctions.swift; path = ../HelpingFunctions.swift; sourceTree = "<group>"; };
 		05E0F0211E7B124C005FE515 /* HashTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HashTable.swift; path = ../HashTable.swift; sourceTree = "<group>"; };
 		05E0F0231E7D4803005FE515 /* BackUpGameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackUpGameBoard.swift; sourceTree = "<group>"; };
+		0F57535435DC7C412B0B9FB9 /* Pods-DoubleDummyBridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoubleDummyBridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-DoubleDummyBridge/Pods-DoubleDummyBridge.release.xcconfig"; sourceTree = "<group>"; };
+		94DC12D4A845DFEE1189EFB0 /* Pods_DoubleDummyBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DoubleDummyBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9563FD3306963093A2B39B6C /* Pods-DoubleDummyBridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoubleDummyBridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DoubleDummyBridge/Pods-DoubleDummyBridge.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				258D319B328B255C3C00A87A /* Pods_DoubleDummyBridge.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +85,8 @@
 				05CC780C1E61A8B900962EA3 /* DoubleDummyBridge */,
 				053CCE361E7EC51000670211 /* BackUp */,
 				05CC780B1E61A8B900962EA3 /* Products */,
+				824C90DB354EDA465C6FD3CC /* Pods */,
+				89AC3A950D9E5BBF071A7CCE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +101,7 @@
 		05CC780C1E61A8B900962EA3 /* DoubleDummyBridge */ = {
 			isa = PBXGroup;
 			children = (
+				05871E9E1F08DA9900AC4F53 /* DoubleDummyBridge.entitlements */,
 				05CC780D1E61A8B900962EA3 /* AppDelegate.swift */,
 				05CC780F1E61A8B900962EA3 /* ViewController.swift */,
 				05CC78111E61A8B900962EA3 /* Main_OLD.storyboard */,
@@ -98,6 +109,7 @@
 				05CC78161E61A8B900962EA3 /* LaunchScreen.storyboard */,
 				05CC78271E63444F00962EA3 /* Main.storyboard */,
 				05CC78191E61A8B900962EA3 /* Info.plist */,
+				05871E9C1F08D78900AC4F53 /* doubledummybridge.json */,
 				05CC781F1E62C83A00962EA3 /* GameBoard.swift */,
 				054691F81F07A09700C5C0EF /* GoogleService-Info.plist */,
 				05CC78251E6330C100962EA3 /* MinMax.swift */,
@@ -111,6 +123,23 @@
 			path = DoubleDummyBridge;
 			sourceTree = "<group>";
 		};
+		824C90DB354EDA465C6FD3CC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9563FD3306963093A2B39B6C /* Pods-DoubleDummyBridge.debug.xcconfig */,
+				0F57535435DC7C412B0B9FB9 /* Pods-DoubleDummyBridge.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		89AC3A950D9E5BBF071A7CCE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94DC12D4A845DFEE1189EFB0 /* Pods_DoubleDummyBridge.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -118,9 +147,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 05CC781C1E61A8B900962EA3 /* Build configuration list for PBXNativeTarget "DoubleDummyBridge" */;
 			buildPhases = (
+				13FFC0A686A4CBBA7B6CA6E2 /* [CP] Check Pods Manifest.lock */,
 				05CC78061E61A8B900962EA3 /* Sources */,
 				05CC78071E61A8B900962EA3 /* Frameworks */,
 				05CC78081E61A8B900962EA3 /* Resources */,
+				0106046712A6E1CF4B87CBE7 /* [CP] Embed Pods Frameworks */,
+				5269212732E75BA2289A75F6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -145,6 +177,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = NXYKJ9H94Y;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -173,6 +210,7 @@
 			files = (
 				05CC78181E61A8B900962EA3 /* LaunchScreen.storyboard in Resources */,
 				05CC78151E61A8B900962EA3 /* Assets.xcassets in Resources */,
+				05871E9D1F08D78900AC4F53 /* doubledummybridge.json in Resources */,
 				054691F91F07A09700C5C0EF /* GoogleService-Info.plist in Resources */,
 				05CC78131E61A8B900962EA3 /* Main_OLD.storyboard in Resources */,
 				05CC78281E63444F00962EA3 /* Main.storyboard in Resources */,
@@ -180,6 +218,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0106046712A6E1CF4B87CBE7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DoubleDummyBridge/Pods-DoubleDummyBridge-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		13FFC0A686A4CBBA7B6CA6E2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5269212732E75BA2289A75F6 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DoubleDummyBridge/Pods-DoubleDummyBridge-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		05CC78061E61A8B900962EA3 /* Sources */ = {
@@ -319,8 +405,10 @@
 		};
 		05CC781D1E61A8B900962EA3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9563FD3306963093A2B39B6C /* Pods-DoubleDummyBridge.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DoubleDummyBridge/DoubleDummyBridge.entitlements;
 				DEVELOPMENT_TEAM = NXYKJ9H94Y;
 				INFOPLIST_FILE = DoubleDummyBridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -332,8 +420,10 @@
 		};
 		05CC781E1E61A8B900962EA3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0F57535435DC7C412B0B9FB9 /* Pods-DoubleDummyBridge.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DoubleDummyBridge/DoubleDummyBridge.entitlements;
 				DEVELOPMENT_TEAM = NXYKJ9H94Y;
 				INFOPLIST_FILE = DoubleDummyBridge/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

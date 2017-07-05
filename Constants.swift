@@ -10,11 +10,11 @@ import Foundation
 
 
 // wenn Variable auf True erzeugt jede Hand stets die korrespondirende relative Hand
-let convertHandsToRelativeHand = true
+let convertHandsToRelativeHand = true // eine zufällig verteilte Hand, wird in Ihre relative Hand überführt am Anfang
 
 var playableCardsWithSorting = false // soll das Programm Karten sortieren ?
 var playingWithQuickTricks = true
-var quickTestPlayingMode = true // Beschreibung siehe Version # V 0.45
+var quickTestPlayingMode = false // Beschreibung siehe Version # V 0.45
 
 let spades:   UInt64 =  0b1111111111111000000000000000000000000000000000000000
 let hearts:   UInt64 =  0b0000000000000111111111111100000000000000000000000000

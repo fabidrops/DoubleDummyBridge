@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+
 
 class ViewController: UIViewController {
     
@@ -30,7 +32,9 @@ class ViewController: UIViewController {
 
     var testHandsOn = false // Testmodus
     
-    let docsBaseURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first! // Speichern der quickTrickDatei (Link)
+    var ref: DatabaseReference!
+    
+
 
     
     override func viewDidLoad() {
@@ -38,29 +42,22 @@ class ViewController: UIViewController {
         
         super.viewDidLoad()
         
-        let file = "QuickTricks.txt" //this is the file. we will write to and read from it
-        
-        let text = "SOMETXTXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" //just a text
-        
-        if let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            if quickTestPlayingMode {
             
-            let path = dir.appendingPathComponent(file)
+            //FIREBASE
             
-            print(path)
+            ref = Database.database().reference()
             
-//            //writing
-//            do {
-//                try text.write(to: path, atomically: false, encoding: String.Encoding.utf8)
-//            }
-//            catch { print("ERROR")}
-            
-            //reading
-            do {
-                let text2 = try String(contentsOf: path, encoding: String.Encoding.utf8)
-                print(text2)
+            Auth.auth().signIn(withEmail: "fvl@koeln.de", password: "fa17024") { (user, error) in
+                // ...
             }
-            catch {/* error handling here */}
+            
+            ref.child("OTHER").setValue(["Test1":2])
+        
+
         }
+        
+        
         
         cardNumberCounterLbl.text = String(NumberOfCardsPerHand)
         outputLbl.text = "HIER"
@@ -95,6 +92,8 @@ class ViewController: UIViewController {
         
         testHandsOn = !testHandsOn
         
+        loopCounter = 0
+        
         printBinary(number: [convertToRelativeRanking(hand: gameC.hands[0], cardRemoved: sK)])
         
         if testHandsOn {
@@ -122,34 +121,22 @@ class ViewController: UIViewController {
             
             print(hashTableQuickTricks)
             
-            // speichern
-            NSKeyedArchiver.archiveRootObject(hashTableQuickTricks, toFile: docsBaseURL.path)
+            
 
             
             // Testmodus
         
             for hand in testHands {
                 
+                // die relativeHands ableiten
+                fillRealtiveHandsinInit(game: hand)
+                
 //                printBinary(number: [hand.hands[0],hand.hands[1],hand.hands[2],hand.hands[3]])
                 
-                //Covert in kanonische Hände
+                //Covert in kanonische (relative) Hände
                 if convertHandsToRelativeHand {
                     
-                    for card in allCards.reversed() {
-                        
-                        // Alle Karten, die bei der Verteilung nicht verteilt wurden, werden überprüft und dancah die relativen Hände bestimmt
-                        if card & (hand.hands[0] | hand.hands[1] | hand.hands[2] | hand.hands[3]) == 0 {
-                            
-                            hand.hands[0] = convertToRelativeRanking(hand: hand.hands[0], cardRemoved: card)
-                            hand.hands[1] = convertToRelativeRanking(hand: hand.hands[1], cardRemoved: card)
-                            hand.hands[2] = convertToRelativeRanking(hand: hand.hands[2], cardRemoved: card)
-                            hand.hands[3] = convertToRelativeRanking(hand: hand.hands[3], cardRemoved: card)
-                            
-                            
-                        }
-                        
-                        
-                    }
+                    convertGameBoardHandsToRelativeRanking(game: hand)
                     
                 }
             
@@ -166,7 +153,7 @@ class ViewController: UIViewController {
                 // Hände anzeigen
                 fillVisual(game: hand)
                 
-                let game = gameBoard(hands: hand.hands, tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
+                let game = gameBoard(hands: hand.hands, relativeHands: [0,0,0,0], tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
                     game.testNumberOfCards = hand.testNumberOfCards
                 
                 
@@ -198,15 +185,26 @@ class ViewController: UIViewController {
             
         } else {
             
-            var game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            var game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
             
-            var gameInverted = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            var gameInverted = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+            
+            // die relativeHands ableiten
+            game = fillRealtiveHandsinInit(game: game)
+            gameInverted = fillRealtiveHandsinInit(game: gameInverted)
+            
+            
+            print(handToStringVisualStyle(hand: game.hands[0]))
+            print("RELATIVE")
+            print(handToStringVisualStyle(hand: game.relativeHands[0]))
+
             
             if quickTestPlayingMode == true {
                 
-               game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 1, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 1)
+               game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 1, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 1)
                 
-            
+                
+                
                 
                 
                 // Austauschen der Mittelkarten
@@ -277,7 +275,7 @@ class ViewController: UIViewController {
             }
             
             // quickTricks von der anderen Seite
-            gameInverted = gameBoard(hands: game.hands, tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 3, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 3)
+            gameInverted = gameBoard(hands: game.hands, relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 3, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 3)
             
             // Korrekte Shape-Struktur der Spieler ermitteln
             game.playerShape =  fillPlayersShape(hands: game.hands)
@@ -291,29 +289,16 @@ class ViewController: UIViewController {
             //Covert in kanonische Hände
             if convertHandsToRelativeHand {
                 
-                for card in allCards.reversed() {
-                    
-                    if card & (game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]) == 0 {
-                        
-                        //print(returnCardAsString(hand: card))
-                        
-                        game.hands[0] = convertToRelativeRanking(hand: game.hands[0], cardRemoved: card)
-                        game.hands[1] = convertToRelativeRanking(hand: game.hands[1], cardRemoved: card)
-                        game.hands[2] = convertToRelativeRanking(hand: game.hands[2], cardRemoved: card)
-                        game.hands[3] = convertToRelativeRanking(hand: game.hands[3], cardRemoved: card)
-                        
-                        
-                    }
-                    
-                    
-                }
-                
+                convertGameBoardHandsToRelativeRanking(game: game)
+                                
             }
         
             var quickTrickOutput = ""
             quickTrickOutput += handToStringQuickTrickStyle(hand: game.hands[1])
+            var playerStr = handToStringQuickTrickStyle(hand: game.hands[1])
             quickTrickOutput += "-"
             quickTrickOutput += handToStringQuickTrickStyle(hand: game.hands[3])
+            var playerStr2 = handToStringQuickTrickStyle(hand: game.hands[3])
             quickTrickOutput += "-"
             // die Gegenerhände brauchen maximal so viele Karten wie Maxiumum der N/S Spieler für quickTricks
             let maxV:Int = max(game.playerShape[1][0],game.playerShape[3][0]) // max Pik Anzahl von Sp1 oder Sp3
@@ -354,7 +339,35 @@ class ViewController: UIViewController {
             
             print("\(VERSION): #N/S \(erg) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
             
+//            ref.child("QUICKTRICKS").removeValue { (error, ref) in
+//                if error != nil {
+//                    print("error \(error)")
+//                }
+//            }
+            
+            if quickTestPlayingMode {
+                if erg == 3 {
+                 
+                ref.child("QUICKTRICK3").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+                }
+                
+                if erg == 4 {
+                    
+                    ref.child("QUICKTRICK4").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+                }
+                if erg == 5 {
+                    
+                    ref.child("QUICKTRICK5").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+                }
+                
+                if erg > 5 {
+                    
+                    ref.child("QUICKTRICK6+").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+                }
 
+
+                
+            }
             
         }
         

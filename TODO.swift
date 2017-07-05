@@ -42,3 +42,5 @@ import Foundation
 // solche reglen kann man auch für AKB definieren usw.
 
 
+// shadow hand einfügen, die immer die relative Hand mitführt, dafür am Anfang Funktion hand -> shadow hand überführen
+// und dann im Modell game einbauen sowie bei playcard

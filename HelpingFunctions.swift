@@ -11,6 +11,8 @@ import Foundation
 // 1. Shuffle Deck -> Mischt die Karten
 // 2. FillPlayersShape -> game.hands in game.playersShape umwandeln
 // 3. Relative Rankings
+// 3b.convertGameBoardHandsToRelativeRanking(game: gameBoard) -> gameBoard
+// die Hände des gameBoards werden in relative Hände überführt
 // 4. Shift Zahl um aus einer Hand eine Farbe zu isolieren
 
 func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
@@ -19,7 +21,7 @@ func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
     
     var deckOfCards = allCards
     
-    swap(&deckOfCards[0], &deckOfCards[44]) // Pik As in die Nordhand
+    //swap(&deckOfCards[0], &deckOfCards[40]) // Pik As in die Nordhand
     
     for i in 0...51 {
         
@@ -30,8 +32,8 @@ func shuffleDeck(numberOfCardsPerHand: Int)-> [UInt64] {
         
         if quickTestPlayingMode {
             
-            if deckOfCards[i]  == sA || deckOfCards[j] == sA {continue} else {swap(&deckOfCards[i], &deckOfCards[j]) }
-
+           // if deckOfCards[i]  == sA || deckOfCards[j] == sA {continue} else {swap(&deckOfCards[i], &deckOfCards[j]) }
+            swap(&deckOfCards[i], &deckOfCards[j])
             
             
         } else {
@@ -134,6 +136,60 @@ func convertToRelativeRanking(hand: UInt64, cardRemoved: UInt64) -> UInt64 {
     
 }
 
+func convertGameBoardHandsToRelativeRanking(game: gameBoard) {
+    
+    for card in allCards.reversed() {
+        
+        // Alle Karten, die bei der Verteilung nicht verteilt wurden, werden überprüft und dancah die relativen Hände bestimmt
+        if card & (game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]) == 0 {
+            
+            game.hands[0] = convertToRelativeRanking(hand: game.hands[0], cardRemoved: card)
+            game.hands[1] = convertToRelativeRanking(hand: game.hands[1], cardRemoved: card)
+            game.hands[2] = convertToRelativeRanking(hand: game.hands[2], cardRemoved: card)
+            game.hands[3] = convertToRelativeRanking(hand: game.hands[3], cardRemoved: card)
+            
+            
+        }
+        
+        
+    }
+ 
+    
+
+    
+}
+
+func fillRealtiveHandsinInit(game: gameBoard) -> gameBoard {
+    // ein gameBoard dessen Hände gefüllt sind bekommt hier die relativeHands gefüllt
+    
+    game.relativeHands[0] = game.hands[0]
+    game.relativeHands[1] = game.hands[1]
+    game.relativeHands[2] = game.hands[2]
+    game.relativeHands[3] = game.hands[3]
+    
+    for card in allCards.reversed() {
+        
+        
+        
+        // Alle Karten, die bei der Verteilung nicht verteilt wurden, werden überprüft und dancah die relativen Hände bestimmt
+        if card & (game.relativeHands[0] | game.relativeHands[1] | game.relativeHands[2] | game.relativeHands[3]) == 0 {
+            
+            game.relativeHands[0] = convertToRelativeRanking(hand: game.relativeHands[0], cardRemoved: card)
+            game.relativeHands[1] = convertToRelativeRanking(hand: game.relativeHands[1], cardRemoved: card)
+            game.relativeHands[2] = convertToRelativeRanking(hand: game.relativeHands[2], cardRemoved: card)
+            game.relativeHands[3] = convertToRelativeRanking(hand: game.relativeHands[3], cardRemoved: card)
+            
+            
+        }
+        
+        
+    }
+    
+    return game
+    
+    
+}
+
 func fillRelativeHashTable() {
     
     hashTableRelativeRanking = [:]
@@ -152,6 +208,34 @@ func shiftNumber (suit: UInt64) -> UInt64 {
     else {return 0}
     
     
+}
+
+func readJson() {
+    
+    print("AAAAAAABBBBBCCCCCCDDDDDDDEEEEEEEFFFFFFFF")
+     print("AAAAAAABBBBBCCCCCCDDDDDDDEEEEEEEFFFFFFFF")
+     print("AAAAAAABBBBBCCCCCCDDDDDDDEEEEEEEFFFFFFFF")
+     print("AAAAAAABBBBBCCCCCCDDDDDDDEEEEEEEFFFFFFFF")
+    do {
+        if let file = Bundle.main.url(forResource: "doubledummybridge", withExtension: "json") {
+            let data = try Data(contentsOf: file)
+            let json = try JSONSerialization.jsonObject(with: data, options: [])
+            if let object = json as? [String: Any] {
+                // json is a dictionary
+                print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+                print(object)
+            } else if let object = json as? [Any] {
+                // json is an array
+                print(object)
+            } else {
+                print("JSON is invalid")
+            }
+        } else {
+            print("no file")
+        }
+    } catch {
+        print(error.localizedDescription)
+    }
 }
 
 // func quickTrickInSuit (suit: UInt64, game:gameBoard) ->

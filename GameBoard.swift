@@ -13,7 +13,7 @@ import Foundation
 
 class gameBoard {
     
-    init (hands:[UInt64], tricksNS: Int, tricksEW: Int,trickCurrent: [UInt64], trump:UInt64, leader: Int, trickSuit: UInt64, playerShape: [[Int]], cardsPlayed: UInt64, playerCurrent:Int) {
+    init (hands:[UInt64], relativeHands:[UInt64],tricksNS: Int, tricksEW: Int,trickCurrent: [UInt64], trump:UInt64, leader: Int, trickSuit: UInt64, playerShape: [[Int]], cardsPlayed: UInt64, playerCurrent:Int) {
         
         self.hands = hands
         self.tricksWonByNorthSouth = tricksNS
@@ -25,11 +25,17 @@ class gameBoard {
         self.playerShape = playerShape
         self.cardsPlayed = cardsPlayed
         self.playerCurrent = playerCurrent
+        self.relativeHands = relativeHands
+       
+       
         
     }
     
     // 4 Bridge Hände als 64-Bit-Zahl (davon werden 52 genutzt pro Hand)
     var hands: [UInt64]
+    
+    // Relative Hände der vier 4 Bridge Hände (zB wenn As fehlt wird der K das As)
+    var relativeHands: [UInt64]
     
     // Anzahl gewonnener Stiche Nord-Süd
     var tricksWonByNorthSouth: Int
