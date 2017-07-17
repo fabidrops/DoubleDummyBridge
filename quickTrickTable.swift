@@ -312,6 +312,8 @@ func fillquickTricksTable () {
 }
 
 
+
+
 func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
     
     switch topCards {
@@ -355,6 +357,30 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
         else if b > a && oppMax <= 3 { return b }
         
         else { return 3 }
+        
+    case 0b10110100: // AQJ zu K
+        
+        if b == 1 {
+            
+            if oppMax <= 3 { return a } else { return 3 }
+            
+        }
+        
+        else if b <= a && oppMax <= 4 { return a }
+            
+        else if b < a && oppMax > 4 { return 4 }
+            
+        else if b > a && oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10110000: // AQJ zu -
+        
+        if oppMax <= 1 { return a }
+            
+        else { return 1 }
+
+
         
     case 0b11010000,0b11000000: // AKJ zu - // AK zu -
         
@@ -403,17 +429,6 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
             
         else { return 2 }
       
-    case 0b11000000: // AK zu -
-        
-        if a == 2 { return 2 }
-            
-        else if b <= 2 && oppMax <= 2 { return a }
-            
-        else if b <= 2 && oppMax > 2 { return 2 }
-            
-        else if oppMax <= 2 { return min(a,b) }
-            
-        else { return 2 }
         
     case 0b10100100: // AQ zu K
         
@@ -455,11 +470,40 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
         
         else { return 1 }
         
+    case 0b10010010: // AJ zu Q
+        
+        if oppMax <= 1 && b <= 1 { return a }
+            
+        else if a == 2 && oppMax <= 1 && b > 1 { return b }
+        
+        else if oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+
+        
     case 0b10100000: // AQ zu -
         
         if oppMax <= 1 && b <= 2 { return a }
         
         else { return 1 }
+        
+    case 0b10010110: // AJ zu KQ
+        
+        if a == 2 && b == 2 { return 2 } // AJ - KQ
+            
+        else if a == 2 && oppMax <= 3 { return b }
+            
+        else if a == 2 && oppMax > 3 { return 3 }
+            
+        else if a == 3 && b == 2 { return 3 } // AJx - KQ
+            
+        else if a >= 3 && b == 2 && oppMax <= 3 { return a } // AJxxxx - KQ
+            
+        else if a == 3 && b >= 3 && oppMax <= 4 { return b } // AJx - KQxxx
+            
+        else if a >= 4 && b >= 4 { return max (a,b) }
+            
+        else { return 3 }
         
     case 0b10010000: // AJ zu -
         
@@ -473,6 +517,112 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
             
         else { return 1 }
 
+    case 0b10010100: // AJ zu K
+        
+        if b == 1 && oppMax <= 1 { return a }
+            
+        else if b == 1 && oppMax > 1 { return 1 }
+        
+        else if b == 2 && oppMax <= 2 { return a }
+            
+        else if b >= 2 && oppMax >= 3 { return 2 }
+            
+        else if oppMax <= 2 { return min(a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000100: // A zu K
+        
+        if a == 1 { return 1 }
+        
+        else if b == 1 && oppMax <= 1 { return a }
+            
+        else if b == 1 && oppMax > 1 { return 1 }
+            
+        else if b == 2 && oppMax <= 2 { return a }
+            
+        else if b >= 2 && oppMax >= 3 { return 2 }
+            
+        else if oppMax <= 2 { return min(a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000111: // A zu KQJ
+        
+        if a == 1 { return 1 }
+        
+        else if a > b && b == 3 && oppMax <= 3 { return a } // Axxx - KQJ
+        
+        else if a > b && b == 3 && oppMax > 3 { return 3 } // Axxx - KQJ
+        
+        else if b == 3 { return 3 }
+        
+        else if oppMax <= 4 { return b }
+        
+        else { return 4 }
+        
+        
+    case 0b10000110: // A zu KQ
+        
+        if a == 1 { return 1 }
+            
+        else if a > b && b == 2 && oppMax <= 2 { return a } // Axxx - KQ
+        
+        else if a > b && b == 3 && oppMax <= 3 { return a } // Axxx - KQx
+            
+        else if a > b && b == 3 && oppMax > 3 { return 3 } // Axxx - KQx
+            
+        else if b == 3 { return 3 }
+            
+        else if oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10000101: // A zu KJ
+        
+        if a == 1 { return 1 }
+            
+        else if b == 2 && oppMax <= 2 { return a } // Axxx - KJ
+            
+        else if a == 2 && oppMax <= 2 { return b } // Ax - KJxx
+            
+        else if oppMax <= 2 { return min(a,b) } // Axxx - KJx
+            
+        else { return 2 }
+        
+    case 0b10000011: // A zu QJ
+
+        if a == 1 { return 1 }
+        
+        else if oppMax <= 1 && a == 2 { return b }
+        
+        else if  oppMax <= 1 { return min (a,b) }
+        
+        else { return 1 }
+        
+    case 0b10000010: // A zu Q
+        
+        if a == 1 { return 1 }
+            
+        else if oppMax <= 1 && a == 2 && b >= 2 { return b }
+            
+        else if  oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000001: // A zu J
+        
+        if a == 1 { return 1 }
+        
+        else if oppMax <= 1 && b <= 1 { return a }
+            
+        else if oppMax <= 1 && a == 2 { return b }
+            
+        else if oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+
+        
         
     default: return 0
         
