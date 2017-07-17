@@ -21,6 +21,7 @@ import Foundation
 //Users/Fabi/Downloads/doubledummybridge-export.json
 
 // ## 0.50 quickTricks Fully Implemented 
+// ## 0.51 kleine Zeitfresser rund um quickTricks entfernt
 
 
 // in info.plist habe ich firebase reporting auf NO gesetzt

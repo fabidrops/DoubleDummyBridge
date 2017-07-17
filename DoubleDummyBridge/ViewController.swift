@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+// import Firebase
 
 
 class ViewController: UIViewController {
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
     var testHandsOn = false // Testmodus
     
         
-    var ref: DatabaseReference!
+    // var ref: DatabaseReference!
     
 
 
@@ -45,15 +45,15 @@ class ViewController: UIViewController {
         
             if quickTestPlayingMode {
             
-                //FIREBASE
-                
-                ref = Database.database().reference()
-                
-                Auth.auth().signIn(withEmail: "fvl@koeln.de", password: "fa17024") { (user, error) in
-                    // ...
-                }
-                
-                ref.child("OTHER").setValue(["Test1":2])
+//                //FIREBASE
+//                
+//                ref = Database.database().reference()
+//                
+//                Auth.auth().signIn(withEmail: "fvl@koeln.de", password: "fa17024") { (user, error) in
+//                    // ...
+//                }
+//                
+//                ref.child("OTHER").setValue(["Test1":2])
         
 
             }
@@ -359,34 +359,34 @@ class ViewController: UIViewController {
 //                }
 //            }
             
-            if quickTestPlayingMode && playerStr.hasPrefix("A") {
-                if erg == 3 {
-                 
-                ref.child("QUICKTRICK3").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
-                }
-                
-                if erg == 4 {
-                    
-                    ref.child("QUICKTRICK4").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
-                }
-                if erg == 5 {
-                    
-                    ref.child("QUICKTRICK5").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
-                }
-                
-                if erg == 6 {
-                    
-                    ref.child("QUICKTRICK6").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
-                }
-                
-                if erg >= 7 {
-                    
-                    ref.child("QUICKTRICK7+").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
-                }
-                
-                
-                
-            }
+//            if quickTestPlayingMode && playerStr.hasPrefix("A") {
+//                if erg == 3 {
+//                 
+//                ref.child("QUICKTRICK3").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+//                }
+//                
+//                if erg == 4 {
+//                    
+//                    ref.child("QUICKTRICK4").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+//                }
+//                if erg == 5 {
+//                    
+//                    ref.child("QUICKTRICK5").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+//                }
+//                
+//                if erg == 6 {
+//                    
+//                    ref.child("QUICKTRICK6").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+//                }
+//                
+//                if erg >= 7 {
+//                    
+//                    ref.child("QUICKTRICK7+").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+//                }
+//                
+//                
+//                
+//            }
             
         }
         

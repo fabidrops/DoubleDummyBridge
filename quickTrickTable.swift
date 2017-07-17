@@ -472,7 +472,7 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
         
     case 0b10010010: // AJ zu Q
         
-        if oppMax <= 1 && b <= 1 { return a }
+        if oppMax <= 1 && b <= 2 { return a } // AJxxx - Q(x)
             
         else if a == 2 && oppMax <= 1 && b > 1 { return b }
         
