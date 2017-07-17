@@ -10,6 +10,14 @@ import Foundation
 
 // quickTrickTable
 var qTT = [String:Int]()    //manuell
+var qTT1 = [String:Int]()    //manuell für längenabhängige qT (Zahl = maxumale Kartenanzahl der Gegner)
+var qTT2 = [String:Int]()    //manuell für längenabhängige qT
+var qTT3 = [String:Int]()    //manuell für längenabhängige qT
+var qTT4 = [String:Int]()    //manuell für längenabhängige qT
+
+//TEST
+var qTT5 = [String:[Int]]()
+
 var hashTableQuickTricks = [String:Int]() // aus Datei
 
 
@@ -39,6 +47,9 @@ func fillquickTricksTable () {
     qTT["AT-KJ"] = 2
     qTT["AT-KQ"] = 2
     qTT["AQ-K"] = 2
+    
+    
+    
 
     // Ax Kombinationen
     qTT["Ax-KQx"] = 3
@@ -209,5 +220,266 @@ func fillquickTricksTable () {
     qTT["AKJx-QTxxxx"] = 6
 
 
+ // Gegner hat weniger als eine Karte
+    qTT1["Axxxxxxx"] = 8
+    qTT1["AKxxxxxx"] = 8
+    qTT1["AQxxxxxx"] = 8
+    qTT1["AKQxxxxx"] = 8
 
+    qTT1["Axxxxxx"] = 7
+    qTT1["AKxxxxx"] = 7
+    qTT1["AQxxxxx"] = 7
+    qTT1["AKQxxxx"] = 7
+    
+    qTT1["Axxxxx"] = 6
+    qTT1["AKxxxx"] = 6
+    qTT1["AQxxxx"] = 6
+    qTT1["AKQxxx"] = 6
+    
+    qTT1["Axxxx"] = 5
+    qTT1["AKxxx"] = 5
+    qTT1["AQxxx"] = 5
+    qTT1["AKQxx"] = 5
+    
+    qTT1["Axxx"] = 4
+    qTT1["AKxx"] = 4
+    qTT1["AQxx"] = 4
+    qTT1["AKQx"] = 4
+    
+    qTT1["Axx"] = 3
+    qTT1["AKx"] = 3
+    qTT1["AQx"] = 3
+    qTT1["AKQ"] = 3
+
+    qTT1["Ax"] = 2
+    qTT1["AK"] = 2
+    qTT1["AQ"] = 2
+    
+    qTT1["A"] = 1
+    
+    // Gegner hat weniger als zwei Karten
+    qTT2["AKxxxxxx"] = 8
+    qTT2["AKQxxxxx"] = 8
+    
+    qTT2["AKxxxxx"] = 7
+    qTT2["AKQxxxx"] = 7
+
+    qTT2["AKxxxx"] = 6
+    qTT2["AKQxxx"] = 6
+    
+    qTT2["AKxxx"] = 5
+    qTT2["AKQxx"] = 5
+
+    qTT2["AKxx"] = 4
+    qTT2["AKQx"] = 4
+    
+    qTT2["AKx"] = 3
+    qTT2["AKQ"] = 3
+    
+    qTT2["AK"] = 2
+    
+    qTT2["AQxxxxxx-Kx"] = 8
+    qTT2["AQxxxxxx-Kxx"] = 8
+    qTT2["Axxxxxxx-Kx"] = 8
+    
+    qTT2["AQxxxxx-Kx"] = 7
+    qTT2["AQxxxxx-Kxx"] = 7
+    qTT2["Axxxxxx-Kx"] = 7
+    
+    qTT2["AQxxxx-Kx"] = 6
+    qTT2["AQxxxx-Kxx"] = 6
+    qTT2["Axxxxx-Kx"] = 6
+
+    qTT2["AQxxx-Kx"] = 5
+    qTT2["AQxxx-Kxx"] = 5
+    qTT2["Axxxx-Kx"] = 5
+    qTT2["Axxxx-KQ"] = 5
+    qTT2["Axxxx-KQx"] = 5
+    qTT2["Axxxx-Kxxxx"] = 5
+
+    
+    qTT2["AQxx-Kx"] = 4
+    qTT2["AQxx-Kxx"] = 4
+    qTT2["Axxx-Kx"] = 4
+    qTT2["Axxx-KQ"] = 4
+    
+    qTT2["AQx-Kx"] = 3
+    qTT2["AQx-Kxx"] = 3
+    qTT2["Axx-Kx"] = 3
+    qTT2["Axx-KQ"] = 3
+    
+    
 }
+
+
+func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
+    
+    switch topCards {
+        
+    case 0b11110000: // AKQJ zu -
+        
+        if oppMax <= 4 { return a } else { return 4 }
+        
+    case 0b11100001: // AKQ zu J
+        
+        if a == 3 { return 3 }
+        else {
+            
+            if b == 1 {
+                
+                if oppMax <= 3 { return a } else { return 3 }
+                
+            } else {
+                
+                if oppMax <= 4 { return max(a,b) } else { return 4 }
+                
+            }
+            
+        }
+        
+    case 0b11100000: // AKQ zu -
+        
+        if b <= 3 && oppMax <= 3 { return a } else { return 3 }
+        
+    case 0b11010010: // AKJ zu Q
+        
+        if b == 1 {
+            
+            
+            if oppMax <= 3 { return a } else { return 3 }
+            
+        } else if b <= a && oppMax <= 4 { return a }
+        
+        else if b < a && oppMax > 4 { return 4 }
+        
+        else if b > a && oppMax <= 3 { return b }
+        
+        else { return 3 }
+        
+    case 0b11010000,0b11000000: // AKJ zu - // AK zu -
+        
+        if oppMax <= 2 && b <= a { return a }
+            
+        else if oppMax <= 2 && b > a { return min(a,b) }
+        
+        else { return 2 }
+        
+    
+    case 0b11000010: // AK zu Q
+        
+        if a == 2 { return 2 }
+        
+        else if b == 1 && oppMax <= 2 { return a }
+        
+        else if b == 1 && oppMax > 2 { return 2 }
+        
+        else if oppMax <= 3 { return max(a,b) }
+        
+        else { return 3 }
+        
+    case 0b11000011: // AK zu QJ
+        
+        if a == 2 { return 2 }
+            
+        else if b == 2 && oppMax <= 3 { return a }
+            
+        else if b == 2 && oppMax > 2 { return 3 }
+            
+        else if oppMax <= 4 { return max(a,b) }
+            
+        else if a == 3 && b == 3 { return 3 }
+        
+        else { return 4 }
+            
+    case 0b11000001: // AK zu J
+        
+        if a == 2 { return 2 }
+            
+        else if b <= 2 && oppMax <= 2 { return a }
+            
+        else if b <= 2 && oppMax > 2 { return 2 }
+            
+        else if a == 3 && oppMax <= 2 { return b }
+            
+        else { return 2 }
+      
+    case 0b11000000: // AK zu -
+        
+        if a == 2 { return 2 }
+            
+        else if b <= 2 && oppMax <= 2 { return a }
+            
+        else if b <= 2 && oppMax > 2 { return 2 }
+            
+        else if oppMax <= 2 { return min(a,b) }
+            
+        else { return 2 }
+        
+    case 0b10100100: // AQ zu K
+        
+        if a == 2 && b <= 2 { return 2 } // AQ - K , AQ - K?
+            
+        else if a == 2 && oppMax <= 2 { return b }
+            
+        else if a == 2 && oppMax > 2 { return 2 }
+            
+        else if a >= 3 && b == 1 && oppMax <= 2 { return a }
+            
+        else if a == 3 && b == 2 { return 3 } // AQx - Kx
+            
+        else if a == 3 && b >= 2 && oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10100101: // AQ zu KJ
+        
+        if a == 2 && b == 2 { return 2 } // AQ - KJ
+            
+        else if a == 2 && oppMax <= 3 { return b }
+            
+        else if a == 2 && oppMax > 3 { return 3 }
+            
+        else if a == 3 && b == 2 { return 3 } // AQx - KJ
+            
+        else if a >= 3 && b == 2 && oppMax <= 3 { return a } // AQxxxx - KJ
+            
+        else if a == 3 && b >= 3 && oppMax <= 4 { return b } // AQx - KJxxx
+        
+        else if a >= 4 && b >= 4 { return max (a,b) }
+            
+        else { return 3 }
+        
+    case 0b10100001: // AQ zu J
+        
+        if oppMax <= 1 && b <= 2 { return a }
+        
+        else { return 1 }
+        
+    case 0b10100000: // AQ zu -
+        
+        if oppMax <= 1 && b <= 2 { return a }
+        
+        else { return 1 }
+        
+    case 0b10010000: // AJ zu -
+        
+        if oppMax <= 1 && b <= 1 { return a }
+            
+        else { return 1 }
+        
+    case 0b10000000: // A zu -
+        
+        if oppMax <= 1 && b <= 1 { return a }
+            
+        else { return 1 }
+
+        
+    default: return 0
+        
+    }
+    
+    
+    
+    return 0
+}
+

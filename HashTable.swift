@@ -11,6 +11,7 @@ import Foundation
 var hashTable = [String:Int]()
 var hashTableAlphaBeta = [String : [Int]]()
 var hashTableRelativeRanking = [String:UInt64]()
+var hashTableCovertHandInTopString = [UInt64:String]() // kann die relativeHands -> String überführen
 
 
 
@@ -24,7 +25,37 @@ var hashTableTrickWinnerNoTrump = [UInt64:UInt64]()
 
 func fillHashTableRelativeSuitOrder() {}
 
-
+func fillHashTableHandInTopString() {
+    
+    
+    for hand in UInt64(0b0000000000000)...UInt64(0b1111111111111) {
+        
+        var str = ""
+        
+        if hand & 0b1000000000000 > 0 { str += "A" }
+        if hand & 0b0100000000000 > 0 { str += "K" }
+        if hand & 0b0010000000000 > 0 { str += "Q" }
+        if hand & 0b0001000000000 > 0 { str += "J" }
+        if hand & 0b0000100000000 > 0 { str += "T" }
+        if hand & 0b0000010000000 > 0 { str += "x" }
+        if hand & 0b0000001000000 > 0 { str += "x" }
+        if hand & 0b0000000100000 > 0 { str += "x" }
+        if hand & 0b0000000010000 > 0 { str += "x" }
+        if hand & 0b0000000001000 > 0 { str += "x" }
+        if hand & 0b0000000000100 > 0 { str += "x" }
+        if hand & 0b0000000000010 > 0 { str += "x" }
+        if hand & 0b0000000000001 > 0 { str += "x" }
+        
+        hashTableCovertHandInTopString[hand] = str
+        
+        
+    }
+    
+    
+    
+    
+    
+}
 
 
 

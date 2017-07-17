@@ -32,6 +32,7 @@ class ViewController: UIViewController {
 
     var testHandsOn = false // Testmodus
     
+        
     var ref: DatabaseReference!
     
 
@@ -44,18 +45,18 @@ class ViewController: UIViewController {
         
             if quickTestPlayingMode {
             
-            //FIREBASE
-            
-            ref = Database.database().reference()
-            
-            Auth.auth().signIn(withEmail: "fvl@koeln.de", password: "fa17024") { (user, error) in
-                // ...
-            }
-            
-            ref.child("OTHER").setValue(["Test1":2])
+                //FIREBASE
+                
+                ref = Database.database().reference()
+                
+                Auth.auth().signIn(withEmail: "fvl@koeln.de", password: "fa17024") { (user, error) in
+                    // ...
+                }
+                
+                ref.child("OTHER").setValue(["Test1":2])
         
 
-        }
+            }
         
         
         
@@ -67,6 +68,16 @@ class ViewController: UIViewController {
         
         // hashTableQuickTricksFüllen
         fillquickTricksTable()
+        
+        // hashTable für Konvertierung von Karten -> String , wird für quickTricks benötigt
+        fillHashTableHandInTopString()
+        
+//        print("TESTTESTTEST")
+//        print(hashTableCovertHandInTopString[0b1101000110100]!)
+//        print(hashTableCovertHandInTopString[0b1110000000000]!)
+//        print(hashTableCovertHandInTopString[0b0010000000000]!)
+
+        
         
         // Tabelle laden
         //hashTableQuickTricks = NSKeyedUnarchiver.unarchiveObject(withFile: docsBaseURL.path) as! [String : Int]
@@ -94,7 +105,7 @@ class ViewController: UIViewController {
         
         loopCounter = 0
         
-        printBinary(number: [convertToRelativeRanking(hand: gameC.hands[0], cardRemoved: sK)])
+        //printBinary(number: [convertToRelativeRanking(hand: gameC.hands[0], cardRemoved: sK)])
         
         if testHandsOn {
             
@@ -119,7 +130,7 @@ class ViewController: UIViewController {
                 
         if testHandsOn {
             
-            print(hashTableQuickTricks)
+            //print(hashTableQuickTricks)
             
             
 
@@ -128,8 +139,11 @@ class ViewController: UIViewController {
         
             for hand in testHands {
                 
+                //print(handToStringVisualStyle(hand: hand.hands[0]))
                 // die relativeHands ableiten
                 fillRealtiveHandsinInit(game: hand)
+                
+                
                 
 //                printBinary(number: [hand.hands[0],hand.hands[1],hand.hands[2],hand.hands[3]])
                 
@@ -194,9 +208,9 @@ class ViewController: UIViewController {
             gameInverted = fillRealtiveHandsinInit(game: gameInverted)
             
             
-            print(handToStringVisualStyle(hand: game.hands[0]))
-            print("RELATIVE")
-            print(handToStringVisualStyle(hand: game.relativeHands[0]))
+//            print(handToStringVisualStyle(hand: game.hands[0]))
+//            print("RELATIVE")
+//            print(handToStringVisualStyle(hand: game.relativeHands[0]))
 
             
             if quickTestPlayingMode == true {
@@ -345,7 +359,7 @@ class ViewController: UIViewController {
 //                }
 //            }
             
-            if quickTestPlayingMode {
+            if quickTestPlayingMode && playerStr.hasPrefix("A") {
                 if erg == 3 {
                  
                 ref.child("QUICKTRICK3").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
@@ -360,18 +374,23 @@ class ViewController: UIViewController {
                     ref.child("QUICKTRICK5").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
                 }
                 
-                if erg > 5 {
+                if erg == 6 {
                     
-                    ref.child("QUICKTRICK6+").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+                    ref.child("QUICKTRICK6").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
                 }
-
-
+                
+                if erg >= 7 {
+                    
+                    ref.child("QUICKTRICK7+").child(playerStr).child(playerStr2).child(stringShort1).child(stringShort2).setValue(["qT":erg])
+                }
+                
+                
                 
             }
             
         }
         
-        if loopCounter <= 10 {
+        if loopCounter <= 1000 {
             
             loopCounter += 1
             
