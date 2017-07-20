@@ -12,7 +12,7 @@ import Foundation
 // wenn Variable auf True erzeugt jede Hand stets die korrespondirende relative Hand
 let convertHandsToRelativeHand = true // eine zufällig verteilte Hand, wird in Ihre relative Hand überführt am Anfang
 
-var playableCardsWithSorting = false // soll das Programm Karten sortieren ?
+var playableCardsWithSorting = true // soll das Programm Karten sortieren ?
 var playingWithQuickTricks = true
 var quickTestPlayingMode = false // Beschreibung siehe Version # V 0.45
 let deepQuickTricks = 0
@@ -27,6 +27,8 @@ let allCards = [sA,sK,sQ,sJ,sT,s9,s8,s7,s6,s5,s4,s3,s2,hA,hK,hQ,hJ,hT,h9,h8,h7,h
 let allHighCards = [sA,sK,sQ,sJ,sT,s9,hA,hK,hQ,hJ,hT,h9,dA,dK,dQ,dJ,dT,d9,cA,cK,cQ,cJ,cT,c9]
 
 let highSpades = [sA,sK,sQ,sJ,sT,s9]
+
+let aces = [spades,hearts,diamonds,clubs]
 
 let allSuits = [allSpades,allHearts,allDiamonds,allClubs]
 

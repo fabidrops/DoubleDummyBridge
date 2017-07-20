@@ -24,6 +24,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     var alpha = alpha
     var beta = beta
     
+        
     let playableCards = game.playableCardsOfCurrentPlayer()
     
     // Quick Tricks output
@@ -72,6 +73,9 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    
+    
+    
     // QUICK TRICKS
     
     if playingWithQuickTricks && game.trickCurrent.count == 0  && deep >= deepQuickTricks  && quickTestPlayingMode == false {
@@ -80,16 +84,16 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         // Quick Tricks
         var qT = game.quickTricksPlayer(player: game.playerCurrent)
         
+        var TESTqT = game.quickTricksPlayer(player: (game.playerCurrent + 1) % 4)
+        
+        //if qT[0] + TESTqT[0] >= deep/4 { game.dontLetOppWinTheTrick = true }
+        
         var quickTrick = qT[0]
 
-        
-        //Entry to Partner ?
-        //if qT[1] > 0 { qT += game.quickTricksPlayer(player: (game.playerCurrent+2)%4) }
-
-                
-        
         // wenn Partner sogar ein Entry hat addiere seine Quick Tricks
         if qT[1] > 0 { quickTrick += game.quickTricksPlayer(player: (game.playerCurrent + 2) % 4 )[0] }
+        
+        
         
         // N/S am Stich
         if turnNS == true {
@@ -103,13 +107,9 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             // nachdem (!) beta Prüfung lief, guckt man, ob man das Alpha verbessern kann
             if quickTrick + game.tricksWonByNorthSouth > alpha { alpha = quickTrick + game.tricksWonByNorthSouth }
             
-            //
+//            print("NS--Deep:\(deep),Alpha:\(alpha),Beta:\(beta)")
+//            print(handToStringVisualStyle(hand: game.cardsPlayed))
             
-//            else if (quickTrick + game.tricksWonByNorthSouth) > alpha {
-//                
-//                alpha = quickTrick + game.tricksWonByNorthSouth
-//                
-//            }
             
         } else {
             
@@ -124,22 +124,12 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             // nachdem (!) alpha Prüfung lief, guckt man, ob man das beta verbessern kann
             if (deep/4 - quickTrick) + game.tricksWonByNorthSouth < beta { beta = (deep/4 - quickTrick) + game.tricksWonByNorthSouth }
             
+//            print("OW--Deep:\(deep),Alpha:\(alpha),Beta:\(beta)")
+//            print(handToStringVisualStyle(hand: game.cardsPlayed))
+
             
-//            if (deep/4 - )
-            
-//            else if game.tricksWonByNorthSouth + (deep/4 - quickTrick) < beta {
-//                
-//                beta = game.tricksWonByNorthSouth + (deep/4 - quickTrick)
-//            }
-//        
             
          }
-        
-        
-        
-        
-        
-        
         
     }
     

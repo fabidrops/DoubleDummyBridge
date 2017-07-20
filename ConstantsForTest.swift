@@ -8,7 +8,7 @@
 
 import Foundation
 
-let VERSION = "V0.51"
+let VERSION = "V0.55"
 
 //V0.20: game0(true) #N/S 1 #TIME 30290 #VAR 7971 #MINMAX 1099099 #HASH 392887 #ALPHA 187797 #BETA 210881
 //V0.20: gameA(true) #N/S 1 #TIME 2544 #VAR 2045 #MINMAX 93881 #HASH 22951 #ALPHA 8170 #BETA 31758
@@ -126,6 +126,15 @@ let VERSION = "V0.51"
 //V0.51: gameC(true) #N/S 3 #TIME 38237 #VAR 1255 #MINMAX 1284703 #HASH 105783 #ALPHA 99597 #BETA 495732 #TRICKS 10
 //V0.51: gameD(true) #N/S 5 #TIME 28 #VAR 10 #MINMAX 990 #HASH 67 #ALPHA 233 #BETA 228 #TRICKS 7
 //V0.51: gameE(true) #N/S 5 #TIME 770 #VAR 87 #MINMAX 25337 #HASH 2658 #ALPHA 2256 #BETA 8373 #TRICKS 9
+//V0.51: gameF(true) #N/S 7 #TIME 13723 #VAR 3573 #MINMAX 402804 #HASH 90639 #ALPHA 105222 #BETA 50251 #TRICKS 11
+
+//V0.55: game0(true) #N/S 1 #TIME 656 #VAR 8 #MINMAX 16309 #HASH 1441 #ALPHA 1460 #BETA 5525 #TRICKS 8
+//V0.55: gameA(true) #N/S 1 #TIME 178 #VAR 8 #MINMAX 4298 #HASH 294 #ALPHA 4 #BETA 2134 #TRICKS 7
+//V0.55: gameB(true) #N/S 5 #TIME 896 #VAR 102 #MINMAX 25868 #HASH 2289 #ALPHA 9108 #BETA 2918 #TRICKS 7
+//V0.55: gameC(true) #N/S 3 #TIME 42952 #VAR 772 #MINMAX 1223673 #HASH 85560 #ALPHA 140839 #BETA 435866 #TRICKS 10
+//V0.55: gameD(true) #N/S 5 #TIME 2 #VAR 0 #MINMAX 61 #HASH 0 #ALPHA 0 #BETA 30 #TRICKS 7
+//V0.55: gameE(true) #N/S 5 #TIME 77 #VAR 0 #MINMAX 1991 #HASH 79 #ALPHA 0 #BETA 995 #TRICKS 9
+//V0.55: gameF(true) #N/S 7 #TIME 164 #VAR 43 #MINMAX 4772 #HASH 387 #ALPHA 1299 #BETA 1054 #TRICKS 11
 
 
 // 13 Stiche Hand
@@ -146,8 +155,8 @@ var GLOBALCOUNTER_ALPHA_CUTOFF = 0
 
 var NumberOfCardsPerHand = 5
 
-
-var testHands = [game0,gameA,gameB,gameC,gameD,gameE]
+var testHands2 = [gameF]
+var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF]
 
 // var testHands = [gameB]
 
@@ -181,9 +190,9 @@ func fillTestHands() {
     gameE.testNumberOfCards = 9
     gameE.tricksTest = 5
     
-//    gameF.nameTest = "gameE"
-//    gameF.testNumberOfCards = 11
-//    gameF.tricksTest = 5
+    gameF.nameTest = "gameF"
+    gameF.testNumberOfCards = 11
+    gameF.tricksTest = 7
     
     
     
@@ -256,4 +265,7 @@ let gameE = gameBoard(hands: [0b100010100000000000010010000000000100010010001000
 //
 // V0.15: #N/S 6 #TIME 231789 #VAR 15994 #MINMAX 9122168 #HASH 3433677 #ALPHA 2471282 #BETA 1028136
 
-//let gameF = gameBoard(hands: [0b10001010000000000001001000000000010001001000100000,0b1000000000000110010010000010000010001010, 0b100010000000010000000000100001000010100010001,0b1001000000000010000100010001000001000100000000000100], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0), relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+let gameF = gameBoard(hands: [0b10001010000000000001001000000000010001001000100000,0b1000000000000110010010000010000010001010, 0b100010000000010000000000100001000010100010001,0b1001000000000010000100010001000001000100000000000100], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
+
+

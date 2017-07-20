@@ -440,6 +440,8 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
             
         else if a >= 3 && b == 1 && oppMax <= 2 { return a }
             
+        else if a >= 3 && b >= 2 && oppMax <= 3 { return a }
+            
         else if a == 3 && b == 2 { return 3 } // AQx - Kx
             
         else if a == 3 && b >= 2 && oppMax <= 3 { return b }

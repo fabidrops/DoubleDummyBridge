@@ -390,14 +390,14 @@ class ViewController: UIViewController {
             
         }
         
-        if loopCounter <= 1000 {
-            
-            loopCounter += 1
-            
-            self.dealButton(self)
-            
-            
-        }
+//        if loopCounter <= 1 {
+//            
+//            loopCounter += 1
+//            
+//            self.dealButton(self)
+//            
+//            
+//        }
         
        
     }

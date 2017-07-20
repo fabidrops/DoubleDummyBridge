@@ -69,6 +69,11 @@ class gameBoard {
     var tricksTest = 0
     var testNumberOfCards = 0
     
+    // Wenn die quick Tricks beider Parteien größer als Reststiche sind, dann sollte man keine Farbe spielen, wo der Gegner die höchste Karte hat
+//    var dontLetOppWinTheTrick = false
+    
+
+    
     
     // Karte, die den aktuellen Stich gewinnt -> Index im aktuellen Stichs
     // liefert -1, wenn Stich leer
@@ -286,6 +291,8 @@ class gameBoard {
         var quickTricks = 0
         var entryToPartner = 0
         
+        var quickTricksShape:[Int] = [0,0,0,0,0,0,0,0]
+        
         // ITERATE OVER ALL SUITS ; 0 = spades : 4 = clubs
         
         for suit in 0...3 {
@@ -344,11 +351,21 @@ class gameBoard {
             }
             
             let qT = calQuickTricks(topCards: topCards2Player, a: a, b: b, oppMax: oppMax)
+            
+            let shifty:UInt8 = (topCards2Player << 4) + (topCards2Player >> 4)
+            
+            let qTP = calQuickTricks(topCards: shifty, a: b, b: a, oppMax: oppMax) // Partner auswerten
+
             quickTricks += qT
+            
+            quickTricksShape[suit] = qT
+            quickTricksShape[suit+4] = qTP
             
            //  if qT > 0 { print(printBinary(number: [UInt64( topCards2Player)])) ; print (qT)}
         
         }
+        
+        //if self.tricksWonByEastWest + self.tricksWonByNorthSouth == 0 { print(quickTricksShape) }
         
         return [quickTricks,entryToPartner]
     }
@@ -444,10 +461,12 @@ class gameBoard {
     
         // Funktion soll in einer Spielsituation einen Wert geben um eine Sortierung zu ermöglichen
         
-        var points = 0
+        if self.trickSuit & card == 0 && card != trump { // Spieler muss abwerfen
+            
+            return -valueOfCard(card: card)
+        }
         
-        
-        return Int(card)
+        return 0
     }
     
     
