@@ -350,6 +350,8 @@ class gameBoard {
                 
             }
             
+            // TO DO - gleich die Partner Seite auswerten
+            
             let qT = calQuickTricks(topCards: topCards2Player, a: a, b: b, oppMax: oppMax)
             
             let shifty:UInt8 = (topCards2Player << 4) + (topCards2Player >> 4)
@@ -461,9 +463,92 @@ class gameBoard {
     
         // Funktion soll in einer Spielsituation einen Wert geben um eine Sortierung zu ermöglichen
         
+        var suitAdd:Int = 0
+        var suitBonus = 0
+        var LHO = 0
+        var RHO = 0
+        
+        if card & spades > 0 {
+        
+            suitAdd = Int(((self.playerShape[playerCurrent][0]) * 64)/36)
+            if self.relativeHands[(playerCurrent+3)%4] & (sA+sK) > 0 { suitBonus += -18 }
+            LHO = self.playerShape[(playerCurrent+1)%4][0]
+            RHO = self.playerShape[(playerCurrent+3)%4][0]
+            
+        } else if card & hearts > 0 {
+            
+            suitAdd = Int(((self.playerShape[playerCurrent][1]) * 64)/36)
+            if self.relativeHands[(playerCurrent+3)%4] & (hA+hK) > 0 { suitBonus += -18 }
+            LHO = self.playerShape[(playerCurrent+1)%4][1]
+            RHO = self.playerShape[(playerCurrent+3)%4][1]
+            
+        } else if card & diamonds > 0 {
+            
+            suitAdd = Int(((self.playerShape[playerCurrent][2]) * 64)/36)
+            if self.relativeHands[(playerCurrent+3)%4] & (dA+dK) > 0 { suitBonus += -18 }
+            LHO = self.playerShape[(playerCurrent+1)%4][1]
+            RHO = self.playerShape[(playerCurrent+3)%4][1]
+            
+        } else {
+            
+            suitAdd = Int(((self.playerShape[playerCurrent][3]) * 64)/36)
+            if self.relativeHands[(playerCurrent+3)%4] & (cA+cK) > 0 { suitBonus += -18 }
+            LHO = self.playerShape[(playerCurrent+1)%4][1]
+            RHO = self.playerShape[(playerCurrent+3)%4][1]
+            
+        }
+        
+        // TO-DO
+        // If the suit length is 2, and the hand-to-play has the next highest rank of the suit, the bonus is reduced by 2.
+        
+        
+        // 1. Ausspieler
+        
+        var suitWeightDelta:Int = suitBonus - Int(((LHO + RHO) * 32)/15)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Spieler muss abwerfen -> möglichst kleine Karte
         if self.trickSuit & card == 0 && card != trump { // Spieler muss abwerfen
             
-            return -valueOfCard(card: card)
+            return -rankOfCard(card: card) + suitAdd
+        }
+        
+        // Spieler gibt zu
+        else if self.trickSuit & card > 0 && card != trump {
+            
+            
+            
+            if card < trickCurrent[cardTrickWinner] {
+                // man gibt zu und kann die Karte nicht schlagen, dann kleine Karte
+                
+                 return -rankOfCard(card: card)
+                
+            }
+            
+            else {
+                // man gibt zu und kann die höchste Karte schlagen
+                
+                
+                // 4. Mann
+                if self.trickCurrent.count == 3 { return -rankOfCard(card: card) + 200 }
+                
+                else { return rankOfCard(card: card) }
+                
+                
+                
+            }
         }
         
         return 0

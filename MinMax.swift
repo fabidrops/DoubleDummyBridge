@@ -51,6 +51,8 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    
+    
     // Spieler N/S kann nicht mehr Maximum erreichen
     // Reststiche reichen nicht mehr aus um Alpha zu erreichen, auch gleich Alpha bringt keine Verbesserung
     if game.trickCurrent.count == 0 && turnNS {
@@ -63,9 +65,9 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     }
     
-    if game.trickCurrent.count == 1 && turnNS {
+    if game.trickCurrent.count == 1 && turnNS  {
     // gleiche Logik, nur das hier O/W am Stich war und man eine Karte wartet, um die Abfrage zu machen, da ber Int + 1, da auch der aktuelle Stich noch gewonnen werden kann
-        if game.tricksWonByNorthSouth + Int(deep/4)+1 <= alpha {
+        if game.tricksWonByNorthSouth + (deep+1)/4 <= alpha {
             
             return alpha
             
@@ -73,21 +75,44 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    // TO DO : bringt der Code am hier was ?
     
+    // Spieler O/W kann nicht mehr Maximum erreichen
+    // Reststiche reichen nicht mehr aus um Beta zu erreichen, auch gleich Beta bringt keine Verbesserung
+    if game.trickCurrent.count == 0 && turnNS == false {
+        
+        if game.tricksWonByEastWest + deep/4 <= game.testNumberOfCards - beta {
+            
+            return beta
+            
+        }
+        
+    }
+    
+    if game.trickCurrent.count == 1 && turnNS == false {
+        
+        if game.tricksWonByEastWest + (deep+1)/4 <= game.testNumberOfCards - beta {
+            
+            return beta
+            
+        }
+        
+    }
+
+    
+    
+
     
     
     // QUICK TRICKS
     
+
+    
     if playingWithQuickTricks && game.trickCurrent.count == 0  && deep >= deepQuickTricks  && quickTestPlayingMode == false {
     // am Anfang eines Stiches
-        
-        // Quick Tricks
+                // Quick Tricks
         var qT = game.quickTricksPlayer(player: game.playerCurrent)
-        
-        var TESTqT = game.quickTricksPlayer(player: (game.playerCurrent + 1) % 4)
-        
-        //if qT[0] + TESTqT[0] >= deep/4 { game.dontLetOppWinTheTrick = true }
-        
+    
         var quickTrick = qT[0]
 
         // wenn Partner sogar ein Entry hat addiere seine Quick Tricks
@@ -107,9 +132,6 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             // nachdem (!) beta Prüfung lief, guckt man, ob man das Alpha verbessern kann
             if quickTrick + game.tricksWonByNorthSouth > alpha { alpha = quickTrick + game.tricksWonByNorthSouth }
             
-//            print("NS--Deep:\(deep),Alpha:\(alpha),Beta:\(beta)")
-//            print(handToStringVisualStyle(hand: game.cardsPlayed))
-            
             
         } else {
             
@@ -124,14 +146,79 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             // nachdem (!) alpha Prüfung lief, guckt man, ob man das beta verbessern kann
             if (deep/4 - quickTrick) + game.tricksWonByNorthSouth < beta { beta = (deep/4 - quickTrick) + game.tricksWonByNorthSouth }
             
-//            print("OW--Deep:\(deep),Alpha:\(alpha),Beta:\(beta)")
-//            print(handToStringVisualStyle(hand: game.cardsPlayed))
-
-            
-            
          }
         
     }
+    
+    // QUICKTRICKS nach erster Karte im Stich, so kann die Seite auch auf Quick Tricks prüfen vorausgesetz, sie hält das As
+    
+    // TO DO: bietet noch neue Möglichkeiten der qT bEstimmung, weil West zum Beispiel in eine Gabel reinspielt
+    
+    let ace = game.trickSuit & (sA + hA + dA + cA) // das As in der ausgespielten Farbe
+    
+    if playingWithQuickTricks && game.trickCurrent.count == 1   && deep >= deepQuickTricks  && quickTestPlayingMode == false && (game.relativeHands[game.playerCurrent] & ace > 0 || game.relativeHands[(game.playerCurrent+2)%4] & ace > 0) { // wenn man das richtige As hat
+        
+        //
+        
+        // erste Karte in der Shape wieder hinzufügen
+        var shape = 0
+        
+        if ace == sA { shape = 0 } else if ace == hA { shape = 1 } else if ace == dA { shape = 2 } else { shape = 3 }
+        game.playerShape[(game.playerCurrent+3)%4][shape] += 1
+        
+        game.hands[(game.playerCurrent+3)%4] += game.trickCurrent[0]
+        
+        var whoHasAce = 0
+        
+        if game.relativeHands[(game.playerCurrent+2)%4] & ace > 0 { whoHasAce = 2 }
+        
+        // Quick Tricks
+        var qT = game.quickTricksPlayer(player: (game.playerCurrent + whoHasAce)%4)
+        
+        var quickTrick = qT[0]
+        
+        // wenn Partner sogar ein Entry hat addiere seine Quick Tricks
+        if qT[1] > 0 { quickTrick += game.quickTricksPlayer(player: (game.playerCurrent + 2 + whoHasAce) % 4 )[0] }
+        
+        
+        
+        // N/S am Stich
+        if turnNS == true {
+            
+            // N/S bekommt den Rest
+            if quickTrick >= (deep+1)/4 { return game.tricksWonByNorthSouth + (deep+1)/4 }
+            
+            // wenn beta durch die qT übertroffen wird, kann O/W immer beta erzwingen
+            if quickTrick + game.tricksWonByNorthSouth >= beta { return beta }
+            
+            // nachdem (!) beta Prüfung lief, guckt man, ob man das Alpha verbessern kann
+            if quickTrick + game.tricksWonByNorthSouth > alpha { alpha = quickTrick + game.tricksWonByNorthSouth }
+            
+            
+        } else {
+            
+            // O/W am Stich
+            
+            // O/W bekommt den Rest
+            if quickTrick >= (deep+1)/4 { return game.tricksWonByNorthSouth }
+            
+            // wenn alpha unterwandert wird, kann N/S immer alpha erzwingen
+            if ((deep+1)/4 - quickTrick) + game.tricksWonByNorthSouth <= alpha { return alpha }
+            
+            // nachdem (!) alpha Prüfung lief, guckt man, ob man das beta verbessern kann
+            if ((deep+1)/4 - quickTrick) + game.tricksWonByNorthSouth < beta { beta = ((deep+1)/4 - quickTrick) + game.tricksWonByNorthSouth }
+            
+        }
+        
+        // erste Karte wieder raus nehmen
+        
+        game.playerShape[(game.playerCurrent+3)%4][shape] -= 1
+        
+        game.hands[(game.playerCurrent+3)%4] -= game.trickCurrent[0]
+
+        
+    }
+
     
     
     // HASH-Table Look-Up BEGINN

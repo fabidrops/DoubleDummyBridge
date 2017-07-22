@@ -8,7 +8,7 @@
 
 import Foundation
 
-let VERSION = "V0.55"
+let VERSION = "V0.60"
 
 //V0.20: game0(true) #N/S 1 #TIME 30290 #VAR 7971 #MINMAX 1099099 #HASH 392887 #ALPHA 187797 #BETA 210881
 //V0.20: gameA(true) #N/S 1 #TIME 2544 #VAR 2045 #MINMAX 93881 #HASH 22951 #ALPHA 8170 #BETA 31758
@@ -135,6 +135,39 @@ let VERSION = "V0.55"
 //V0.55: gameD(true) #N/S 5 #TIME 2 #VAR 0 #MINMAX 61 #HASH 0 #ALPHA 0 #BETA 30 #TRICKS 7
 //V0.55: gameE(true) #N/S 5 #TIME 77 #VAR 0 #MINMAX 1991 #HASH 79 #ALPHA 0 #BETA 995 #TRICKS 9
 //V0.55: gameF(true) #N/S 7 #TIME 164 #VAR 43 #MINMAX 4772 #HASH 387 #ALPHA 1299 #BETA 1054 #TRICKS 11
+//V0.55: gameF1(true) #N/S 4 #TIME 548983 #VAR 2350 #MINMAX 15491354 #HASH 1529636 #ALPHA 2034639 #BETA 5098191 #TRICKS 11
+//V0.55: gameG(true) #N/S 9 #TIME 2131646 #VAR 2609 #MINMAX 58155524 #HASH 7476510 #ALPHA 19338233 #BETA 7377147 #TRICKS 13
+
+//V0.55: game0(true) #N/S 1 #TIME 385 #VAR 12 #MINMAX 10690 #HASH 745 #ALPHA 1015 #BETA 3674 #TRICKS 8
+//V0.55: gameA(true) #N/S 1 #TIME 122 #VAR 8 #MINMAX 3493 #HASH 146 #ALPHA 2 #BETA 1736 #TRICKS 7
+//V0.55: gameB(true) #N/S 5 #TIME 782 #VAR 88 #MINMAX 22956 #HASH 1630 #ALPHA 8324 #BETA 2449 #TRICKS 7
+//V0.55: gameC(true) #N/S 3 #TIME 25609 #VAR 558 #MINMAX 724301 #HASH 49938 #ALPHA 85249 #BETA 258812 #TRICKS 10
+//V0.55: gameD(true) #N/S 5 #TIME 2 #VAR 0 #MINMAX 61 #HASH 0 #ALPHA 0 #BETA 30 #TRICKS 7
+//V0.55: gameE(true) #N/S 5 #TIME 72 #VAR 0 #MINMAX 1873 #HASH 54 #ALPHA 0 #BETA 936 #TRICKS 9
+//V0.55: gameF(true) #N/S 7 #TIME 1650 #VAR 466 #MINMAX 48707 #HASH 6334 #ALPHA 22213 #BETA 1341 #TRICKS 11
+//V0.55: gameF1(true) #N/S 4 #TIME 318981 #VAR 1386 #MINMAX 8732758 #HASH 912454 #ALPHA 933278 #BETA 3138451 #TRICKS 11
+//V0.55: gameG(true) #N/S 9 #TIME 982665 #VAR 644 #MINMAX 26664534 #HASH 3550443 #ALPHA 9823786 #BETA 2666254 #TRICKS 13
+
+//V0.55: game0(true) #N/S 1 #TIME 441 #VAR 18 #MINMAX 11713 #HASH 973 #ALPHA 994 #BETA 4152 #TRICKS 8
+//V0.55: gameA(true) #N/S 1 #TIME 135 #VAR 17 #MINMAX 3824 #HASH 147 #ALPHA 7 #BETA 1887 #TRICKS 7
+//V0.55: gameB(true) #N/S 5 #TIME 877 #VAR 102 #MINMAX 25484 #HASH 1827 #ALPHA 9369 #BETA 2590 #TRICKS 7
+//V0.55: gameC(true) #N/S 3 #TIME 26922 #VAR 532 #MINMAX 720123 #HASH 48186 #ALPHA 86353 #BETA 255053 #TRICKS 10
+//V0.55: gameD(true) #N/S 5 #TIME 2 #VAR 0 #MINMAX 61 #HASH 0 #ALPHA 0 #BETA 30 #TRICKS 7
+//V0.55: gameE(true) #N/S 5 #TIME 77 #VAR 0 #MINMAX 1817 #HASH 52 #ALPHA 0 #BETA 908 #TRICKS 9
+//V0.55: gameF(true) #N/S 7 #TIME 1872 #VAR 592 #MINMAX 54432 #HASH 7208 #ALPHA 24431 #BETA 1670 #TRICKS 11
+//V0.55: gameF1(true) #N/S 4 #TIME 258799 #VAR 1263 #MINMAX 6738940 #HASH 607466 #ALPHA 850771 #BETA 2319917 #TRICKS 11
+//V0.55: gameG(true) #N/S 9 #TIME 728678 #VAR 493 #MINMAX 18308685 #HASH 2249812 #ALPHA 6954943 #BETA 1684641 #TRICKS 13
+
+//V0.57: game0(true) #N/S 1 #TIME 321 #VAR 9 #MINMAX 8413 #HASH 919 #ALPHA 817 #BETA 2337 #TRICKS 8
+//V0.57: gameA(true) #N/S 1 #TIME 122 #VAR 11 #MINMAX 3530 #HASH 147 #ALPHA 7 #BETA 1691 #TRICKS 7
+//V0.57: gameB(true) #N/S 5 #TIME 777 #VAR 70 #MINMAX 22663 #HASH 1787 #ALPHA 8428 #BETA 1797 #TRICKS 7
+//V0.57: gameC(true) #N/S 3 #TIME 25096 #VAR 455 #MINMAX 692947 #HASH 46767 #ALPHA 81966 #BETA 242023 #TRICKS 10
+//V0.57: gameD(true) #N/S 5 #TIME 1 #VAR 0 #MINMAX 38 #HASH 0 #ALPHA 0 #BETA 16 #TRICKS 7
+//V0.57: gameE(true) #N/S 5 #TIME 59 #VAR 0 #MINMAX 1288 #HASH 52 #ALPHA 0 #BETA 597 #TRICKS 9
+//V0.57: gameF(true) #N/S 7 #TIME 109 #VAR 21 #MINMAX 3055 #HASH 248 #ALPHA 826 #BETA 611 #TRICKS 11
+//V0.57: gameF1(true) #N/S 4 #TIME 189860 #VAR 719 #MINMAX 4974772 #HASH 442829 #ALPHA 702148 #BETA 1527854 #TRICKS 11
+//V0.57: gameG(true) #N/S 9 #TIME 651501 #VAR 431 #MINMAX 16862790 #HASH 2121946 #ALPHA 6217251 #BETA 1627579 #TRICKS 13
+
 
 
 // 13 Stiche Hand
@@ -155,8 +188,8 @@ var GLOBALCOUNTER_ALPHA_CUTOFF = 0
 
 var NumberOfCardsPerHand = 5
 
-var testHands2 = [gameF]
-var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF]
+var testHands2 = [game0]
+var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF,gameF1,gameG]
 
 // var testHands = [gameB]
 
@@ -193,6 +226,15 @@ func fillTestHands() {
     gameF.nameTest = "gameF"
     gameF.testNumberOfCards = 11
     gameF.tricksTest = 7
+    
+    gameF1.nameTest = "gameF1"
+    gameF1.testNumberOfCards = 11
+    gameF1.tricksTest = 4
+
+    
+    gameG.nameTest = "gameG"
+    gameG.testNumberOfCards = 13
+    gameG.tricksTest = 9
     
     
     
@@ -267,5 +309,23 @@ let gameE = gameBoard(hands: [0b100010100000000000010010000000000100010010001000
 
 let gameF = gameBoard(hands: [0b10001010000000000001001000000000010001001000100000,0b1000000000000110010010000010000010001010, 0b100010000000010000000000100001000010100010001,0b1001000000000010000100010001000001000100000000000100], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
 
+// Testhand F1
 
+let hand1f1:UInt64 = sT+s8+h5+dK+dT+d3+cA+cK+cJ+c9+c8
+let hand2f1:UInt64 = s5+hK+h9+h7+d7+d5+d4+cQ+cT+c7+c4
+let hand3f1:UInt64 = sK+sQ+s7+s6+hA+hT+dA+dQ+d8+c5+c3
+let hand4f1:UInt64 = sA+sJ+s9+hQ+hJ+h8+h6+dJ+d9+d6+c6
+
+
+let gameF1 = gameBoard(hands: [hand1f1,hand2f1,hand3f1,hand4f1], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
+
+// Testhand G
+
+let hand1g:UInt64 = sQ+s7+s4+s2+hA+hQ+hT+d2+cQ+cT+c6+c5+c4
+let hand2g:UInt64 = s9+s8+s3+hJ+h7+h6+h2+dA+d6+d3+c8+c7+c2
+let hand3g:UInt64 = sJ+sT+s6+h9+h8+h4+h3+dT+d8+d7+d5+cJ+c3
+let hand4g:UInt64 = sA+sK+s5+hK+h5+dK+dQ+dJ+d9+d4+cA+cK+c9
+
+let gameG = gameBoard(hands: [hand1g,hand2g,hand3g,hand4g], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
 

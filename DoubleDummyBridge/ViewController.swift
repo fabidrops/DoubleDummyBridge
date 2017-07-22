@@ -167,7 +167,7 @@ class ViewController: UIViewController {
                 // Hände anzeigen
                 fillVisual(game: hand)
                 
-                let game = gameBoard(hands: hand.hands, relativeHands: [0,0,0,0], tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
+                var game = gameBoard(hands: hand.hands, relativeHands: [0,0,0,0], tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
                     game.testNumberOfCards = hand.testNumberOfCards
                 
                 
@@ -176,7 +176,9 @@ class ViewController: UIViewController {
                 game.tricksTest = hand.tricksTest
                 game.nameTest = hand.nameTest
                 
-                
+                // relative füllen
+                game = fillRealtiveHandsinInit(game: game)
+
                 
                 hashTableBuildingGuide = 0
                 

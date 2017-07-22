@@ -26,6 +26,7 @@
 		05CC782E1E64A72800962EA3 /* HelpingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */; };
 		05E0F0221E7B124C005FE515 /* HashTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0F0211E7B124C005FE515 /* HashTable.swift */; };
 		05E0F0241E7D4803005FE515 /* BackUpGameBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E0F0231E7D4803005FE515 /* BackUpGameBoard.swift */; };
+		05E88DDD1F20D5F700993DD7 /* SortingCards.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E88DDC1F20D5F700993DD7 /* SortingCards.swift */; };
 		258D319B328B255C3C00A87A /* Pods_DoubleDummyBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94DC12D4A845DFEE1189EFB0 /* Pods_DoubleDummyBridge.framework */; };
 /* End PBXBuildFile section */
 
@@ -52,6 +53,7 @@
 		05CC782D1E64A72800962EA3 /* HelpingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HelpingFunctions.swift; path = ../HelpingFunctions.swift; sourceTree = "<group>"; };
 		05E0F0211E7B124C005FE515 /* HashTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HashTable.swift; path = ../HashTable.swift; sourceTree = "<group>"; };
 		05E0F0231E7D4803005FE515 /* BackUpGameBoard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackUpGameBoard.swift; sourceTree = "<group>"; };
+		05E88DDC1F20D5F700993DD7 /* SortingCards.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SortingCards.swift; path = ../SortingCards.swift; sourceTree = "<group>"; };
 		0F57535435DC7C412B0B9FB9 /* Pods-DoubleDummyBridge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoubleDummyBridge.release.xcconfig"; path = "Pods/Target Support Files/Pods-DoubleDummyBridge/Pods-DoubleDummyBridge.release.xcconfig"; sourceTree = "<group>"; };
 		94DC12D4A845DFEE1189EFB0 /* Pods_DoubleDummyBridge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DoubleDummyBridge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9563FD3306963093A2B39B6C /* Pods-DoubleDummyBridge.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoubleDummyBridge.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DoubleDummyBridge/Pods-DoubleDummyBridge.debug.xcconfig"; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				05CC78231E63301E00962EA3 /* ConstantsForTest.swift */,
 				05CC78291E63468100962EA3 /* Output.swift */,
 				056D07CC1EDADE710077A626 /* quickTrickTable.swift */,
+				05E88DDC1F20D5F700993DD7 /* SortingCards.swift */,
 			);
 			path = DoubleDummyBridge;
 			sourceTree = "<group>";
@@ -274,6 +277,7 @@
 			files = (
 				05E0F0241E7D4803005FE515 /* BackUpGameBoard.swift in Sources */,
 				05CC78101E61A8B900962EA3 /* ViewController.swift in Sources */,
+				05E88DDD1F20D5F700993DD7 /* SortingCards.swift in Sources */,
 				05CC78261E6330C100962EA3 /* MinMax.swift in Sources */,
 				05E0F0221E7B124C005FE515 /* HashTable.swift in Sources */,
 				05CC78201E62C83A00962EA3 /* GameBoard.swift in Sources */,

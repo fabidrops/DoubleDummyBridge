@@ -24,6 +24,9 @@ import Foundation
 // ## 0.51 kleine Zeitfresser rund um quickTricks entfernt
 // ## 0.55 Sorting eingeführt, insbesondere beim Abwerfen, werden tendenziell kleine Karten abgeworfen
 // sehr wichtig zB bei Hand F, da die QuickTricks für ausccashen sprechen, es sei denn der Gegner wirft hohe Karten ab :-))
+// ## 0.57  TooManyTricks sowohl für alpha als auch für beta (NS und OW) implementiert
+//          und quickTricks nach der ersten Karte im Stich begonnen
+// ## 0.60  quickTricks mit erstem Stich beendet
 
 
 // in info.plist habe ich firebase reporting auf NO gesetzt
