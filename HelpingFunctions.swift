@@ -138,10 +138,12 @@ func convertToRelativeRanking(hand: UInt64, cardRemoved: UInt64) -> UInt64 {
 
 func convertGameBoardHandsToRelativeRanking(game: gameBoard) {
     
+    let handsCheck = game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]
+    
     for card in allCards.reversed() {
         
         // Alle Karten, die bei der Verteilung nicht verteilt wurden, werden überprüft und dancah die relativen Hände bestimmt
-        if card & (game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]) == 0 {
+        if card & handsCheck == 0 {
             
             game.hands[0] = convertToRelativeRanking(hand: game.hands[0], cardRemoved: card)
             game.hands[1] = convertToRelativeRanking(hand: game.hands[1], cardRemoved: card)
@@ -167,12 +169,14 @@ func fillRealtiveHandsinInit(game: gameBoard) -> gameBoard {
     game.relativeHands[2] = game.hands[2]
     game.relativeHands[3] = game.hands[3]
     
+    let handsCheck = game.hands[0] | game.hands[1] | game.hands[2] | game.hands[3]
+    
     for card in allCards.reversed() {
         
         
         
         // Alle Karten, die bei der Verteilung nicht verteilt wurden, werden überprüft und dancah die relativen Hände bestimmt
-        if card & (game.relativeHands[0] | game.relativeHands[1] | game.relativeHands[2] | game.relativeHands[3]) == 0 {
+        if card & handsCheck == 0 {
             
             game.relativeHands[0] = convertToRelativeRanking(hand: game.relativeHands[0], cardRemoved: card)
             game.relativeHands[1] = convertToRelativeRanking(hand: game.relativeHands[1], cardRemoved: card)

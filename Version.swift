@@ -27,6 +27,8 @@ import Foundation
 // ## 0.57  TooManyTricks sowohl für alpha als auch für beta (NS und OW) implementiert
 //          und quickTricks nach der ersten Karte im Stich begonnen
 // ## 0.60  quickTricks mit erstem Stich beendet
+// ## 0.60a performance optimisations
+
 
 
 // in info.plist habe ich firebase reporting auf NO gesetzt

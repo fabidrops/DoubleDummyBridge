@@ -11,7 +11,7 @@ import Foundation
 
 // Klasse beschreibt eine aktuelle Spielsituation
 
-class gameBoard {
+final class gameBoard {
     
     init (hands:[UInt64], relativeHands:[UInt64],tricksNS: Int, tricksEW: Int,trickCurrent: [UInt64], trump:UInt64, leader: Int, trickSuit: UInt64, playerShape: [[Int]], cardsPlayed: UInt64, playerCurrent:Int) {
         
@@ -69,18 +69,11 @@ class gameBoard {
     var tricksTest = 0
     var testNumberOfCards = 0
     
-    // Wenn die quick Tricks beider Parteien größer als Reststiche sind, dann sollte man keine Farbe spielen, wo der Gegner die höchste Karte hat
-//    var dontLetOppWinTheTrick = false
     
-
-    
-    
-    // Karte, die den aktuellen Stich gewinnt -> Index im aktuellen Stichs
-    // liefert -1, wenn Stich leer
     
     var cardTrickWinner: Int {
         
-        
+        // Karte, die den aktuellen Stich gewinnt -> Index im aktuellen Stichs
         // die Zahl die returniert wird ist die Array-Position der Karte, nicht die des Spielers
         
         if trickCurrent.count == 1 {
@@ -99,7 +92,7 @@ class gameBoard {
                 
                 if highestCardInTrick & trump > 0 {
                 
-                    // Trumpf im Stich
+                    // Trumpf schon im Stich
                     if (trickCurrent[i] & trump) > (highestCardInTrick & trump)  {
                         
                         
@@ -110,7 +103,7 @@ class gameBoard {
                 
                 } else {
                     
-                     // kein Trumpf im Stich
+                     // bisher kein Trumpf im Stich
                     if (trickCurrent[i] & trickSuit) > (highestCardInTrick & trickSuit) || (trickCurrent[i] & trump) > 0  {
                         
                         
@@ -180,9 +173,10 @@ class gameBoard {
         trickCurrent.append(card)
         
         // Stich komplett ?
-        let cardWinsNumber = (self.cardTrickWinner + trickLeader) % 4
+        
         if self.trickCurrent.count == 4 {
             
+            let cardWinsNumber = (self.cardTrickWinner + trickLeader) % 4
             
             // Stichanzahl erhöhen
             
@@ -203,8 +197,8 @@ class gameBoard {
         } else {
             
             // Stich nicht vollständig -> nächster Spieler dran
-            self.playerCurrent = (self.trickLeader + self.trickCurrent.count) % 4
-            
+            // self.playerCurrent = (self.trickLeader + self.trickCurrent.count) % 4
+            self.playerCurrent = (self.playerCurrent + 1) % 4
             
         }
         
@@ -393,7 +387,25 @@ class gameBoard {
             
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
-        } else if hashTableBuildingGuide == 2 {
+        }
+        
+        else if hashTableBuildingGuide == 55  {
+            
+            // Hash-Table macht aus 9,87,6,5,4,3,2 jeweils ein x
+            
+            let str1 = String(self.cardsPlayed & 0b1111100000000111110000000011111000000001111100000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        } else if hashTableBuildingGuide == 56  {
+            
+            // 
+            
+            let str1 = String(self.relativeHands[0]) + String(self.relativeHands[1]) + String(self.relativeHands[2]) + String(self.relativeHands[3]) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }else if hashTableBuildingGuide == 2 {
             
             // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
             

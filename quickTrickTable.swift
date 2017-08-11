@@ -316,6 +316,9 @@ func fillquickTricksTable () {
 
 func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
     
+    // a ist Länge des eigenen Blattes, b des Partners und oppMax das Maximum eines Gegners
+    // topCards als erste vier Stellen die eigenen A K Q J und die anderen des Partners
+    
     switch topCards {
         
     case 0b11110000: // AKQJ zu -
@@ -324,14 +327,14 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
         
     case 0b11100001: // AKQ zu J
         
-        if a == 3 { return 3 }
+        if a == 3 { return 3 } // AKQ sec
         else {
             
-            if b == 1 {
+            if b == 1 { // AKQx(xx) - J
                 
                 if oppMax <= 3 { return a } else { return 3 }
                 
-            } else {
+            } else { // AKQx(xx) - Jx(xxx)
                 
                 if oppMax <= 4 { return max(a,b) } else { return 4 }
                 
@@ -341,7 +344,11 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
         
     case 0b11100000: // AKQ zu -
         
-        if b <= 3 && oppMax <= 3 { return a } else { return 3 }
+        if b <= 3 && oppMax <= 3 { return a }
+        
+        else if b > 3 && oppMax <= 3 { return min(a,b)}
+        
+        else { return 3 }
         
     case 0b11010010: // AKJ zu Q
         
