@@ -178,6 +178,31 @@ let VERSION = "V0.60a"
 //V0.60: gameF1(true) #N/S 4 #TIME 155221 #VAR 449 #MINMAX 4027106 #HASH 383741 #ALPHA 414692 #BETA 1286433 #TRICKS 11
 //V0.60: gameG(true) #N/S 9 #TIME 637169 #VAR 361 #MINMAX 15650693 #HASH 2085115 #ALPHA 5919468 #BETA 1212789 #TRICKS 13
 
+//V0.60a: game0(true) #N/S 1 #TIME 273 #VAR 3 #MINMAX 7427 #HASH 896 #ALPHA 817 #BETA 1746 #TRICKS 8
+//V0.60a: gameA(true) #N/S 1 #TIME 104 #VAR 7 #MINMAX 3149 #HASH 147 #ALPHA 7 #BETA 1459 #TRICKS 7
+//V0.60a: gameB(true) #N/S 5 #TIME 631 #VAR 44 #MINMAX 19510 #HASH 1650 #ALPHA 7001 #BETA 1503 #TRICKS 7
+//V0.60a: gameC(true) #N/S 3 #TIME 21901 #VAR 354 #MINMAX 663458 #HASH 48835 #ALPHA 73778 #BETA 226031 #TRICKS 10
+//V0.60a: gameD(true) #N/S 5 #TIME 0 #VAR 0 #MINMAX 22 #HASH 0 #ALPHA 0 #BETA 6 #TRICKS 7
+//V0.60a: gameE(true) #N/S 5 #TIME 24 #VAR 0 #MINMAX 625 #HASH 52 #ALPHA 0 #BETA 182 #TRICKS 9
+//V0.60a: gameF(true) #N/S 7 #TIME 76 #VAR 21 #MINMAX 2368 #HASH 248 #ALPHA 830 #BETA 182 #TRICKS 11
+//V0.60a: gameF1(true) #N/S 4 #TIME 141118 #VAR 449 #MINMAX 4027106 #HASH 383741 #ALPHA 414692 #BETA 1286433 #TRICKS 11
+//V0.60a: gameG(true) #N/S 9 #TIME 541149 #VAR 361 #MINMAX 15650693 #HASH 2085115 #ALPHA 5919468 #BETA 1212789 #TRICKS 13
+//V0.60a: gameH(true) #N/S 8 #TIME 60984 #VAR 42 #MINMAX 1803560 #HASH 234113 #ALPHA 867041 #BETA 18633 #TRICKS 11
+
+// HASH MODE 58
+//V0.60a: game0(true) #N/S 1 #TIME 268 #VAR 3 #MINMAX 7314 #HASH 887 #ALPHA 810 #BETA 1702 #TRICKS 8
+//V0.60a: gameA(true) #N/S 1 #TIME 99 #VAR 7 #MINMAX 3048 #HASH 143 #ALPHA 7 #BETA 1411 #TRICKS 7
+//V0.60a: gameB(true) #N/S 5 #TIME 477 #VAR 44 #MINMAX 14965 #HASH 1351 #ALPHA 4972 #BETA 1489 #TRICKS 7
+//V0.60a: gameC(true) #N/S 3 #TIME 10873 #VAR 260 #MINMAX 320766 #HASH 20393 #ALPHA 42266 #BETA 102452 #TRICKS 10
+//V0.60a: gameD(true) #N/S 5 #TIME 0 #VAR 0 #MINMAX 22 #HASH 0 #ALPHA 0 #BETA 6 #TRICKS 7
+//V0.60a: gameE(true) #N/S 5 #TIME 18 #VAR 0 #MINMAX 442 #HASH 37 #ALPHA 0 #BETA 129 #TRICKS 9
+//V0.60a: gameF(true) #N/S 7 #TIME 151 #VAR 58 #MINMAX 4614 #HASH 541 #ALPHA 1975 #BETA 139 #TRICKS 11
+//V0.60a: gameF1(true) #N/S 4 #TIME 67476 #VAR 349 #MINMAX 1854033 #HASH 169504 #ALPHA 171533 #BETA 620066 #TRICKS 11
+//V0.60a: gameG(true) #N/S 9 #TIME 79301 #VAR 284 #MINMAX 2245587 #HASH 274712 #ALPHA 882230 #BETA 153559 #TRICKS 13
+//V0.60a: gameH(true) #N/S 8 #TIME 14256 #VAR 32 #MINMAX 415867 #HASH 51137 #ALPHA 199464 #BETA 4576 #TRICKS 11
+
+
+
 // 13 Stiche Hand
 //["11001001000000101100101001000000000001110", "1010000101000000010000000010000010000101110101000000", "1100000000100100001111000001000100010000000010001", "100011010100010000110000000010000010000001010100000"]
 //V0.30: #N/S 11 #TIME 5198720 #VAR 17552 #MINMAX 56299505 #HASH 13709746 #ALPHA 13139410 #BETA 7861885
@@ -196,8 +221,8 @@ var GLOBALCOUNTER_ALPHA_CUTOFF = 0
 
 var NumberOfCardsPerHand = 5
 
-var testHands2 = [game0]
-var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF,gameF1,gameG]
+var testHands2 = [gameH]
+var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF,gameF1,gameG,gameH,gameZ]
 
 // var testHands = [gameB]
 
@@ -244,7 +269,13 @@ func fillTestHands() {
     gameG.testNumberOfCards = 13
     gameG.tricksTest = 9
     
+    gameH.nameTest = "gameH"
+    gameH.testNumberOfCards = 11
+    gameH.tricksTest = 8
     
+    gameZ.nameTest = "gameZ"
+    gameZ.testNumberOfCards = 13
+    gameZ.tricksTest = 6
     
 }
 
@@ -336,4 +367,23 @@ let hand3g:UInt64 = sJ+sT+s6+h9+h8+h4+h3+dT+d8+d7+d5+cJ+c3
 let hand4g:UInt64 = sA+sK+s5+hK+h5+dK+dQ+dJ+d9+d4+cA+cK+c9
 
 let gameG = gameBoard(hands: [hand1g,hand2g,hand3g,hand4g], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
+// Testhand H
+
+let hand1h:UInt64 = sK+sT+s8+s6+hT+h8+dT+d9+cJ+c7+c5
+let hand2h:UInt64 = sA+s5+hA+hJ+h6+dA+dJ+d6+cK+cT+c8
+let hand3h:UInt64 = sQ+sJ+hK+hQ+h9+h4+d7+d5+d4+c9+c6
+let hand4h:UInt64 = s9+s7+h7+h5+h3+dK+dQ+d8+cA+cQ+c4
+
+let gameH = gameBoard(hands: [hand1h,hand2h,hand3h,hand4h], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
+// Testhand Z
+
+let hand1z:UInt64 = sA+sQ+hJ+h4+h4+dA+dK+d9+d8+d2+cQ+cT+c9
+let hand2z:UInt64 = sK+s7+s5+s3+s2+hQ+h9+h8+h6+d7+cA+c6+c5
+let hand3z:UInt64 = sJ+sT+s6+s4+hK+dJ+dT+d5+cK+cJ+c8+c7+c4
+let hand4z:UInt64 = s9+s8+hA+hT+h7+h5+h2+dQ+d6+d4+d3+c3+c2
+
+let gameZ = gameBoard(hands: [hand1z,hand2z,hand3z,hand4z], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
 

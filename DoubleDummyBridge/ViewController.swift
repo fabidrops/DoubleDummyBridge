@@ -180,7 +180,9 @@ class ViewController: UIViewController {
                 game = fillRealtiveHandsinInit(game: game)
 
                 
-                hashTableBuildingGuide = 0
+                hashTableBuildingGuide = 58
+                
+                TOTALTRICKSINGAME = game.testNumberOfCards
                 
                 let time1 = DispatchTime.now()
                 let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: 0, beta: 13, turnNS: false)
@@ -344,7 +346,7 @@ class ViewController: UIViewController {
             let time2 = DispatchTime.now()
             let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
             
-            outputLbl.text = "Max Stiche N/S:\(erg)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
+            outputLbl.text = "Max Stiche N/S:\(erg)\n"+"Time:\(delta), #:\(GLOBALCOUNTER_MINMAX)"
             hashTableQuickTricks[quickTrickOutput] = erg
             
 //            print("gameZ.nameTest = \"gameZ\"")

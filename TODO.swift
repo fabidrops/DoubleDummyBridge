@@ -33,7 +33,7 @@ import Foundation
 
 // Optimierung
 // Hash-Table nach Anzahl der Restkarten, zB 13-10 Restkarten darf auch "7" -> x verwandeln, darunter nur ab der 6 -> x ?
-
+// Hash Table zukünftige Stiche nicht die Stiche bis zu der Position
 
 // QuickTricks: ich bilde einzelne Farbe pro Hand ab
 // 100010000011000 0111011000000

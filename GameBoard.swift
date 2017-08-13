@@ -211,16 +211,13 @@ final class gameBoard {
         var playableCards:[UInt64] = []
         var playableCardsFilterEqualCards:[UInt64] = []
         
-    
-        
-        let cardsInPlayersHandAsArray = allCards.filter({$0 & hands[playerCurrent] > 0})
         // -> Array mit allen Karten, die in der Spielerhand sind
         
         
         if trickCurrent.isEmpty {
             // 1. Ausspieler, alle Karten, die sich in der Hand des aktuellen Spielers befinden
             
-            playableCards = cardsInPlayersHandAsArray
+            playableCards = allCards.filter({$0 & hands[playerCurrent] > 0})
             
         } else {
             
@@ -231,21 +228,21 @@ final class gameBoard {
                 
                 // a. Nein -> alle Spielerkarten sind spielbar
                
-                playableCards = cardsInPlayersHandAsArray
+                playableCards = allCards.filter({$0 & hands[playerCurrent] > 0})
                 
             } else {
                 
                 // b. Ja
                
-                playableCards = cardsInPlayersHandAsArray.filter({$0 & trickSuit > 0})
+                playableCards = allCards.filter({$0 & hands[playerCurrent] & trickSuit > 0})
                 
             }
             
         }
         
-        if playableCards.count == 0 { return playableCards }
+        if playableCards.count <= 1 { return playableCards }
         
-              if playableCards.count == 1 { return playableCards } else {
+              else {
         
                 
             // Ab mindestens 2 Karten, wird untersucht, ob diese "gleichwertig sind", d.h. benachbart
@@ -389,27 +386,165 @@ final class gameBoard {
             
         }
         
-        else if hashTableBuildingGuide == 55  {
+        
+        else if hashTableBuildingGuide == 5555  {
             
             // Hash-Table macht aus 9,87,6,5,4,3,2 jeweils ein x
+            
+//            V0.60a: game0(false) #N/S 2 #TIME 46 #VAR 0 #MINMAX 1109 #HASH 87 #ALPHA 3 #BETA 465 #TRICKS 8
+//            V0.60a: gameA(true) #N/S 1 #TIME 100 #VAR 7 #MINMAX 3149 #HASH 147 #ALPHA 7 #BETA 1459 #TRICKS 7
+//            V0.60a: gameB(true) #N/S 5 #TIME 428 #VAR 40 #MINMAX 13374 #HASH 1007 #ALPHA 4884 #BETA 930 #TRICKS 7
+//            V0.60a: gameC(true) #N/S 3 #TIME 6724 #VAR 131 #MINMAX 195601 #HASH 13708 #ALPHA 32123 #BETA 55518 #TRICKS 10
+//            V0.60a: gameD(true) #N/S 5 #TIME 0 #VAR 0 #MINMAX 22 #HASH 0 #ALPHA 0 #BETA 6 #TRICKS 7
+//            V0.60a: gameE(true) #N/S 5 #TIME 17 #VAR 0 #MINMAX 441 #HASH 39 #ALPHA 0 #BETA 131 #TRICKS 9
+//            V0.60a: gameF(true) #N/S 7 #TIME 156 #VAR 51 #MINMAX 4457 #HASH 535 #ALPHA 1902 #BETA 141 #TRICKS 11
+//            V0.60a: gameF1(true) #N/S 4 #TIME 55770 #VAR 210 #MINMAX 1536200 #HASH 172479 #ALPHA 119869 #BETA 546597 #TRICKS 11
+//            V0.60a: gameG(true) #N/S 9 #TIME 27742 #VAR 90 #MINMAX 774429 #HASH 107631 #ALPHA 279772 #BETA 64586 #TRICKS 13
+
             
             let str1 = String(self.cardsPlayed & 0b1111100000000111110000000011111000000001111100000000) + String(self.playerCurrent)
             
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
-        } else if hashTableBuildingGuide == 56  {
+        }  else if hashTableBuildingGuide == 5544  {
+            
+            
+            let str1 = String(self.cardsPlayed & 0b1111100000000111110000000011111000000001111100000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }
+
+            
+        else if hashTableBuildingGuide == 6666 {
+//            V0.60a: game0(true) #N/S 1 #TIME 276 #VAR 3 #MINMAX 7427 #HASH 896 #ALPHA 817 #BETA 1746 #TRICKS 8
+//            V0.60a: gameA(true) #N/S 1 #TIME 102 #VAR 7 #MINMAX 3149 #HASH 147 #ALPHA 7 #BETA 1459 #TRICKS 7
+//            V0.60a: gameB(true) #N/S 5 #TIME 634 #VAR 44 #MINMAX 19510 #HASH 1650 #ALPHA 7001 #BETA 1503 #TRICKS 7
+//            V0.60a: gameC(true) #N/S 3 #TIME 10873 #VAR 188 #MINMAX 329780 #HASH 23181 #ALPHA 49956 #BETA 97800 #TRICKS 10
+//            V0.60a: gameD(true) #N/S 5 #TIME 0 #VAR 0 #MINMAX 22 #HASH 0 #ALPHA 0 #BETA 6 #TRICKS 7
+//            V0.60a: gameE(true) #N/S 5 #TIME 17 #VAR 0 #MINMAX 451 #HASH 37 #ALPHA 0 #BETA 131 #TRICKS 9
+//            V0.60a: gameF(true) #N/S 7 #TIME 137 #VAR 51 #MINMAX 4477 #HASH 531 #ALPHA 1902 #BETA 141 #TRICKS 11
+//            V0.60a: gameF1(true) #N/S 4 #TIME 72968 #VAR 300 #MINMAX 2084025 #HASH 212167 #ALPHA 186160 #BETA 707616 #TRICKS 11
+//            V0.60a: gameG(true) #N/S 9 #TIME 53210 #VAR 137 #MINMAX 1533463 #HASH 201582 #ALPHA 572045 #BETA 119056 #TRICKS 13
+            
+            let str1 = String(self.cardsPlayed & 0b1111110000000111111000000011111100000001111110000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }
+        else if hashTableBuildingGuide == 4444  {
+            
+//            V0.60a: game0(false) #N/S 2 #TIME 27 #VAR 0 #MINMAX 655 #HASH 55 #ALPHA 2 #BETA 277 #TRICKS 8
+//            V0.60a: gameA(true) #N/S 1 #TIME 83 #VAR 5 #MINMAX 2348 #HASH 117 #ALPHA 5 #BETA 1090 #TRICKS 7
+//            V0.60a: gameB(true) #N/S 5 #TIME 250 #VAR 27 #MINMAX 7429 #HASH 587 #ALPHA 2520 #BETA 662 #TRICKS 7
+//            V0.60a: gameC(true) #N/S 3 #TIME 3047 #VAR 59 #MINMAX 90540 #HASH 7742 #ALPHA 16910 #BETA 23298 #TRICKS 10
+//            V0.60a: gameD(true) #N/S 5 #TIME 0 #VAR 0 #MINMAX 22 #HASH 0 #ALPHA 0 #BETA 6 #TRICKS 7
+//            V0.60a: gameE(true) #N/S 5 #TIME 16 #VAR 0 #MINMAX 432 #HASH 39 #ALPHA 0 #BETA 129 #TRICKS 9
+//            V0.60a: gameF(true) #N/S 7 #TIME 253 #VAR 151 #MINMAX 8485 #HASH 948 #ALPHA 3841 #BETA 147 #TRICKS 11
+//            V0.60a: gameF1(true) #N/S 4 #TIME 19864 #VAR 113 #MINMAX 541423 #HASH 66602 #ALPHA 52200 #BETA 180486 #TRICKS 11
+//            V0.60a: gameG(false) #N/S 10 #TIME 5188 #VAR 54 #MINMAX 143254 #HASH 20163 #ALPHA 54125 #BETA 9769 #TRICKS 13
+
+            
+            
+            let str1 = String(self.cardsPlayed & 0b1111000000000111100000000011110000000001111000000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }
+        
+        else if hashTableBuildingGuide == 3333  {
+            
+//            V0.60a: game0(false) #N/S 2 #TIME 22 #VAR 0 #MINMAX 568 #HASH 40 #ALPHA 2 #BETA 241 #TRICKS 8
+//            V0.60a: gameA(true) #N/S 1 #TIME 50 #VAR 3 #MINMAX 1552 #HASH 80 #ALPHA 3 #BETA 725 #TRICKS 7
+//            V0.60a: gameB(false) #N/S 4 #TIME 114 #VAR 8 #MINMAX 3533 #HASH 327 #ALPHA 1131 #BETA 372 #TRICKS 7
+//            V0.60a: gameC(true) #N/S 3 #TIME 1109 #VAR 16 #MINMAX 31926 #HASH 2916 #ALPHA 6463 #BETA 7653 #TRICKS 10
+//            V0.60a: gameD(true) #N/S 5 #TIME 0 #VAR 0 #MINMAX 22 #HASH 0 #ALPHA 0 #BETA 6 #TRICKS 7
+//            V0.60a: gameE(true) #N/S 5 #TIME 13 #VAR 0 #MINMAX 334 #HASH 36 #ALPHA 0 #BETA 102 #TRICKS 9
+//            V0.60a: gameF(true) #N/S 7 #TIME 244 #VAR 139 #MINMAX 7798 #HASH 907 #ALPHA 3555 #BETA 120 #TRICKS 11
+//            V0.60a: gameF1(false) #N/S 2 #TIME 3044 #VAR 26 #MINMAX 82621 #HASH 8658 #ALPHA 3513 #BETA 34094 #TRICKS 11
+//            V0.60a: gameG(false) #N/S 10 #TIME 1937 #VAR 20 #MINMAX 52987 #HASH 8408 #ALPHA 19673 #BETA 3710 #TRICKS 13
+            
+            
+            
+            let str1 = String(self.cardsPlayed & 0b1110000000000111000000000011100000000001110000000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }else if hashTableBuildingGuide == 58  {
+            
+            // Hash-Table macht aus 9,87,6,5,4,3,2 jeweils ein x
+            
+            if tricksWonByNorthSouth + tricksWonByEastWest <= TOTALTRICKSINGAME/3 - 1 {
+                
+                            
+            let str1 = String(self.cardsPlayed & 0b1111000000000111100000000011110000000001111000000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+                
+            }
+            
+            else if tricksWonByNorthSouth + tricksWonByEastWest <= 2*TOTALTRICKSINGAME/3 - 1 {
+                
+                let str1 = String(self.cardsPlayed & 0b1111110000000111111000000011111100000001111110000000) + String(self.playerCurrent)
+                
+                return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+                
+            }
+            else  {
+                
+                let str1 = String(self.cardsPlayed) + String(self.playerCurrent)
+                
+                return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+                
+            }
+
+            
+            
+            
+        }else if hashTableBuildingGuide == 77 {
+            
+            // bis auf die erste Hand passt es
+            
+            if tricksWonByNorthSouth + tricksWonByEastWest <= TOTALTRICKSINGAME/3 - 1 {
+                
+                
+                let str1 = String(self.cardsPlayed & 0b1111000000000111100000000011110000000001111000000000) + String(self.playerCurrent)
+                
+                return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+                
+            }
+                
+            else if tricksWonByNorthSouth + tricksWonByEastWest <= 2*TOTALTRICKSINGAME/3 - 1 {
+                
+                let str1 = String(self.cardsPlayed & 0b1111100000000111110000000011111000000001111100000000) + String(self.playerCurrent)
+                
+                return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+                
+            }
+            else  {
+                
+                let str1 = String(self.cardsPlayed) + String(self.playerCurrent)
+                
+                return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+                
+            }
+            
+            
+            
+            
+        }else if hashTableBuildingGuide == 56  {
             
             // 
             
             let str1 = String(self.relativeHands[0]) + String(self.relativeHands[1]) + String(self.relativeHands[2]) + String(self.relativeHands[3]) + String(self.playerCurrent)
             
-            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth) 
             
-        }else if hashTableBuildingGuide == 2 {
+        }else if hashTableBuildingGuide == 57 {
             
-            // Hash-Table macht aus 6,5,4,3,2 jeweils ein x
+            // Hash-Table macht aus T,...,6,5,4,3,2 jeweils ein x
             
-            let str1 = String(self.cardsPlayed & 0b1111110000000111111000000011111100000001111110000000) + String(self.playerCurrent)
+            let str1 = String(self.cardsPlayed & 0b1111000000000111100000000011110000000001111000000000) + String(self.playerCurrent)
             
             return  str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
@@ -459,11 +594,19 @@ final class gameBoard {
             //Sind die Karten noch im Spiel also auf einer Gegnerhand/Partnerhand ODER im aktuellen Stich
             //können die Karten nie benachbart sein
             
+            // aquivalent zu eigene Hand oder gespielt ? -> hilf das ?
+            
+            
             if (cardRun & hands[playerCurrent] == 0 && cardRun & self.cardsPlayed == 0) || self.trickCurrent.contains(cardRun) == true {
                 
                 return false
                 
             }
+            
+//            if !((cardRun & hands[playerCurrent] > 0) || (cardRun & cardsPlayed) > 0) {
+//                
+//                return false
+//            }
             
         }
         

@@ -28,6 +28,7 @@ import Foundation
 //          und quickTricks nach der ersten Karte im Stich begonnen
 // ## 0.60  quickTricks mit erstem Stich beendet
 // ## 0.60a performance optimisations
+// ## 0.61  more Testhands + better HashTable
 
 
 

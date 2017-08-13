@@ -17,6 +17,8 @@ var playingWithQuickTricks = true
 var quickTestPlayingMode = false // Beschreibung siehe Version # V 0.45
 let deepQuickTricks = 0
 
+var TOTALTRICKSINGAME = 0
+
 let spades:   UInt64 =  0b1111111111111000000000000000000000000000000000000000
 let hearts:   UInt64 =  0b0000000000000111111111111100000000000000000000000000
 let diamonds: UInt64 =  0b0000000000000000000000000011111111111110000000000000
