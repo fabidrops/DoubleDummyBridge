@@ -180,8 +180,7 @@ class ViewController: UIViewController {
                 game = fillRealtiveHandsinInit(game: game)
 
                 
-                hashTableBuildingGuide = 58
-                
+                                
                 TOTALTRICKSINGAME = game.testNumberOfCards
                 
                 let time1 = DispatchTime.now()
@@ -197,7 +196,7 @@ class ViewController: UIViewController {
                 
                 if erg6 != game.tricksTest {testScoreCorrect = false }
                 
-                 print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
+                 print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #HASH: \(hashTableBuildingGuide) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
                 
             }
             
@@ -336,7 +335,7 @@ class ViewController: UIViewController {
             
             //hashTable = [:]
             hashTableAlphaBeta = [:]
-            hashTableBuildingGuide = 0
+           
             
             let time1 = DispatchTime.now()
             
@@ -355,7 +354,7 @@ class ViewController: UIViewController {
 //            
 //            print("var gameZ = gameBoard(hands: [0b\(SingleBinary(number: game.hands[0])), 0b\(SingleBinary(number: game.hands[1])), 0b\(SingleBinary(number: game.hands[2])), 0b\(SingleBinary(number: game.hands[3]))], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)")
             
-            print("\(VERSION): #N/S \(erg) #TIME \(delta) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
+            print("\(VERSION): #N/S \(erg) #TIME \(delta) #HASH: \(hashTableBuildingGuide) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
             
 //            ref.child("QUICKTRICKS").removeValue { (error, ref) in
 //                if error != nil {

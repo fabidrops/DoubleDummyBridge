@@ -9,6 +9,8 @@
 import Foundation
 
 
+let VERSION = "V0.71"
+
 // wenn Variable auf True erzeugt jede Hand stets die korrespondirende relative Hand
 let convertHandsToRelativeHand = true // eine zufällig verteilte Hand, wird in Ihre relative Hand überführt am Anfang
 
@@ -16,6 +18,11 @@ var playableCardsWithSorting = true // soll das Programm Karten sortieren ?
 var playingWithQuickTricks = true
 var quickTestPlayingMode = false // Beschreibung siehe Version # V 0.45
 let deepQuickTricks = 0
+var hashTableBuildingGuide = 8888 // Art wie die Hash Table konstruiert wird
+
+let deleteAllCardsFromPlayableCardsThatAreNotTheSmallestOnesInSuitYouCannotGiveSuit = true
+
+
 
 var TOTALTRICKSINGAME = 0
 

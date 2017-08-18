@@ -73,6 +73,7 @@ final class gameBoard {
     
     var cardTrickWinner: Int {
         
+        
         // Karte, die den aktuellen Stich gewinnt -> Index im aktuellen Stichs
         // die Zahl die returniert wird ist die Array-Position der Karte, nicht die des Spielers
         
@@ -230,11 +231,33 @@ final class gameBoard {
                
                 playableCards = allCards.filter({$0 & hands[playerCurrent] > 0})
                 
+                if deleteAllCardsFromPlayableCardsThatAreNotTheSmallestOnesInSuitYouCannotGiveSuit {
+                    
+                    // wenn Konstante gesetzt, dann wird immer nur die kleinste Karte einer Farbe ausgewertet
+                    // ergab bei den Testhänden bis ZA keine Fehler !
+                    
+                    let playableSpades = playableCards.filter({$0 & spades > 0}).sorted(by: {$0 < $1})
+                    let playableHearts = playableCards.filter({$0 & hearts > 0}).sorted(by: {$0 < $1})
+                    let playableDiamonds = playableCards.filter({$0 & diamonds > 0}).sorted(by: {$0 < $1})
+                    let playableClubs = playableCards.filter({$0 & clubs > 0}).sorted(by: {$0 < $1})
+                    
+                    var playableNew:[UInt64] = []
+                    
+                    if !playableSpades.isEmpty { playableNew.append(playableSpades[0]) }
+                    if !playableHearts.isEmpty { playableNew.append(playableHearts[0]) }
+                    if !playableDiamonds.isEmpty { playableNew.append(playableDiamonds[0]) }
+                    if !playableClubs.isEmpty { playableNew.append(playableClubs[0]) }
+                    
+                    playableCards = playableNew
+                }
+
+                
             } else {
                 
                 // b. Ja
                
                 playableCards = allCards.filter({$0 & hands[playerCurrent] & trickSuit > 0})
+                
                 
             }
             
@@ -262,9 +285,27 @@ final class gameBoard {
             
         }
         
+        // TO: Karten rausfiltern wo Q gespielt und man hält KB , da sollte K immer richtig sein, na ja kann mal richtig sein, wenn Q vorgelegt wird zu ducken
+        
         if playableCardsWithSorting == true {
-            //images.sorted({ $0.fileID > $1.fileID })
-            return playableCardsFilterEqualCards.sorted(by: {self.pointsForCardSorting(card: $0) > self.pointsForCardSorting(card: $1)})
+            
+            
+            
+//            for card in playableCardsFilterEqualCards {
+//            
+//                if tricksWonByEastWest + tricksWonByNorthSouth == 0 && trickCurrent.isEmpty {
+//                
+//                    print("\(returnCardAsString(hand: card)): \(pointsForCardSorting2(card: card))")
+//                   
+//                
+//                
+//                }
+//            
+//            }
+            
+            // TO DO: von jeder Farbe sollte eine Karte vorne stehen ! aber nur wenn nicht bedient wird, sonst ist es ja so
+            
+            return playableCardsFilterEqualCards.sorted(by: {self.pointsForCardSorting2(card: $0) > self.pointsForCardSorting2(card: $1)})
             
         } else {
             
@@ -432,6 +473,15 @@ final class gameBoard {
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
         }
+        else if hashTableBuildingGuide == 7777 {
+            
+            let str1 = String(self.cardsPlayed & 0b1111111000000111111100000011111110000001111111000000) + String(self.playerCurrent)
+            
+            //hashTableBuildingGuide = 4444
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }
         else if hashTableBuildingGuide == 4444  {
             
 //            V0.60a: game0(false) #N/S 2 #TIME 27 #VAR 0 #MINMAX 655 #HASH 55 #ALPHA 2 #BETA 277 #TRICKS 8
@@ -444,7 +494,7 @@ final class gameBoard {
 //            V0.60a: gameF1(true) #N/S 4 #TIME 19864 #VAR 113 #MINMAX 541423 #HASH 66602 #ALPHA 52200 #BETA 180486 #TRICKS 11
 //            V0.60a: gameG(false) #N/S 10 #TIME 5188 #VAR 54 #MINMAX 143254 #HASH 20163 #ALPHA 54125 #BETA 9769 #TRICKS 13
 
-            
+            //hashTableBuildingGuide = 7777
             
             let str1 = String(self.cardsPlayed & 0b1111000000000111100000000011110000000001111000000000) + String(self.playerCurrent)
             
@@ -467,6 +517,14 @@ final class gameBoard {
             
             
             let str1 = String(self.cardsPlayed & 0b1110000000000111000000000011100000000001110000000000) + String(self.playerCurrent)
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }else if hashTableBuildingGuide == 2222  {
+            
+            
+            
+            let str1 = String(self.cardsPlayed & 0b1100000000000110000000000011000000000001100000000000) + String(self.playerCurrent)
             
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
@@ -540,6 +598,15 @@ final class gameBoard {
             
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth) 
             
+        } else if hashTableBuildingGuide == 199  {
+            
+          
+            
+            let str1 = String(self.cardsPlayed & 0b1111000000000111100000000011110000000001111000000000) + String(self.playerCurrent)
+            
+            return  str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+            
         }else if hashTableBuildingGuide == 57 {
             
             // Hash-Table macht aus T,...,6,5,4,3,2 jeweils ein x
@@ -554,7 +621,7 @@ final class gameBoard {
             
             return  String(self.cardsPlayed) + String(self.trickLeader)
             
-        } else {
+        } else if hashTableBuildingGuide == 8888 {
             
             // Hash-Table macht aus 5,4,3,2 jeweils ein x
             
@@ -564,6 +631,9 @@ final class gameBoard {
             
             
             
+        } else {
+            
+            return ""
         }
         
     }
@@ -614,102 +684,7 @@ final class gameBoard {
         return true
     }
     
-    func pointsForCardSorting(card: UInt64) -> Int {
-    
-        // Funktion soll in einer Spielsituation einen Wert geben um eine Sortierung zu ermöglichen
         
-        var suitAdd:Int = 0
-        var suitBonus = 0
-        var LHO = 0
-        var RHO = 0
-        
-        if card & spades > 0 {
-        
-            suitAdd = Int(((self.playerShape[playerCurrent][0]) * 64)/36)
-            if self.relativeHands[(playerCurrent+3)%4] & (sA+sK) > 0 { suitBonus += -18 }
-            LHO = self.playerShape[(playerCurrent+1)%4][0]
-            RHO = self.playerShape[(playerCurrent+3)%4][0]
-            
-        } else if card & hearts > 0 {
-            
-            suitAdd = Int(((self.playerShape[playerCurrent][1]) * 64)/36)
-            if self.relativeHands[(playerCurrent+3)%4] & (hA+hK) > 0 { suitBonus += -18 }
-            LHO = self.playerShape[(playerCurrent+1)%4][1]
-            RHO = self.playerShape[(playerCurrent+3)%4][1]
-            
-        } else if card & diamonds > 0 {
-            
-            suitAdd = Int(((self.playerShape[playerCurrent][2]) * 64)/36)
-            if self.relativeHands[(playerCurrent+3)%4] & (dA+dK) > 0 { suitBonus += -18 }
-            LHO = self.playerShape[(playerCurrent+1)%4][1]
-            RHO = self.playerShape[(playerCurrent+3)%4][1]
-            
-        } else {
-            
-            suitAdd = Int(((self.playerShape[playerCurrent][3]) * 64)/36)
-            if self.relativeHands[(playerCurrent+3)%4] & (cA+cK) > 0 { suitBonus += -18 }
-            LHO = self.playerShape[(playerCurrent+1)%4][1]
-            RHO = self.playerShape[(playerCurrent+3)%4][1]
-            
-        }
-        
-        // TO-DO
-        // If the suit length is 2, and the hand-to-play has the next highest rank of the suit, the bonus is reduced by 2.
-        
-        
-        // 1. Ausspieler
-        
-        var suitWeightDelta:Int = suitBonus - Int(((LHO + RHO) * 32)/15)
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        // Spieler muss abwerfen -> möglichst kleine Karte
-        if self.trickSuit & card == 0 && card != trump { // Spieler muss abwerfen
-            
-            return -rankOfCard(card: card) + suitAdd
-        }
-        
-        // Spieler gibt zu
-        else if self.trickSuit & card > 0 && card != trump {
-            
-            
-            
-            if card < trickCurrent[cardTrickWinner] {
-                // man gibt zu und kann die Karte nicht schlagen, dann kleine Karte
-                
-                 return -rankOfCard(card: card)
-                
-            }
-            
-            else {
-                // man gibt zu und kann die höchste Karte schlagen
-                
-                
-                // 4. Mann
-                if self.trickCurrent.count == 3 { return -rankOfCard(card: card) + 200 }
-                
-                else { return rankOfCard(card: card) }
-                
-                
-                
-            }
-        }
-        
-        return 0
-    }
-    
-    
 }
 
 

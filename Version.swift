@@ -29,6 +29,9 @@ import Foundation
 // ## 0.60  quickTricks mit erstem Stich beendet
 // ## 0.60a performance optimisations
 // ## 0.61  more Testhands + better HashTable
+// ## 0.70  sortCards analog DDS im Internet
+// ## 0.71  IMPLEMENTED - let deleteAllCardsFromPlayableCardsThatAreNotTheSmallestOnesInSuitYouCannotGiveSuit = true
+
 
 
 

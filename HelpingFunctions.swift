@@ -244,5 +244,16 @@ func readJson() {
 
 
 
-// func quickTrickInSuit (suit: UInt64, game:gameBoard) ->
+func orderPlayableCardsWithEverySuitAtTheBeginning (cards: [UInt64]) -> [UInt64] {
+    
+    var setSuit: ()
+    
+    for card in cards {
+        
+        
+        
+    }
+    
+    return cards
+}
 
