@@ -26,7 +26,7 @@ extension gameBoard {
         
         var isSequence: Bool {
             
-            if rankOfCard(card: card) <= 12 {
+            if rankOfCard(card: card) <= 13 {
                 
                 if (card << 1 & hands[playerCurrent] > 0) && (card << 2 & hands[playerCurrent] > 0) {
                     
@@ -126,25 +126,25 @@ extension gameBoard {
         
         
         // relativer Rank der Karte
-        var relativeRank: Int {
-            
-            let cardsinHand = hands[0] + hands[1] + hands[2] + hands[3]
-            
-            var counter = 0
-            
-            for high in relativeCards {
-                
-                if high & cardsinHand > 0 {
-                    
-                    counter += 1
-                    
-                }
-                
-                if high == card { return counter }
-                
-            }
-            
-            return 0        }
+//        var relativeRank: Int {
+//            
+//            let cardsinHand = hands[0] + hands[1] + hands[2] + hands[3]
+//            
+//            var counter = 0
+//            
+//            for high in relativeCards {
+//                
+//                if high & cardsinHand > 0 {
+//                    
+//                    counter += 1
+//                    
+//                }
+//                
+//                if high == card { return counter }
+//                
+//            }
+//            
+//            return 0        }
         
         
             
@@ -159,8 +159,9 @@ extension gameBoard {
         
             var firstCard = 0.5
            
-            var partnerPlRelativeMin = 15
+            var partnerPlRelativeMin = 15 // die Karte mit dem kleinsten relatoven Rank, also höchste Karte !
             var partnerPlRelativeMax = 0
+        
             
             var LHORelativeMin = 15
             var LHORelativeMax = 0
@@ -171,7 +172,15 @@ extension gameBoard {
             let card0inTrickRelative = 0
             let card1inTrickRelative = 0
             let card2inTrickRelative = 0
+        
+        var smallestPossibleWinnerInCurrentHand: Bool = false
+        
+        if trickCurrent.count > 0 {
+        
+            if card & trickSuit > 0 && card > trickCurrent[0] && card > (hands[(playerCurrent+1)%4] & trickSuit) { smallestPossibleWinnerInCurrentHand = true }
             
+        
+        }
             
             
             let cardsinHand = hands[0] + hands[1] + hands[2] + hands[3]
@@ -217,15 +226,25 @@ extension gameBoard {
                 if high == card { cardRelative = counter }
                 
                 
+                
+                
                 if trickCurrent.count > 0 {
                     
                     if high == trickCurrent[0] {
                         
-                        firstCard = firstCard + Double(counter)
+                        firstCard = firstCard + Double(counter) // gespielte Karte bekommt einen relativen Rank mit +0,5
+                        
+                    }
+                    
+                    if high < card && high > trickCurrent[0] && high > (hands[(playerCurrent+1)%4] & trickSuit) && smallestPossibleWinnerInCurrentHand {
+                        // es gibt eine kleinere Karte als die aktuelle untersuchte Karte, die sowohl größer als die ausgesielte Karte als auch als alle anderen Karten des LHO sind, dann ist aktuelle untersuchte Karte nicht der kleinste mögliche Gewinner
+                        smallestPossibleWinnerInCurrentHand = false
                         
                     }
                     
                 }
+                
+                
                 
                 
                 
@@ -387,6 +406,51 @@ extension gameBoard {
             
             
         }
+        
+        else if trickCurrent.count == 1 && trump == 0 && trickSuit & card > 0 {
+            
+            // wen Partner gewinnen kann anders agieren
+            
+            // Partner hat A oder Kx oder Qx
+            
+            if partnerPlRelativeMin == 1 && playerShape[(playerCurrent+2)%4][suit] == 1 || partnerPlRelativeMin == 2 && playerShape[(playerCurrent+2)%4][suit] <= 2 {
+                
+                return -rankOfCard(card: card)
+            }
+            
+            // kleinster Gewinner (warum einen anderen verschwenden)
+            
+            if smallestPossibleWinnerInCurrentHand && cardRelative != 1 { return 100 }
+            
+            
+            // sequenz splitten
+            
+            if isSequence && cardRelative <= 6 && isPotentialWinner(card: card){ return 50 }
+            
+            
+            //
+            if isWinner(card: card) { return 37 - cardRelative}
+
+            
+            // kleinste Karte
+            
+            if cardRelative == currentPlRelativeMax { return 35 }
+            
+            //
+            
+            if isPotentialWinner(card: card) { return 25 - rankOfCard(card: card) }
+            
+            // decken (also kleinste höhere Karte als Ausspiel), aber Kx deckt Dx zu ABx
+            
+            
+            // To Do: wenn eine kleine Karte kleiner ist als die kleinste Karte der anderen Spieler, dann reicht es eine Karte in playable Cards zu haben
+            
+            // höchste Karte
+            
+            return -rankOfCard(card: card)
+            
+        }
+            
             
 //         else if trickCurrent.count == 1 && trump == 0 && trickSuit & card > 0 {
 //            

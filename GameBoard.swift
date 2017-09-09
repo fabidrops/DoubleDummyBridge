@@ -69,6 +69,9 @@ final class gameBoard {
     var tricksTest = 0
     var testNumberOfCards = 0
     
+    // 
+    
+    var hand4thFlag = false
     
     
     var cardTrickWinner: Int {
@@ -249,7 +252,10 @@ final class gameBoard {
                     if !playableClubs.isEmpty { playableNew.append(playableClubs[0]) }
                     
                     playableCards = playableNew
+                    
                 }
+                
+                
 
                 
             } else {
@@ -257,6 +263,20 @@ final class gameBoard {
                 // b. Ja
                
                 playableCards = allCards.filter({$0 & hands[playerCurrent] & trickSuit > 0})
+                
+                
+                // wenn der Größte es nie schaffen kann, nimm nur die kleinste
+                let playableNew:[UInt64] = playableCards.sorted(by: {$0 > $1})
+                
+                if deleteAllCardsExceptGreatestWhenEveryCardIsSmallerThanSmallestOfOpps {
+                
+                    if (playableNew[0] < hands[(playerCurrent+1)%4] & trickSuit) && (playableNew[0] < hands[(playerCurrent+2)%4] & trickSuit) && (playableNew[0] < hands[(playerCurrent+3)%4] & trickSuit) {
+                        
+                        return [playableNew.last!]
+                        
+                    }
+                
+                }
                 
                 
             }
@@ -323,6 +343,10 @@ final class gameBoard {
         var quickTricks = 0
         var entryToPartner = 0
         
+        var LHOhasKing = false
+        var LHOhasQueen = false
+        var LHOhasJack = false
+        
         var quickTricksShape:[Int] = [0,0,0,0,0,0,0,0]
         
         // ITERATE OVER ALL SUITS ; 0 = spades : 4 = clubs
@@ -332,6 +356,12 @@ final class gameBoard {
             var topCards:[UInt8] = [0b10000000,0b01000000,0b00100000,0b00010000]
             var topCards2Player:UInt8 = 0
             var topCardsCounter = 0
+            
+            LHOhasKing = false
+            LHOhasQueen = false
+            LHOhasJack = false
+
+            
             
             // Ziel topCards2Player hat Syntax 0b11000010, ersten 4 Stellen für aktuellen Spieler AKQJ, letzten für Partner
             
@@ -360,6 +390,10 @@ final class gameBoard {
                     
                 }
                 
+                if card & hands[(player+1)%4] > 0 && topCardsCounter == 1 { LHOhasKing = true }
+                if card & hands[(player+1)%4] > 0 && topCardsCounter == 2 { LHOhasQueen = true }
+                if card & hands[(player+1)%4] > 0 && topCardsCounter == 3 { LHOhasJack = true }
+                
                 topCardsCounter += 1
                 
             }
@@ -382,24 +416,40 @@ final class gameBoard {
                 
             }
             
-            // TO DO - gleich die Partner Seite auswerten
             
-            let qT = calQuickTricks(topCards: topCards2Player, a: a, b: b, oppMax: oppMax)
+            
+            // TO DO - gleich die Partner Seite auswerten
+            var qTFull:[Int] = []
+            
+            let qT = calQuickTricks(topCards: topCards2Player, a: a, b: b, oppMax: oppMax, LHO: [LHOhasKing,LHOhasQueen,LHOhasJack])
+                
+          
             
             let shifty:UInt8 = (topCards2Player << 4) + (topCards2Player >> 4)
             
-            let qTP = calQuickTricks(topCards: shifty, a: b, b: a, oppMax: oppMax) // Partner auswerten
+            // RHO !!!!!!
+            let qTP = calQuickTricks(topCards: shifty, a: b, b: a, oppMax: oppMax, LHO: [LHOhasKing,LHOhasQueen,LHOhasJack]) // Partner auswerten
+            
+//            qTFull[4*suit] = qT       // für jede Farbe, wenn von West gespielt wird
+//            qTFull[4*suit+1] = qTP    // für jede Farbe, wenn von Ost gespielt wird 
+//            qTFull[4*suit+2] = 0      
+//            qTFull[4*suit+3] = 0
+            
+            
 
             quickTricks += qT
             
-            quickTricksShape[suit] = qT
-            quickTricksShape[suit+4] = qTP
+//            print(qTFull)
+            
+//            quickTricksShape[suit] = qT
+//            quickTricksShape[suit+4] = qTP
             
            //  if qT > 0 { print(printBinary(number: [UInt64( topCards2Player)])) ; print (qT)}
         
         }
         
         //if self.tricksWonByEastWest + self.tricksWonByNorthSouth == 0 { print(quickTricksShape) }
+        
         
         return [quickTricks,entryToPartner]
     }

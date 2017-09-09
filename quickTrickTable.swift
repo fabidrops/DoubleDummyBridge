@@ -314,10 +314,24 @@ func fillquickTricksTable () {
 
 
 
-func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
+func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int, LHO: [Bool]) -> Int {
+    
+    // hand4th ist, wenn ausgewertet wird, dass der linke Spieler ausspielt und RHO das As hat
+    // dann spielt er in gewisse Gabeln rein
+    
+    // TO DO: wenn man drei Asse hat, kann man die quicktricks der vierten Farbe hinzuaddieren, wenn man die Farbe entwickeln kan,
+    // zB KQJ 
+    
+    // TO DO: zB QJ sec auswerten wenn ein Gegner QJ und der andere xxxx hat, obwohl oppMax dann 4 wäre
+    
+    // TO DO: bei asuwertung nach der ersten Karte, wenn man in AKJ reinspielt oder AD
     
     // a ist Länge des eigenen Blattes, b des Partners und oppMax das Maximum eines Gegners
     // topCards als erste vier Stellen die eigenen A K Q J und die anderen des Partners
+    
+    // LHO ist ein Triple aus Bool, welches sagt ob LHO den K, die Q oder den B hat
+    
+    //print(LHO)
     
     switch topCards {
         
@@ -641,4 +655,339 @@ func calQuickTricks(topCards: UInt8, a: Int, b:Int, oppMax:Int) -> Int {
     
     return 0
 }
+
+func calQuickTricks2(topCards: UInt8, a: Int, b:Int, oppMax:Int, LHO: [Bool]) -> Int {
+    
+    
+    // returniert [2,4,2,1]
+    // erste Zahl quickTricks wenn von Westhand gespielt wird die Farbe
+    // zweite Zahl von der anderen Seite
+    // dritte Zahl Übergänge nach Ost wenn man Maximum Stiche macht (Kx zu AQx -> 1, sonst blockiert man Farbe)
+    // vierte Zahl Übergäbge nach West wenn man Maximum Stiche rausholt (Kx zu AQx -> 0 
+    
+    
+    switch topCards {
+        
+    case 0b11110000: // AKQJ zu -
+        
+        if oppMax <= 4 { return a } else { return 4 }
+        
+    case 0b11100001: // AKQ zu J
+        
+        if a == 3 { return 3 } // AKQ sec
+        else {
+            
+            if b == 1 { // AKQx(xx) - J
+                
+                if oppMax <= 3 { return a } else { return 3 }
+                
+            } else { // AKQx(xx) - Jx(xxx)
+                
+                if oppMax <= 4 { return max(a,b) } else { return 4 }
+                
+            }
+            
+        }
+        
+    case 0b11100000: // AKQ zu -
+        
+        if b <= 3 && oppMax <= 3 { return a }
+            
+        else if b > 3 && oppMax <= 3 { return min(a,b)}
+            
+        else { return 3 }
+        
+    case 0b11010010: // AKJ zu Q
+        
+        if b == 1 {
+            
+            
+            if oppMax <= 3 { return a } else { return 3 }
+            
+        } else if b <= a && oppMax <= 4 { return a }
+            
+        else if b < a && oppMax > 4 { return 4 }
+            
+        else if b > a && oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10110100: // AQJ zu K
+        
+        if b == 1 {
+            
+            if oppMax <= 3 { return a } else { return 3 }
+            
+        }
+            
+        else if b <= a && oppMax <= 4 { return a }
+            
+        else if b < a && oppMax > 4 { return 4 }
+            
+        else if b > a && oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10110000: // AQJ zu -
+        
+        if oppMax <= 1 { return a }
+            
+        else { return 1 }
+        
+        
+        
+    case 0b11010000,0b11000000: // AKJ zu - // AK zu -
+        
+        if oppMax <= 2 && b <= a { return a }
+            
+        else if oppMax <= 2 && b > a { return min(a,b) }
+            
+        else { return 2 }
+        
+        
+    case 0b11000010: // AK zu Q
+        
+        if a == 2 { return 2 }
+            
+        else if b == 1 && oppMax <= 2 { return a }
+            
+        else if b == 1 && oppMax > 2 { return 2 }
+            
+        else if oppMax <= 3 { return max(a,b) }
+            
+        else { return 3 }
+        
+    case 0b11000011: // AK zu QJ
+        
+        if a == 2 { return 2 }
+            
+        else if b == 2 && oppMax <= 3 { return a }
+            
+        else if b == 2 && oppMax > 2 { return 3 }
+            
+        else if oppMax <= 4 { return max(a,b) }
+            
+        else if a == 3 && b == 3 { return 3 }
+            
+        else { return 4 }
+        
+    case 0b11000001: // AK zu J
+        
+        if a == 2 { return 2 }
+            
+        else if b <= 2 && oppMax <= 2 { return a }
+            
+        else if b <= 2 && oppMax > 2 { return 2 }
+            
+        else if a == 3 && oppMax <= 2 { return b }
+            
+        else { return 2 }
+        
+        
+    case 0b10100100: // AQ zu K
+        
+        if a == 2 && b <= 2 { return 2 } // AQ - K , AQ - K?
+            
+        else if a == 2 && oppMax <= 2 { return b }
+            
+        else if a == 2 && oppMax > 2 { return 2 }
+            
+        else if a >= 3 && b == 1 && oppMax <= 2 { return a }
+            
+        else if a >= 3 && b >= 2 && oppMax <= 3 { return a }
+            
+        else if a == 3 && b == 2 { return 3 } // AQx - Kx
+            
+        else if a == 3 && b >= 2 && oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10100101: // AQ zu KJ
+        
+        if a == 2 && b == 2 { return 2 } // AQ - KJ
+            
+        else if a == 2 && oppMax <= 3 { return b }
+            
+        else if a == 2 && oppMax > 3 { return 3 }
+            
+        else if a == 3 && b == 2 { return 3 } // AQx - KJ
+            
+        else if a >= 3 && b == 2 && oppMax <= 3 { return a } // AQxxxx - KJ
+            
+        else if a == 3 && b >= 3 && oppMax <= 4 { return b } // AQx - KJxxx
+            
+        else if a >= 4 && b >= 4 { return max (a,b) }
+            
+        else { return 3 }
+        
+    case 0b10100001: // AQ zu J
+        
+        if oppMax <= 1 && b <= 2 { return a }
+            
+        else { return 1 }
+        
+    case 0b10010010: // AJ zu Q
+        
+        if oppMax <= 1 && b <= 2 { return a } // AJxxx - Q(x)
+            
+        else if a == 2 && oppMax <= 1 && b > 1 { return b }
+            
+        else if oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+        
+        
+    case 0b10100000: // AQ zu -
+        
+        if oppMax <= 1 && b <= 2 { return a }
+            
+        else { return 1 }
+        
+    case 0b10010110: // AJ zu KQ
+        
+        if a == 2 && b == 2 { return 2 } // AJ - KQ
+            
+        else if a == 2 && oppMax <= 3 { return b }
+            
+        else if a == 2 && oppMax > 3 { return 3 }
+            
+        else if a == 3 && b == 2 { return 3 } // AJx - KQ
+            
+        else if a >= 3 && b == 2 && oppMax <= 3 { return a } // AJxxxx - KQ
+            
+        else if a == 3 && b >= 3 && oppMax <= 4 { return b } // AJx - KQxxx
+            
+        else if a >= 4 && b >= 4 { return max (a,b) }
+            
+        else { return 3 }
+        
+    case 0b10010000: // AJ zu -
+        
+        if oppMax <= 1 && b <= 1 { return a }
+            
+        else { return 1 }
+        
+    case 0b10000000: // A zu -
+        
+        if oppMax <= 1 && b <= 1 { return a }
+            
+        else { return 1 }
+        
+    case 0b10010100: // AJ zu K
+        
+        if b == 1 && oppMax <= 1 { return a }
+            
+        else if b == 1 && oppMax > 1 { return 1 }
+            
+        else if b == 2 && oppMax <= 2 { return a }
+            
+        else if b >= 2 && oppMax >= 3 { return 2 }
+            
+        else if oppMax <= 2 { return min(a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000100: // A zu K
+        
+        if a == 1 { return 1 }
+            
+        else if b == 1 && oppMax <= 1 { return a }
+            
+        else if b == 1 && oppMax > 1 { return 1 }
+            
+        else if b == 2 && oppMax <= 2 { return a }
+            
+        else if b >= 2 && oppMax >= 3 { return 2 }
+            
+        else if oppMax <= 2 { return min(a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000111: // A zu KQJ
+        
+        if a == 1 { return 1 }
+            
+        else if a > b && b == 3 && oppMax <= 3 { return a } // Axxx - KQJ
+            
+        else if a > b && b == 3 && oppMax > 3 { return 3 } // Axxx - KQJ
+            
+        else if b == 3 { return 3 }
+            
+        else if oppMax <= 4 { return b }
+            
+        else { return 4 }
+        
+        
+    case 0b10000110: // A zu KQ
+        
+        if a == 1 { return 1 }
+            
+        else if a > b && b == 2 && oppMax <= 2 { return a } // Axxx - KQ
+            
+        else if a > b && b == 3 && oppMax <= 3 { return a } // Axxx - KQx
+            
+        else if a > b && b == 3 && oppMax > 3 { return 3 } // Axxx - KQx
+            
+        else if b == 3 { return 3 }
+            
+        else if oppMax <= 3 { return b }
+            
+        else { return 3 }
+        
+    case 0b10000101: // A zu KJ
+        
+        if a == 1 { return 1 }
+            
+        else if b == 2 && oppMax <= 2 { return a } // Axxx - KJ
+            
+        else if a == 2 && oppMax <= 2 { return b } // Ax - KJxx
+            
+        else if oppMax <= 2 { return min(a,b) } // Axxx - KJx
+            
+        else { return 2 }
+        
+    case 0b10000011: // A zu QJ
+        
+        if a == 1 { return 1 }
+            
+        else if oppMax <= 1 && a == 2 { return b }
+            
+        else if  oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000010: // A zu Q
+        
+        if a == 1 { return 1 }
+            
+        else if oppMax <= 1 && a == 2 && b >= 2 { return b }
+            
+        else if  oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+        
+    case 0b10000001: // A zu J
+        
+        if a == 1 { return 1 }
+            
+        else if oppMax <= 1 && b <= 1 { return a }
+            
+        else if oppMax <= 1 && a == 2 { return b }
+            
+        else if oppMax <= 1 { return min (a,b) }
+            
+        else { return 1 }
+        
+        
+        
+    default: return 0
+        
+    }
+    
+    
+    
+    return 0
+}
+
+
 

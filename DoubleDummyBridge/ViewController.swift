@@ -167,36 +167,46 @@ class ViewController: UIViewController {
                 // Hände anzeigen
                 fillVisual(game: hand)
                 
-                var game = gameBoard(hands: hand.hands, relativeHands: [0,0,0,0], tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
-                    game.testNumberOfCards = hand.testNumberOfCards
+                var lastErg = 0
                 
+                for i in 1...hand.testNumberOfCards {
+                    
+                    zeroWindowDepth = i
+                    hashTableAlphaBeta = [:]
+                    
                 
-                // Testparameter setzen
-                NumberOfCardsPerHand = hand.testNumberOfCards
-                game.tricksTest = hand.tricksTest
-                game.nameTest = hand.nameTest
-                
-                // relative füllen
-                game = fillRealtiveHandsinInit(game: game)
+                    var game = gameBoard(hands: hand.hands, relativeHands: [0,0,0,0], tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
+                        game.testNumberOfCards = hand.testNumberOfCards
+                    
+                    
+                    // Testparameter setzen
+                    NumberOfCardsPerHand = hand.testNumberOfCards
+                    game.tricksTest = hand.tricksTest
+                    game.nameTest = hand.nameTest
+                    
+                    // relative füllen
+                    game = fillRealtiveHandsinInit(game: game)
 
-                
-                                
-                TOTALTRICKSINGAME = game.testNumberOfCards
-                
-                let time1 = DispatchTime.now()
-                let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: 0, beta: 13, turnNS: false)
-                let time2 = DispatchTime.now()
-                let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
-                
-                //hashTable = [:]
-                
-                outputLbl.text = "Max Stiche N/S:\(erg6)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
-                
-                var testScoreCorrect = true
-                
-                if erg6 != game.tricksTest {testScoreCorrect = false }
-                
-                 print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #HASH: \(hashTableBuildingGuide) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
+                    
+                                    
+                    TOTALTRICKSINGAME = game.testNumberOfCards
+                    
+                    let time1 = DispatchTime.now()
+                    let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: lastErg, beta: lastErg+1, turnNS: false)
+                    let time2 = DispatchTime.now()
+                    let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
+                    
+                    lastErg = erg6
+                    
+                    outputLbl.text = "Max Stiche N/S:\(erg6)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
+                    
+                    var testScoreCorrect = true
+                    
+                    if erg6 != game.tricksTest {testScoreCorrect = false }
+                    
+                     print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #HASH: \(hashTableBuildingGuide) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
+                    
+                }
                 
             }
             
@@ -338,6 +348,8 @@ class ViewController: UIViewController {
            
             
             let time1 = DispatchTime.now()
+            
+            
             
             let erg = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: -13, beta: 13, turnNS: (game.playerCurrent == 1 || game.playerCurrent == 3 ))
             

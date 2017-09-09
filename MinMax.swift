@@ -27,22 +27,6 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     let playableCards = game.playableCardsOfCurrentPlayer()
     
-    // Quick Tricks output
-    
-//    if game.trickCurrent.count == 0 {
-//        
-//        if GLOBALCOUNTER_MINMAX == 1 {
-//            print(game.quickTricksPlayer(player: 0))
-//            print(game.quickTricksPlayer(player: 1))
-//            print(game.quickTricksPlayer(player: 2))
-//            print(game.quickTricksPlayer(player: 3))
-//        }
-//    }
-    
-    
-    // TO DO: angenommen alpha ist 7 und n/S hat 4 es sind aber nur noch 2 Stiche -> Cut
-    
-    
     // Spiel zu Ende -> Bewertung vornehmen
     if deep == 0 || playableCards.count == 0  {
         
@@ -51,6 +35,17 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    // falls für die zero window iteration bur die ersten N Stiche ausgewertet werten
+    
+    if zeroWindowSearch {
+        
+        if game.tricksWonByNorthSouth + game.tricksWonByEastWest == zeroWindowDepth {
+            
+            return game.tricksWonByNorthSouth
+            
+        }
+        
+    }
     
     
     // Spieler N/S kann nicht mehr Maximum erreichen
@@ -106,8 +101,6 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     // QUICK TRICKS
     
-
-    
     if playingWithQuickTricks && game.trickCurrent.count == 0  && deep >= deepQuickTricks  && quickTestPlayingMode == false {
     // am Anfang eines Stiches
                 // Quick Tricks
@@ -156,7 +149,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     let ace = game.trickSuit & (sA + hA + dA + cA) // das As in der ausgespielten Farbe
     
-    if playingWithQuickTricks && game.trickCurrent.count == 1   && deep >= deepQuickTricks  && quickTestPlayingMode == false && (game.relativeHands[game.playerCurrent] & ace > 0 || game.relativeHands[(game.playerCurrent+2)%4] & ace > 0) { // wenn man das richtige As hat
+    if playingWithQuickTricks && game.trickCurrent.count == 1   && deep >= deepQuickTricks  && quickTestPlayingMode == false && (game.relativeHands[game.playerCurrent] & ace > 0 || game.relativeHands[(game.playerCurrent+2)%4] & ace > 0) { // wenn man das richtige As hat, daran denken: player current ist schon LHO vom Ausspieler
         
         //
         
@@ -170,7 +163,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
         var whoHasAce = 0
         
-        if game.relativeHands[(game.playerCurrent+2)%4] & ace > 0 { whoHasAce = 2 }
+        if game.relativeHands[(game.playerCurrent+2)%4] & ace > 0 { whoHasAce = 2 ; game.hand4thFlag = true}
         
         // Quick Tricks
         var qT = game.quickTricksPlayer(player: (game.playerCurrent + whoHasAce)%4)
@@ -215,6 +208,8 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         game.playerShape[(game.playerCurrent+3)%4][shape] -= 1
         
         game.hands[(game.playerCurrent+3)%4] -= game.trickCurrent[0]
+        
+        game.hand4thFlag = false
 
         
     }
@@ -353,6 +348,8 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             if (value < minValue) {
                 
                 minValue = value
+                
+                if deep == 0 { print(returnCardAsString(hand: card)) }
                 
                 if (minValue <= alpha) {
                     
