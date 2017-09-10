@@ -532,6 +532,15 @@ final class gameBoard {
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
             
         }
+        else if hashTableBuildingGuide == 8888 {
+            
+            let str1 = String(self.cardsPlayed & 0b1111111100000111111110000011111111000001111111100000) + String(self.playerCurrent)
+            
+            //hashTableBuildingGuide = 4444
+            
+            return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth)
+            
+        }
         else if hashTableBuildingGuide == 4444  {
             
 //            V0.60a: game0(false) #N/S 2 #TIME 27 #VAR 0 #MINMAX 655 #HASH 55 #ALPHA 2 #BETA 277 #TRICKS 8

@@ -139,6 +139,8 @@ class ViewController: UIViewController {
         
             for hand in testHands {
                 
+                hashTableAlphaBeta = [:]
+                
                 //print(handToStringVisualStyle(hand: hand.hands[0]))
                 // die relativeHands ableiten
                 fillRealtiveHandsinInit(game: hand)
@@ -167,12 +169,13 @@ class ViewController: UIViewController {
                 // Hände anzeigen
                 fillVisual(game: hand)
                 
-                var lastErg = 0
                 
-                for i in 1...hand.testNumberOfCards {
-                    
-                    zeroWindowDepth = i
-                    hashTableAlphaBeta = [:]
+                
+                
+                
+                
+                
+                    //hashTableAlphaBeta = [:]
                     
                 
                     var game = gameBoard(hands: hand.hands, relativeHands: [0,0,0,0], tricksNS: hand.tricksWonByNorthSouth, tricksEW: hand.tricksWonByEastWest, trickCurrent: hand.trickCurrent, trump: hand.trump, leader: hand.trickLeader, trickSuit: hand.trickSuit, playerShape: hand.playerShape, cardsPlayed: hand.cardsPlayed, playerCurrent: hand.playerCurrent)
@@ -191,12 +194,13 @@ class ViewController: UIViewController {
                                     
                     TOTALTRICKSINGAME = game.testNumberOfCards
                     
+                    //let time1 = DispatchTime.now()
                     let time1 = DispatchTime.now()
-                    let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: lastErg, beta: lastErg+1, turnNS: false)
+                    let erg6 = miniMax(game: game, deep: 4*NumberOfCardsPerHand, alpha: 0, beta: 13, turnNS: false)
                     let time2 = DispatchTime.now()
                     let delta = (time2.uptimeNanoseconds - time1.uptimeNanoseconds)/1000000
                     
-                    lastErg = erg6
+                    
                     
                     outputLbl.text = "Max Stiche N/S:\(erg6)\n"+"Zweige:\(GLOBALCOUNTER_CALCULATE_LAST)"
                     
@@ -204,13 +208,18 @@ class ViewController: UIViewController {
                     
                     if erg6 != game.tricksTest {testScoreCorrect = false }
                     
-                     print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #HASH: \(hashTableBuildingGuide) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
+                
                     
-                }
+                        print("\(VERSION): \(game.nameTest)(\(testScoreCorrect)) #N/S \(erg6) #TIME \(delta) #HASH: \(hashTableBuildingGuide) #VAR \(GLOBALCOUNTER_CALCULATE_LAST) #MINMAX \(GLOBALCOUNTER_MINMAX) #HASH \(GLOBALCOUNTER_HASHTAG) #ALPHA \(GLOBALCOUNTER_ALPHA_CUTOFF) #BETA \(GLOBALCOUNTER_BETA_CUTOFF) #TRICKS \(game.testNumberOfCards) ")
+                    
+                
+                
                 
             }
             
         } else {
+            
+            zeroWindowDepth = NumberOfCardsPerHand
             
             var game = gameBoard(hands: shuffleDeck(numberOfCardsPerHand: NumberOfCardsPerHand), relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
             

@@ -31,7 +31,7 @@ import Foundation
 // ## 0.61  more Testhands + better HashTable
 // ## 0.70  sortCards analog DDS im Internet
 // ## 0.71  IMPLEMENTED - let deleteAllCardsFromPlayableCardsThatAreNotTheSmallestOnesInSuitYouCannotGiveSuit = true
-// ## 0.75  zero Search Window Anfang
+// ## 0.75  zero Search Window Anfang gelöscht // variable HashTableBuildingGuide optimiert für Testhände
 
 
 

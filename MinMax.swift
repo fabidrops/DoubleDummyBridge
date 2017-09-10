@@ -70,6 +70,26 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
     }
     
+    // HashTableBuildingGuide setzen nach deep-Steuerung
+    
+    
+    if deep >= 52 {hashTableBuildingGuide = 3333 } // egal, da Ausgangsposition
+    else if deep >= 48 {hashTableBuildingGuide = 3333 } // darf nicht tiefer
+    else if deep >= 44 {hashTableBuildingGuide = 7777 } // Hand G darf nicht schlechter als 7777
+    else if deep >= 40 {hashTableBuildingGuide = 4444 }
+    else if deep >= 36 {hashTableBuildingGuide = 4444 } //
+    else if deep >= 32 {hashTableBuildingGuide = 4444 } //
+    else if deep >= 28 {hashTableBuildingGuide = 5555 } // darf nicht tiefer
+    else if deep >= 24 {hashTableBuildingGuide = 5555 } // darf nicht tiefer
+    else if deep >= 20 {hashTableBuildingGuide = 5555 } // darf nicht tiefer
+    else if deep >= 16 {hashTableBuildingGuide = 6666 } // darf nicht tiefer
+    else if deep >= 12 {hashTableBuildingGuide = 6666 }
+    else if deep >= 8 {hashTableBuildingGuide = 7777 }
+    else {hashTableBuildingGuide = 7777}
+    
+    
+    
+    
     // TO DO : bringt der Code am hier was ?
     
     // Spieler O/W kann nicht mehr Maximum erreichen
@@ -225,20 +245,36 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
     
     // Hash Typus: resultierte der Wert aus einem Cut-Off oder war er exkat berechnet
     var hashFlagStore = 0 // 0 = exakt ; 1 = lower bound ; 2 = upper bound
+    
+    
 
+    // zeroWindow Hash Compability
+    // neben dem Wert und der Art des HashValues (s.u.) muss auch gespeichert werden, welche Depth (Anzahl der N ersten Karten) untersucht wurde
+    // ist der Hash Eintrag aus der gleichen Depth Berechnung bleibt alles beim Alten
+    // ansonten gilt bei einem Durchlauf mit Depth M (M>N):
+    // der gespeicherte Minimum Wert Min ist für die Depth M : Min - (M-N) = MIN + N - M
+    // der gespeicherte Maximum Wert Max ist für die Depth M : Max + (M-N) = MAX + M - N
+    
     if let hashValue = hashTableAlphaBeta[hashIndexActual] {
 
         if hashFlag == true {
+            
+            //var hashFlagDepth = hashValue[2]
             
             GLOBALCOUNTER_HASHTAG += 1
             
             switch hashValue[1] {
                 
-                case 0: return hashValue[0] // exakter Wert
+                case 0:
+                    
+                    
+                    return hashValue[0] // exakter Wert
+                        
+                
                 
                 case 1: // lower bound
                     
-                    if (hashValue[0] >= beta) {
+                    if hashValue[0] >= beta {
                             return hashValue[0]
                         }
                 
@@ -246,7 +282,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
                 
                 case 2: // upper bound
                     
-                    if (hashValue[0] <= alpha) {
+                    if hashValue[0] <= alpha {
                             return hashValue[0]
                         }
                 
@@ -312,7 +348,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
         if hashFlag {
     
-            hashTableAlphaBeta[hashIndexActual] = [maxValue,hashFlagStore]
+            hashTableAlphaBeta[hashIndexActual] = [maxValue,hashFlagStore,zeroWindowDepth]
     
         }
         
@@ -374,7 +410,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
         if hashFlag  {
                 
-                hashTableAlphaBeta[hashIndexActual] = [minValue,hashFlagStore]
+                hashTableAlphaBeta[hashIndexActual] = [minValue,hashFlagStore,zeroWindowDepth]
             
         }
 
