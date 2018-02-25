@@ -307,7 +307,7 @@ import Foundation
 //V0.73: gameZA(true) #N/S 8 #TIME 968 #HASH: 4444 #VAR 462 #MINMAX 18605 #HASH 1298 #ALPHA 5425 #BETA 1973 #TRICKS 13
 //V0.73: gameZB(true) #N/S 10 #TIME 14447 #HASH: 7777 #VAR 155 #MINMAX 276324 #HASH 27455 #ALPHA 104744 #BETA 23383 #TRICKS 13
 //V0.73: gameZC(true) #N/S 8 #TIME 16654 #HASH: 3333 #VAR 156 #MINMAX 313618 #HASH 24642 #ALPHA 87441 #BETA 50629 #TRICKS 13
-
+//V0.75: gameZD(true) #N/S 10 #TIME 161191 #HASH: 4444 #VAR 1344 #MINMAX 3160036 #HASH 334824 #ALPHA 1420469 #BETA 94715 #TRICKS 13
 
 // 13 Stiche Hand
 //["11001001000000101100101001000000000001110", "1010000101000000010000000010000010000101110101000000", "1100000000100100001111000001000100010000000010001", "100011010100010000110000000010000010000001010100000"]
@@ -328,7 +328,7 @@ var GLOBALCOUNTER_ALPHA_CUTOFF = 0
 var NumberOfCardsPerHand = 5
 
 var testHands2 = [gameF1]
-var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF,gameF1,gameG,gameH,gameZ,gameZA,gameZB,gameZC]
+var testHands = [game0,gameA,gameB,gameC,gameD,gameE,gameF,gameF1,gameG,gameH,gameZ,gameZA,gameZB,gameZC,gameZD,gameZE]
 
 // var testHands = [gameB]
 
@@ -394,6 +394,14 @@ func fillTestHands() {
     gameZC.nameTest = "gameZC"
     gameZC.testNumberOfCards = 13
     gameZC.tricksTest = 8
+    
+    gameZD.nameTest = "gameZD"
+    gameZD.testNumberOfCards = 13
+    gameZD.tricksTest = 10
+    
+    gameZE.nameTest = "gameZE"
+    gameZE.testNumberOfCards = 13
+    gameZE.tricksTest = 11
     
 }
 
@@ -535,5 +543,23 @@ let hand1zc:UInt64 = sK+s8+hK+hT+h8+h7+d9+d7+cQ+cT+c9+c7+c5
 let hand2zc:UInt64 = sA+s6+s4+hA+hQ+hJ+h3+dT+d6+d5+cJ+c8+c2
 
 let gameZC = gameBoard(hands: [hand1zc,hand2zc,hand3zc,hand4zc], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
+// Testhand ZD
+
+let hand3zd:UInt64 = s6+s3+hT+h6+h4+d9+d8+d6+d4+cQ+cT+c8+c8
+let hand4zd:UInt64 = sK+sT+s2+hQ+h9+dA+dT+d7+d2+cK+c5+c3+c2
+let hand1zd:UInt64 = sJ+s9+s7+s4+hK+hJ+h7+h3+h2+dK+dQ+d5+c4
+let hand2zd:UInt64 = sA+sQ+s8+s5+hA+h8+h5+dJ+d3+cA+cJ+c9+c6
+
+let gameZD = gameBoard(hands: [hand1zd,hand2zd,hand3zd,hand4zd], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
+
+// Testhand ZE
+
+let hand1ze:UInt64 = s2+hA+hQ+hT+h8+h7+h3+h2+d7+d6+d5+d4+c3
+let hand2ze:UInt64 = sA+sK+sQ+s9+h9+h5+h4+dA+dK+dJ+c9+c7+c5
+let hand3ze:UInt64 = sJ+sT+s8+s5+s4+s3+h6+d2+cQ+cJ+cT+c8+c2
+let hand4ze:UInt64 = s7+s6+hK+hJ+dQ+dT+d9+d8+d3+cA+cK+c6+c4
+
+let gameZE = gameBoard(hands: [hand1ze,hand2ze,hand3ze,hand4ze], relativeHands: [0,0,0,0], tricksNS: 0, tricksEW: 0, trickCurrent: [], trump: 0, leader: 0, trickSuit: 0, playerShape: [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]], cardsPlayed: 0, playerCurrent: 0)
 
 

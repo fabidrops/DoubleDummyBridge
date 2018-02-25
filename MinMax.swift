@@ -341,6 +341,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
                 
             }
             
+            
         }
         
         // HASH-Table Write
@@ -360,6 +361,8 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
         
         var value: Int
         var minValue = beta
+        
+        var bestCard:UInt64 = 0
         
         if quickTestPlayingMode == true &&  (game.trickCurrent.count == 0 || game.trickSuit != spades)  { minValue = game.tricksWonByNorthSouth } else {
         
@@ -385,7 +388,7 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
                 
                 minValue = value
                 
-                if deep == 0 { print(returnCardAsString(hand: card)) }
+                if game.tricksWonByNorthSouth + game.tricksWonByEastWest == 0 && game.trickCurrent.isEmpty { bestCard = card }
                 
                 if (minValue <= alpha) {
                     
@@ -402,7 +405,12 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
                 
             }
             
-            }
+           
+
+            
+        }
+           
+            
             
         }
         
@@ -414,7 +422,10 @@ func miniMax( game: gameBoard, deep: Int, alpha: Int, beta: Int , turnNS: Bool) 
             
         }
 
-        
+        if game.tricksWonByNorthSouth + game.tricksWonByEastWest == 0 && game.trickCurrent.isEmpty {
+            print(returnCardAsString(hand: bestCard))
+
+        }
         return minValue
         
     }

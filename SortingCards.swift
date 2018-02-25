@@ -10,6 +10,7 @@ import Foundation
 
 extension gameBoard {
     
+    // TO DO: AKQx zu J -> nur A oder kleinste Karte kommt in Frage...blockierende Farben
     
     func pointsForCardSorting2(card: UInt64) -> Int {
         

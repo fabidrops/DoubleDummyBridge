@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         
         
         // hashTableQuickTricksFüllen
-        fillquickTricksTable()
+        //fillquickTricksTable()
         
         // hashTable für Konvertierung von Karten -> String , wird für quickTricks benötigt
         fillHashTableHandInTopString()

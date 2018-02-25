@@ -18,7 +18,7 @@ var playableCardsWithSorting = true // soll das Programm Karten sortieren ?
 var playingWithQuickTricks = true
 var quickTestPlayingMode = false // Beschreibung siehe Version # V 0.45
 let deepQuickTricks = 0
-var hashTableBuildingGuide = 58 // Art wie die Hash Table konstruiert wird
+var hashTableBuildingGuide = 0 // Art wie die Hash Table konstruiert wird
 
 let zeroWindowSearch = false
 var zeroWindowDepth = 13

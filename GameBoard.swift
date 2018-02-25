@@ -31,7 +31,7 @@ final class gameBoard {
         
     }
     
-    // 4 Bridge Hände als 64-Bit-Zahl (davon werden 52 genutzt pro Hand)
+    // 4 Bridge Hände als 64-Bit-Zahl (davon werden 52 Bits genutzt pro Hand)
     var hands: [UInt64]
     
     // Relative Hände der vier 4 Bridge Hände (zB wenn As fehlt wird der K das As)
@@ -346,6 +346,9 @@ final class gameBoard {
         var LHOhasKing = false
         var LHOhasQueen = false
         var LHOhasJack = false
+        var RHOhasKing = false
+        var RHOhasQueen = false
+        var RHOhasJack = false
         
         var quickTricksShape:[Int] = [0,0,0,0,0,0,0,0]
         
@@ -360,6 +363,9 @@ final class gameBoard {
             LHOhasKing = false
             LHOhasQueen = false
             LHOhasJack = false
+            RHOhasKing = false
+            RHOhasQueen = false
+            RHOhasJack = false
 
             
             
@@ -393,6 +399,9 @@ final class gameBoard {
                 if card & hands[(player+1)%4] > 0 && topCardsCounter == 1 { LHOhasKing = true }
                 if card & hands[(player+1)%4] > 0 && topCardsCounter == 2 { LHOhasQueen = true }
                 if card & hands[(player+1)%4] > 0 && topCardsCounter == 3 { LHOhasJack = true }
+                if card & hands[(player+3)%4] > 0 && topCardsCounter == 1 { RHOhasKing = true }
+                if card & hands[(player+3)%4] > 0 && topCardsCounter == 2 { RHOhasQueen = true }
+                if card & hands[(player+3)%4] > 0 && topCardsCounter == 3 { RHOhasJack = true }
                 
                 topCardsCounter += 1
                 
@@ -653,7 +662,9 @@ final class gameBoard {
             
             // 
             
-            let str1 = String(self.relativeHands[0]) + String(self.relativeHands[1]) + String(self.relativeHands[2]) + String(self.relativeHands[3]) + String(self.playerCurrent)
+            var str1 = String(self.relativeHands[0]) + String(self.relativeHands[1]) + String(self.relativeHands[2])
+                
+             str1 += String(self.relativeHands[3]) + String(self.playerCurrent)
             
             return str1 + String(tricksWonByEastWest) + String(tricksWonByNorthSouth) 
             
